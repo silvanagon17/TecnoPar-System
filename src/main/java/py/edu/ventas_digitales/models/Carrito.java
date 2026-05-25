@@ -35,12 +35,12 @@ public class Carrito {
     @Column(name = "codigo", length = 45, nullable = false)
     private String codigo;
 
+    @ManyToOne
+    @JoinColumn(name = "producto_id", nullable = false)
+    private Producto producto;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "producto_id", nullable = false)
-    private Producto producto;
 
 }

@@ -29,14 +29,14 @@ public class Venta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "pre_total", nullable = false, precision = 10, scale = 2)
-    private BigDecimal pre_total;
+    @Column(name = "precio_total", nullable = false, precision = 10, scale = 2)
+    private BigDecimal precioTotal;
 
     @Column(name = "metodo_pago", length = 50, nullable = false)
-    private String metodo_pago;
+    private String metodoPago;
 
-    @Column(name = "fecha_venta", nullable = false)
-    private LocalDateTime fecha_venta;
+    @Column(name = "fecha", nullable = false)
+    private LocalDateTime fecha;
 
     @Column(name = "estado", length = 45, nullable = false)
     private String estado;

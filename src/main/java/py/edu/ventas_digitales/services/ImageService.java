@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class ImageService {
 
-    private final String image_dir = "src/main/resources/static/image/";
+    private final String image_dir = "src/main/resources/static/image/productos/";
 
     public String guardarImagen(MultipartFile archivo) throws IOException {
         Path uploadPath = Paths.get(image_dir);
@@ -26,7 +26,7 @@ public class ImageService {
 
         Files.write(rutaArchivo, archivo.getBytes());
 
-        return "/image/" + nombreUnico;
+        return "/image/productos/" + nombreUnico;
     }
 
 }

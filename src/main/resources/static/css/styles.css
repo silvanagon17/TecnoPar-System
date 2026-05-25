@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Antonio:wght@100..700&family=Cinzel:wght@800&family=Fjalla+One&family=Libre+Baskerville&family=Parisienne&display=swap");
 :root {
   --bg-body: #020617;
   --bg-card: #0a112be5;
@@ -11,6 +12,7 @@
   --bg-sidebar: #03071f;
   --text-sidebar: #ffffff;
   --bg-nav-secundario: #0f172a;
+  --bg-nav-principal: #020617;
   --box-shadow: rgba(214, 214, 214, 0.329);
   --bg-category: #03081f;
   --border-categoria: #202131b7;
@@ -23,6 +25,7 @@
 body.modo-claro {
   --bg-body: #f1f5f9;
   --bg-nav-secundario: #d5d9e6;
+  --bg-nav-principal: #f1f5f9;
   --bg-card: #dee3f0;
   --text-main: #0f172a;
   --text-muted: #64748b;
@@ -50,6 +53,13 @@ body {
   font-family: "Plus Jakarta Sans", sans-serif;
   color: var(--text-main);
   border-color: var(--border-color);
+}
+
+.titulo {
+  font-family: "Antonio", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 28px;
+  font-style: normal;
 }
 
 .c-categoria {
@@ -145,6 +155,10 @@ footer {
   background-color: var(--bg-nav-secundario);
 }
 
+.nav-principal {
+  background-color: var(--bg-nav-principal);
+}
+
 .principal {
   background-color: var(--bg-button);
 }
@@ -238,4 +252,34 @@ footer {
 
 .header-table {
   border-bottom: var(--border-color) 1px solid;
+}
+
+#tbody td {
+  height: 60px;
+  vertical-align: middle;
+  padding: 6px;
+}
+
+.text-custom {
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.descripcion-custom {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-width: 200px;
+}
+
+.table-hover td {
+  height: 50px;
+  vertical-align: middle;
+}
+
+.dropdown-item {
+  color: var(--text-main);
 }

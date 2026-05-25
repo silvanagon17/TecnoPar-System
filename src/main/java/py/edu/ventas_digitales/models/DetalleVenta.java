@@ -31,11 +31,11 @@ public class DetalleVenta {
     @Column(name = "cantidad", nullable = false)
     private Integer cantidad;
 
-    @Column(name = "precioUnitario", nullable = false, precision = 10, scale = 2)
+    @Column(name = "precio_unitario", nullable = false, precision = 10, scale = 2)
     private BigDecimal precioUnitario;
 
-    @Column(name = "precioTotal", nullable = false, precision = 10, scale = 2)
-    private BigDecimal precioTotal;
+    @Column(name = "sub_total", nullable = false, precision = 10, scale = 2)
+    private BigDecimal subTotal;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "venta_id", nullable = false)

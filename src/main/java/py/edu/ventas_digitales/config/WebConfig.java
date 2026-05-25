@@ -7,7 +7,8 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 public class WebConfig {
 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/image/**").addResourceLocations("file:src/main/resources/static/image/");
+        registry.addResourceHandler("/image/productos/**")
+                .addResourceLocations("file:src/main/resources/static/image/productos/");
     }
 
 }

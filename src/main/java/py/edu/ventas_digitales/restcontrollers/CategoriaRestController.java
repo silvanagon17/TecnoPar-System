@@ -1,4 +1,4 @@
-package py.edu.ventas_digitales.controllers;
+package py.edu.ventas_digitales.restcontrollers;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import py.edu.ventas_digitales.services.CategoriaService;
 
 @RestController
 @RequestMapping("/api/categorias")
-public class CategoriaController {
+public class CategoriaRestController {
 
     @Autowired
     private CategoriaService cService;

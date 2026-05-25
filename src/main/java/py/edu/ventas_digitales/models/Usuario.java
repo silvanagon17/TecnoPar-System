@@ -29,13 +29,13 @@ public class Usuario {
     @Column(name = "apellido", length = 80, nullable = false)
     private String apellido;
 
-    @Column(name = "email", length = 70, nullable = false, unique = true)
+    @Column(name = "email", length = 180, nullable = false, unique = true)
     private String email;
 
     @Column(name = "telefono", length = 15, nullable = false, unique = true)
     private String telefono;
 
-    @Column(name = "contrasenha", length = 70, nullable = false, unique = true)
+    @Column(name = "contrasenha", length = 100, nullable = false)
     private String contrasenha;
 
     @Column(name = "tipo_usuario", length = 45, nullable = false)

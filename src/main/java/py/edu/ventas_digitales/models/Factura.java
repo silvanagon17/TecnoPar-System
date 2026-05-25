@@ -29,8 +29,11 @@ public class Factura {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "numero_factura", nullable = false, unique = true, length = 45)
+    private String numeroFactura;
+
     @Column(name = "fecha_factura", nullable = false)
-    private LocalDateTime fecha_factura;
+    private LocalDateTime fechaFactura;
 
     @Column(name = "total", nullable = false, precision = 10, scale = 2)
     private BigDecimal total;

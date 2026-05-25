@@ -1,5 +1,3 @@
-// *****Para Boton Categoria*****
-
 function toggleDropdown(id, arrowId) {
   const menu = document.getElementById(id);
   const arrow = document.getElementById(arrowId);

@@ -1,4 +1,4 @@
-package py.edu.ventas_digitales.controllers;
+package py.edu.ventas_digitales.restcontrollers;
 
 import java.io.IOException;
 import java.util.List;
@@ -20,7 +20,7 @@ import py.edu.ventas_digitales.services.ProductoService;
 
 @RestController
 @RequestMapping("/api/productos")
-public class ProductoController {
+public class ProductoRestController {
 
     @Autowired
     private ProductoService pService;

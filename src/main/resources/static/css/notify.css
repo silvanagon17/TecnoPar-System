@@ -1,0 +1,38 @@
+#notify-container {
+  position: fixed;
+  right: 90px;
+  margin-top: 25px;
+  z-index: 100;
+}
+
+.alert-in {
+  animation: notify-in 1s ease 0s 1 normal forwards;
+}
+
+@keyframes notify-in {
+  0% {
+    opacity: 0;
+    transform: translateX(250px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.alert-out {
+  animation: notify-out 1s ease 0s 1 normal forwards;
+}
+
+@keyframes notify-out {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(250px);
+  }
+}
