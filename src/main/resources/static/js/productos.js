@@ -1,4 +1,5 @@
-import { mostrarMensaje } from "./alerts.js";
+import { mostrarMensaje } from "./components/alerts.js";
+import { normalizarTexto } from "./utils/stringFormatter.js";
 
 const API_URL = "/api/productos";
 const API_CATEGORIAS = "/api/categorias";
@@ -102,15 +103,6 @@ const renderTabla = (productos) => {
 };
 
 /**
- * @param {string} nombreProducto
- */
-const normalizarNombre = (nombreProducto) => {
-  const normalizado = nombreProducto.trim().toLowerCase();
-  if (!normalizado) return "";
-  return normalizado.charAt(0).toUpperCase() + normalizado.slice(1);
-};
-
-/**
  * @param {string|number} id
  */
 const cargarFormulario = (id) => {
@@ -159,13 +151,13 @@ const handleFormSubmit = async (event) => {
   event.preventDefault();
 
   const id = inputId.value;
-  const normalizado = normalizarNombre(inputNombre.value);
+  const nombreLimpio = normalizarTexto(inputNombre.value);
   const selectCategoria = document.getElementById("nombreCategoria");
 
   const productoExiste = listaProductos.some(
-    (cat) =>
-      cat.nombreProducto.toLowerCase() === normalizado.toLowerCase() &&
-      String(cat.id) !== String(id),
+    (prod) =>
+      prod.nombreProducto.toLowerCase() === nombreLimpio.toLowerCase() &&
+      String(prod.id) !== String(id),
   );
 
   if (productoExiste) {

@@ -1,4 +1,5 @@
-import { mostrarMensaje } from "./alerts.js";
+import { mostrarMensaje } from "./components/alerts.js";
+import { normalizarTexto } from "./utils/stringFormatter.js";
 
 const API_URL = "/api/categorias";
 
@@ -58,16 +59,6 @@ const renderTabla = (categorias) => {
 };
 
 /**
- * Limpia los espacios, pasa el nombre a minusculas y pone la primera letra en mayusculas
- * @param {string} nombreCategoria
- */
-const normalizarNombre = (nombreCategoria) => {
-  const limpio = nombreCategoria.trim().toLowerCase();
-  if (!limpio) return "";
-  return limpio.charAt(0).toUpperCase() + limpio.slice(1);
-};
-
-/**
  * @param {string|number} id
  */
 const cargarFormulario = (id) => {
@@ -92,7 +83,7 @@ const handleFormSubmit = async (event) => {
   event.preventDefault();
 
   const id = inputId.value;
-  const nombreLimpio = normalizarNombre(inputNombre.value);
+  const nombreLimpio = normalizarTexto(inputNombre.value);
 
   const categoriaExiste = listaCategorias.some(
     (cat) =>
