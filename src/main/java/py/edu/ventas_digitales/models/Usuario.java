@@ -32,7 +32,7 @@ public class Usuario {
     @Column(name = "email", length = 180, nullable = false, unique = true)
     private String email;
 
-    @Column(name = "telefono", length = 15, nullable = false, unique = true)
+    @Column(name = "telefono", length = 15, nullable = false)
     private String telefono;
 
     @Column(name = "contrasenha", length = 100, nullable = false)

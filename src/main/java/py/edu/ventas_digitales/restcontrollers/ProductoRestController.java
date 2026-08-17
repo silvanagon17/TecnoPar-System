@@ -61,13 +61,37 @@ public class ProductoRestController {
         try {
             Producto productoExistente = pService.getProductoById(id);
 
-            productoExistente.setNombreProducto(productoUpdate.getNombreProducto());
-            productoExistente.setDescripcion(productoUpdate.getDescripcion());
-            productoExistente.setCodigo(productoUpdate.getCodigo());
-            productoExistente.setPre_venta(productoUpdate.getPre_venta());
-            productoExistente.setStock(productoUpdate.getStock());
-            productoExistente.setEstado(productoUpdate.getEstado());
-            productoExistente.setUrl_imagen(productoUpdate.getUrl_imagen());
+            if (productoExistente == null) {
+                throw new RuntimeException("El producto con ID " + id + " no existe");
+            }
+
+            if (productoUpdate.getNombreProducto() != null && !productoUpdate.getNombreProducto().trim().isEmpty()) {
+                productoExistente.setNombreProducto(productoUpdate.getNombreProducto());
+            }
+
+            if (productoUpdate.getDescripcion() != null) {
+                productoExistente.setDescripcion(productoUpdate.getDescripcion());
+            }
+
+            if (productoUpdate.getCodigo() != null && !productoUpdate.getCodigo().trim().isEmpty()) {
+                productoExistente.setCodigo(productoUpdate.getCodigo());
+            }
+
+            if (productoUpdate.getPre_venta() != null) {
+                productoExistente.setPre_venta(productoUpdate.getPre_venta());
+            }
+
+            if (productoUpdate.getStock() != 0) {
+                productoExistente.setStock(productoUpdate.getStock());
+            }
+
+            if (productoUpdate.getEstado() != null) {
+                productoExistente.setEstado(productoUpdate.getEstado());
+            }
+
+            if (productoUpdate.getCategoria() != null && productoUpdate.getCategoria().getId() != null) {
+                productoExistente.setCategoria(productoUpdate.getCategoria());
+            }
 
             if (file != null && !file.isEmpty()) {
                 String nuevaUrl = iService.guardarImagen(file);

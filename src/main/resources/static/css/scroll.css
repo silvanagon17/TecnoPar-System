@@ -1,0 +1,38 @@
+:root {
+  --border-color: #1d293d;
+  --bg-scroll-hover: #121b42;
+  --bg-scroll: #4a5069;
+}
+
+body.modo-claro {
+  --border-color: #dfdfdfc0;
+  --bg-scroll-hover: #92979c;
+  --bg-scroll: #a0aab3;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-scroll);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bg-scroll-hover);
+}
