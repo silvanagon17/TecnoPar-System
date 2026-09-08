@@ -4,10 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TecnoPar</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="./image/estatico/logoTecnoPar.png"
+    />
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="css/scroll.css" />
+    <script src="js/components/confirmDialog.js"></script>
   </head>
   <body>
     <header class="sticky position-fixed w-100 top-0 z-50 pre-scrollable">
@@ -89,10 +95,12 @@
             </label>
           </div>
 
-          <div
-            class="principal h-[35px] w-[35px] flex justify-center rounded-[11px]"
-          >
-            <button popovertarget="notificacion-sidebar" class="relative">
+          <div class="h-[35px] w-[35px] flex justify-center rounded-[11px]">
+            <button
+              id="btn-carrito"
+              onclick="initCarritoDropdown()"
+              class="relative"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="22"
@@ -112,38 +120,117 @@
                 />
               </svg>
             </button>
+            <div
+              id="carrito-dropdown"
+              class="notif-dropdown absolute right-[195px] mt-[48px] w-[350px] py-2 hidden z-50"
+            >
+              <div class="notif-b px-4 py-2 flex justify-between items-center">
+                <span class="font-bold text-sm">Carrito</span>
+              </div>
+              <div id="carrito-list" class="max-h-64 overflow-y-auto"></div>
+              <div id="carrito-footer">
+                <div class="py-2 px-3 flex flex-col gap-2">
+                  <div class="flex justify-between font-bold text-[14px]">
+                    <span>Total:</span>
+                    <span>Gs. 0</span>
+                  </div>
+                  <button
+                    id="btn-procesar-compra"
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-[14px] text-white font-bold py-2 px-4 rounded-lg transition active:scale-95 cursor-pointer"
+                  >
+                    Finalizar Compra
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div class="user">
-            <button
-              class="flex items-center gap-2 hover:text-blue-400 transition group"
-            >
-              <div class="hidden lg:block text-left">
-                <p class="text-xs text-slate-400">Mi Cuenta</p>
-                <p class="user-name text-[14px] font-bold leading-tight">
-                  Silvana Quintana
-                </p>
-              </div>
-              <div
-                class="w-[35px] h-[35px] rounded-[11px] flex items-center text-center justify-center group-hover:bg-slate-800 transition principal"
+          <div class="user relative">
+            <div id="usuario-anonimo">
+              <a
+                href="login.html"
+                class="flex items-center gap-2 hover:text-blue-400 transition"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="23"
-                  height="23"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.25"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-user-round-icon lucide-user-round"
+                <div class="hidden lg:block text-left">
+                  <span class="user-name text-[14px] font-bold leading-tight"
+                    >Iniciar Sesión</span
+                  >
+                </div>
+                <div
+                  class="w-[35px] h-[35px] rounded-[11px] flex items-center justify-center transition"
                 >
-                  <circle cx="12" cy="8" r="5" />
-                  <path d="M20 21a8 8 0 0 0-16 0" />
-                </svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="23"
+                    height="23"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.25"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="12" cy="8" r="5" />
+                    <path d="M20 21a8 8 0 0 0-16 0" />
+                  </svg>
+                </div>
+              </a>
+            </div>
+
+            <div id="usuario-logueado" class="hidden relative">
+              <button
+                id="btn-user-menu"
+                class="flex items-center gap-2 hover:text-blue-400 transition"
+              >
+                <div class="hidden lg:block text-left">
+                  <p
+                    class="text-[10px] text-slate-400 uppercase tracking-wider font-bold"
+                  >
+                    Hola,
+                  </p>
+                  <p
+                    id="nav-username"
+                    class="text-[14px] font-bold leading-tight text-blue-500"
+                  >
+                    Usuario
+                  </p>
+                </div>
+                <div
+                  class="w-[35px] h-[35px] rounded-5 principal flex items-center justify-center"
+                >
+                  <i
+                    data-lucide="user"
+                    class="h-[23px] w-[23px]"
+                    stroke-width="1.5"
+                  ></i>
+                </div>
+              </button>
+
+              <div
+                id="user-dropdown"
+                class="notif-dropdown absolute right-0 mt-2 w-48 rounded-xl shadow-xl py-2 hidden z-50"
+              >
+                <button
+                  id="btn-logout"
+                  class="w-full text-left px-4 py-2 text-sm hover:bg-blue-600/20 flex items-center gap-2 transition"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                  </svg>
+                  Cerrar Sesión
+                </button>
               </div>
-            </button>
+            </div>
           </div>
         </div>
       </div>
@@ -494,19 +581,21 @@
             </nav>
           </div>
           <div class="footer-sidebar p-3 md:p-4">
-            <div
-              class="hidden md:flex items-center justify-center text-[10px] bg-red-500/10 hover:bg-red-500/30 text-red-500 rounded-xl w-full space-x-2 px-2 py-[17px]"
-            >
-              <i data-lucide="log-out"></i>
-              <p class="sidebar-text text-[14px] font-bold leading-none">
-                Cerrar Sesión
-              </p>
+            <div class="hidden md:flex w-100">
+              <button
+                id="btn-logout-sb"
+                class="text-[14px] font-bold leading-none bg-red-500/10 hover:bg-red-500/30 text-red-500 rounded-xl w-full flex items-center justify-center text-[10px] space-x-2 px-2 py-[17px]"
+              >
+                <i data-lucide="log-out" class="w-5 h-5 shrink-0"></i>
+                <span class="sidebar-text"> Cerrar Sesión</span>
+              </button>
             </div>
           </div>
         </div>
-
-        <!-- Footer del Sidebar -->
       </aside>
+
+      <app-confirm-dialog id="confirm-modal" class="flex"></app-confirm-dialog>
+
       <section class="mb-20">
         <h2
           class="text-xl mb-7 uppercase tracking-tighter flex items-center gap-3 font-extrabold"
@@ -698,58 +787,47 @@
       </section>
 
       <section>
-        <div class="d-flex justify-between items-end mb-10 align-items-center">
-          <h3
-            class="text-xl uppercase tracking-tighter flex items-center gap-3 font-extrabold"
-          >
-            Productos Destacados
-          </h3>
-
-          <button
-            class="principal px-6 py-2 rounded-xl text-xs font-bold transition"
-          >
-            Ver todo el catálogo
-          </button>
-        </div>
-        <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-2">
-          <div
-            class="cards rounded-3 overflow-hidden group hover:border-blue-500/30 transition-all"
-            style="height: 390px"
-          >
+        <div id="contenedor-catalogo">
+          <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-2">
             <div
-              class="relative overflow-hidden"
-              style="display: flex; height: 200px; width: auto"
+              class="cards rounded-3 overflow-hidden group hover:border-blue-500/30 transition-all"
+              style="height: 390px"
             >
-              <img
-                src="https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&q=80&w=500"
-                alt="RTX"
-                class="object-cover group-hover:scale-105 transition duration-700 w-full h-full"
-              />
-            </div>
-            <div
-              class="p-3 space-y-3 flex flex-col justify-content-between"
-              style="height: 190px"
-            >
-              <div class="flex justify-between items-start">
-                <div>
-                  <p class="text-[17px] capitalize text-blue-500">
-                    NVIDIA RTX 4080 FE
-                  </p>
-                  <div class="precio">
-                    <span class="text-[19px]">Gs. 1.300.000</span>
+              <div
+                class="relative overflow-hidden"
+                style="display: flex; height: 200px; width: auto"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&q=80&w=500"
+                  alt="RTX"
+                  class="object-cover group-hover:scale-105 transition duration-700 w-full h-full"
+                />
+              </div>
+              <div
+                class="p-3 space-y-3 flex flex-col justify-content-between"
+                style="height: 190px"
+              >
+                <div class="flex justify-between items-start">
+                  <div>
+                    <p class="text-[17px] capitalize text-blue-500">
+                      NVIDIA RTX 4080 FE
+                    </p>
+                    <div class="precio">
+                      <span class="text-[19px]">Gs. 1.300.000</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="flex items-center pt-1 gap-2">
-                <button
-                  class="flex items-center w-100 justify-center bg-blue-600 hover:bg-blue-500 text-white rounded-3 transition active:scale-95"
-                  style="padding: 5px 16px"
-                >
-                  <div class="flex justify-content-end items-center">
-                    <i data-lucide="plus" class="w-5 h-5"></i>
-                    <span class="">Agregar</span>
-                  </div>
-                </button>
+                <div class="flex items-center pt-1 gap-2">
+                  <button
+                    class="flex items-center w-50 justify-center bg-blue-600 hover:bg-blue-500 text-white rounded-3 transition active:scale-95"
+                    style="padding: 5px 16px"
+                  >
+                    <div class="flex justify-content-end items-center">
+                      <i data-lucide="plus" class="w-5 h-5"></i>
+                      <span class="">Agregar</span>
+                    </div>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -901,5 +979,9 @@
     <script src="js/bootstrap/bootstrap.min.js"></script>
     <script src="js/utils/scroll.js"></script>
     <script src="js/utils/sidebar.js"></script>
+    <script src="js/utils/userInfo.js"></script>
+    <script src="js/controllers/authController.js"></script>
+    <script type="module" src="js/utils/carrito.js"></script>
+    <script type="module" src="js/components/cardsProductoElement.js"></script>
   </body>
 </html>

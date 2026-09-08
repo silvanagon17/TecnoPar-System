@@ -32,22 +32,22 @@ public class Usuario {
     @Column(name = "email", length = 180, nullable = false, unique = true)
     private String email;
 
-    @Column(name = "telefono", length = 15, nullable = false)
+    @Column(name = "telefono", length = 15, nullable = true)
     private String telefono;
 
     @Column(name = "contrasenha", length = 100, nullable = false)
     private String contrasenha;
 
-    @Column(name = "tipo_usuario", length = 45, nullable = false)
+    @Column(name = "tipo_usuario", length = 45, nullable = true)
     private String tipoUsuario;
 
-    @Column(name = "tipo_documento", length = 20, nullable = false)
+    @Column(name = "tipo_documento", length = 20, nullable = true)
     private String tipoDocumento;
 
-    @Column(name = "documento", length = 15, nullable = false, unique = true)
+    @Column(name = "documento", length = 15, nullable = true, unique = true)
     private String documento;
 
-    @Column(name = "direccion", length = 100, nullable = false)
+    @Column(name = "direccion", length = 100, nullable = true)
     private String direccion;
 
 }

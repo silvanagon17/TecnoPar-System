@@ -6,12 +6,18 @@ import {
   initNotificationListeners,
   agregaNotificacion,
 } from "../utils/dropdownNotif.js";
+import {
+  obtenerProductos,
+  crearProducto,
+  actualizarProducto,
+  eliminarProducto,
+} from "./productoService.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   initNotificationListeners();
+  cargarNotificacionStock();
 });
 
-const API_URL = "/api/productos";
 const API_CATEGORIAS = "/api/categorias";
 const BASE_URL_IMAGEN = "/image/productos/";
 
@@ -47,10 +53,16 @@ const confirmModal = document.getElementById("confirm-modal");
 let listaProductos = [];
 let idProductoEdicion = null;
 
+const token = localStorage.getItem("token");
+const tipoUsuario = localStorage.getItem("tipoUsuario");
+
+if (!token || tipoUsuario !== "ADMIN") {
+  window.location.href = "/index.html";
+}
+
 const fetchAndRenderProductos = async () => {
   try {
-    const respuesta = await fetch(API_URL);
-    listaProductos = await respuesta.json();
+    listaProductos = await obtenerProductos();
     renderTabla(listaProductos);
     cargarNotificacionStock(listaProductos);
   } catch (error) {
@@ -91,13 +103,6 @@ const renderTabla = (productos) => {
   }
   productos.forEach((producto) => {
     const tr = document.createElement("tr");
-    const esActivo = producto.estado === "true" || producto.estado === true;
-    const nombreArchivo = producto.url_imagen
-      ? producto.url_imagen.split("/").pop()
-      : "";
-    const fullImagenUrl = producto.url_imagen
-      ? `${BASE_URL_IMAGEN}${nombreArchivo}`
-      : "http://via.placeholder.com/50?text=Sin+Foto";
 
     let botonesHtml = `
                         <button
@@ -221,33 +226,29 @@ const handleFormSubmit = async (event) => {
     formData.append("file", inputFoto.files[0]);
   }
 
-  if (idEditar !== null) {
-    await updateProducto(idEditar, formData);
-  } else {
-    try {
-      const respuesta = await fetch(API_URL, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (respuesta.ok) {
-        mostrarMensaje(
-          "success",
-          "circle-check",
-          "Producto registrado con éxito!",
-        );
-        resetForm();
-        fetchAndRenderProductos();
-      } else {
-        const errorData = await respuesta.json();
-        alert("Error del servidor: " + errorData.message);
-      }
-    } catch (error) {
-      console.error("Error en handleFormSubmit: ", error);
+  try {
+    if (idEditar !== null) {
+      await actualizarProducto(idEditar, formData);
+      mostrarMensaje("success", "circle-check", "Producto ha sido editado!");
+    } else {
+      await crearProducto(formData);
+      mostrarMensaje(
+        "success",
+        "circle-check",
+        "Producto registrado con éxito!",
+      );
     }
+    resetForm();
+    await fetchAndRenderProductos();
+    goToListarView();
+  } catch (error) {
+    console.error("Error en handleFormSubmit: ", error);
+    mostrarMensaje(
+      "danger",
+      "circle-x",
+      error.message || "Error al procesar la solicitud",
+    );
   }
-
-  goToListarView();
 };
 
 /**
@@ -258,6 +259,7 @@ const updateProducto = async (id, formData) => {
   try {
     const response = await fetch(`${API_URL}/${id}`, {
       method: "PUT",
+      headers: getAuthHeaders(),
       body: formData,
     });
     if (response.ok) {
@@ -289,30 +291,19 @@ const deleteProducto = async (id, nombre) => {
     confirmText: "Sí, eliminar",
     onConfirm: async () => {
       try {
-        const res = await fetch(`${API_URL}/${id}`, {
-          method: "DELETE",
-        });
-
-        if (res.ok) {
-          mostrarMensaje(
-            "success",
-            "circle-check",
-            "El producto ha sido eliminado.",
-          );
-          fetchAndRenderProductos();
-        } else {
-          mostrarMensaje(
-            "danger",
-            "circle-x",
-            "No se pudo eliminar el producto.",
-          );
-        }
+        await eliminarProducto(id);
+        mostrarMensaje(
+          "success",
+          "circle-check",
+          "El producto ha sido eliminado.",
+        );
+        await fetchAndRenderProductos();
       } catch (error) {
         console.error("Error en deleteProducto: ", error);
         mostrarMensaje(
-          "warning",
-          "triangle-alert",
-          "Error al intentar conectar con el servidor.",
+          "danger",
+          "circle-x",
+          "No se pudo eliminar el producto.",
         );
       }
     },
@@ -362,7 +353,7 @@ const resetForm = () => {
   submitBtn.textContent = "Guardar";
 };
 
-btnCancelar.addEventListener("click", () => {
+const confirmarCancelar = () => {
   const formLoaded =
     inputNombre.value.trim() !== "" ||
     inputCodigo.value.trim() !== "" ||
@@ -384,35 +375,14 @@ btnCancelar.addEventListener("click", () => {
     resetForm();
     goToListarView();
   }
-});
+};
+
+btnCancelar.addEventListener("click", confirmarCancelar);
+volver.addEventListener("click", confirmarCancelar);
 
 nuevoRegistro.addEventListener("click", (event) => {
   resetForm();
   goToFormView();
-});
-
-volver.addEventListener("click", (event) => {
-  const formLoaded =
-    inputNombre.value.trim() !== "" ||
-    inputCodigo.value.trim() !== "" ||
-    inputPrecio.value.trim() !== "" ||
-    inputDescripcion.value.trim() !== "";
-
-  if (formLoaded) {
-    confirmModal.show({
-      title: "¿Cancelar registro?",
-      message:
-        "Has ingresado datos en el formulario. Si cancelas, se perderán los cambios.",
-      confirmText: "Sí, cancelar",
-      onConfirm: () => {
-        resetForm();
-        goToListarView();
-      },
-    });
-  } else {
-    resetForm();
-    goToListarView();
-  }
 });
 
 tbodyProductos.addEventListener("click", (event) => {
@@ -432,9 +402,9 @@ tbodyProductos.addEventListener("click", (event) => {
   }
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  cargarCategoria();
+document.addEventListener("DOMContentLoaded", async () => {
+  await cargarCategoria();
+  await fetchAndRenderProductos();
 });
 
 formProducto.addEventListener("submit", handleFormSubmit);
-fetchAndRenderProductos();

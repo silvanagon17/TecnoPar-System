@@ -1,31 +1,40 @@
-let notificaciones = [];
+import { obtenerProductos } from "../controllers/productoService.js";
 
+let notificaciones =
+  JSON.parse(localStorage.getItem("app_notificaciones")) || [];
 /**
  * @param {Array} productos
  */
-export const cargarNotificacionStock = (productos = []) => {
-  notificaciones = [];
+export const cargarNotificacionStock = async () => {
+  try {
+    const productos = await obtenerProductos();
+    notificaciones = notificaciones.filter(
+      (n) => typeof n.id !== "string" || !n.id.startsWith("stock-"),
+    );
 
-  productos.forEach((prod) => {
-    const stock = Number(prod.stock) || 0;
+    productos.forEach((prod) => {
+      const stock = Number(prod.stock) || 0;
 
-    if (stock < 5) {
-      notificaciones.push({
-        id: `stock-critico-${prod.id}`,
-        text: `Stock crítico: ${prod.nombreProducto} (${stock} ${stock === 1 ? "unidad" : "unidades"})`,
-        type: "warning",
-        time: "Revisar inventario",
-      });
-    } else if (stock >= 5 && stock <= 10) {
-      notificaciones.push({
-        id: `stock-bajo-${prod.id}`,
-        text: `Stock bajo: ${prod.nombreProducto} (${stock} unidades)`,
-        type: "info",
-        time: "Reponer pronto",
-      });
-    }
-  });
-  renderNotify();
+      if (stock < 5) {
+        notificaciones.push({
+          id: `stock-critico-${prod.id}`,
+          text: `Stock crítico: ${prod.nombreProducto} (${stock} ${stock === 1 ? "unidad" : "unidades"})`,
+          type: "warning",
+          time: "Revisar inventario",
+        });
+      } else if (stock >= 5 && stock <= 10) {
+        notificaciones.push({
+          id: `stock-bajo-${prod.id}`,
+          text: `Stock bajo: ${prod.nombreProducto} (${stock} unidades)`,
+          type: "info",
+          time: "Reponer pronto",
+        });
+      }
+    });
+    renderNotify();
+  } catch (error) {
+    console.error("Error al cargar notificaciones de stock: ", error);
+  }
 };
 
 export const agregaNotificacion = (
@@ -95,7 +104,9 @@ export const renderNotify = () => {
                 `;
     list.appendChild(item);
   });
-  lucide.createIcons();
+  if (typeof lucide !== "undefined") {
+    lucide.createIcons();
+  }
 };
 
 export const clearNotifications = () => {
@@ -130,4 +141,13 @@ export const initNotificationListeners = () => {
       dropdown.classList.add("hidden");
     }
   });
+
+  renderNotify();
+  cargarNotificacionStock();
 };
+
+if (typeof window !== "undefined") {
+  window.initNotificationListeners = initNotificationListeners;
+  window.agregaNotificacion = agregaNotificacion;
+  window.cargarNotificacionStock = cargarNotificacionStock;
+}

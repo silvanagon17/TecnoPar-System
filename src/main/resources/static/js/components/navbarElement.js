@@ -58,7 +58,7 @@ class Header extends HTMLElement {
           </div>
 
           <div
-            class="principal h-[32px] w-[35px] flex justify-center rounded-[11px]"
+            class="h-[32px] w-[35px] flex justify-center rounded-[11px]"
           >
             <button id="btn-notif-bell" class="relative">
               <svg
@@ -106,36 +106,58 @@ class Header extends HTMLElement {
           </div>
           </div>
 
-          <div class="user">
-            <button
-              class="flex items-center gap-2 hover:text-blue-400 transition group"
-            >
-              <div class="hidden lg:block text-left">
-                <p class="text-xs text-slate-400">Mi Cuenta</p>
-                <p class="user-name text-[14px] font-bold leading-tight">
-                  Silvana Quintana
-                </p>
-              </div>
-              <div
-                class="w-[33px] h-[32px] rounded-[11px] flex items-center text-center justify-center group-hover:bg-slate-800 transition principal"
+          <div id="usuario-logueado" class="user hidden relative">
+           <button
+                id="btn-user-menu"
+                class="flex items-center gap-2 hover:text-blue-400 transition"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="23"
-                  height="23"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-user-round-icon lucide-user-round"
+                <div class="hidden lg:block text-left">
+                  <p
+                    class="text-[10px] text-slate-400 uppercase tracking-wider font-bold"
+                  >
+                    Hola,
+                  </p>
+                  <p
+                    id="nav-username"
+                    class="text-[14px] font-bold leading-tight text-blue-500"
+                  >
+                    Usuario
+                  </p>
+                </div>
+                <div
+                  class="w-[35px] h-[35px] rounded-5 principal flex items-center justify-center"
                 >
-                  <circle cx="12" cy="8" r="5" />
-                  <path d="M20 21a8 8 0 0 0-16 0" />
-                </svg>
+                  <i
+                    data-lucide="user"
+                    class="h-[23px] w-[23px]"
+                    stroke-width="1.5"
+                  ></i>
+                </div>
+              </button>
+                <div
+                id="user-dropdown"
+                class="notif-dropdown absolute right-0 mt-2 w-48 rounded-xl shadow-xl py-2 hidden z-50"
+              >
+                <button
+                  id="btn-logout"
+                  class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-blue-600/20 flex items-center gap-2 transition"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                  </svg>
+                  Cerrar Sesión
+                </button>
               </div>
-            </button>
           </div>
         </div>
       </div>

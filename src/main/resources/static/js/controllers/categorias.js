@@ -1,6 +1,7 @@
 import { mostrarMensaje } from "../components/alerts.js";
 import { goToFormView, goToListarView } from "../utils/changeView.js";
 import { renderState } from "../utils/strockControl.js";
+import { initNotificationListeners } from "../utils/dropdownNotif.js";
 
 const API_URL = "/api/categorias";
 
@@ -19,6 +20,10 @@ const confirmModal = document.getElementById("confirm-modal");
 
 let listaCategorias = [];
 let idCategoriEdicion = null;
+
+document.addEventListener("DOMContentLoaded", () => {
+  initNotificationListeners();
+});
 
 const fetchAndRenderCategorias = async () => {
   try {

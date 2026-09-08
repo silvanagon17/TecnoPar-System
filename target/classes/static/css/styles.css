@@ -35,6 +35,8 @@
   --borde-categoria: #202131b7;
   --borde-principal: #1d3053d3;
   --sombra-blanca: #d6d6d654;
+
+  --input-cantidad: #38455cd3;
 }
 
 body.modo-claro {
@@ -67,6 +69,8 @@ body.modo-claro {
   --azul-buscador: #eaebf1ea;
   --azul-transparente-capa: #d5d9e6;
   --azul-opcion: #f0f5fc;
+
+  --input-cantidad: #fafcffd3;
 }
 
 /*--------------- General --------------- */
@@ -334,7 +338,11 @@ app-sidebar {
 
 .cards {
   background-color: var(--azul-seccion);
-  border: 1px solid var(--borde-general);
+  border: 1px solid var(--borde-categoria);
+}
+
+.cards:hover {
+  box-shadow: var(--borde-categoria) 2px 6px 19px 0px;
 }
 
 .dashboard-bg {
@@ -381,6 +389,12 @@ app-sidebar {
 
 .admin-input:hover {
   background-color: var(--azul-superficie-hover);
+}
+
+.input-cantidad {
+  background-color: var(--input-cantidad);
+  border: 1px solid var(--borde-principal);
+  color: var(--texto-blanco);
 }
 
 .buscador-container {
@@ -548,4 +562,13 @@ option {
 
 .divide {
   border-bottom: 1px solid var(--borde-general);
+}
+
+.border-b {
+  border-bottom: 1px solid var(--borde-general);
+}
+
+#carrito-footer {
+  background: var(--azul-seccion);
+  border-top: 1px solid var(--borde-principal);
 }
