@@ -2,8 +2,12 @@ import { mostrarMensaje } from "../components/alerts.js";
 import { goToFormView, goToListarView } from "../utils/changeView.js";
 import { renderState } from "../utils/strockControl.js";
 import { initNotificationListeners } from "../utils/dropdownNotif.js";
-
-const API_URL = "/api/categorias";
+import {
+  obtenerCategorias,
+  crearCategoria,
+  actualizarCategoria,
+  eliminarCategoria,
+} from "./categoriaService.js";
 
 const formCategoria = document.getElementById("formCategoria");
 const tbodyCategoria = document.getElementById("tbody");
@@ -27,8 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const fetchAndRenderCategorias = async () => {
   try {
-    const respuesta = await fetch(API_URL);
-    listaCategorias = await respuesta.json();
+    listaCategorias = await obtenerCategorias();
     renderTabla(listaCategorias);
   } catch (error) {
     console.error("Error al obtener las categorias: ", error);
@@ -124,36 +127,33 @@ const handleFormSubmit = async (event) => {
     estado: document.getElementById("estado").value,
   };
 
-  if (idEditar !== null) {
-    await updateCategoria(idEditar, nuevaCategoria);
-  } else {
-    try {
-      const respuesta = await fetch(API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(nuevaCategoria),
-      });
-
-      if (respuesta.ok) {
-        mostrarMensaje(
-          "success",
-          "circle-check",
-          "Categoría resgistrado con éxito",
-        );
-        resetForm();
-        fetchAndRenderCategorias();
-      } else {
-        const errorData = await respuesta.json();
-        alert("Error del servidor: " + errorData.message);
-      }
-    } catch (error) {
-      console.error("Error en handleFormSubmit:", error);
-      alert("No se pudo crear la categoria.");
+  try {
+    if (idEditar !== null) {
+      await actualizarCategoria(idEditar, nuevaCategoria);
+      mostrarMensaje(
+        "success",
+        "circle-check",
+        "La categoria ha sido editado!",
+      );
+    } else {
+      await crearCategoria(nuevaCategoria);
+      mostrarMensaje(
+        "success",
+        "circle-check",
+        "Categoria registrado con éxito!",
+      );
     }
+    resetForm();
+    await fetchAndRenderCategorias();
+    goToListarView();
+  } catch (error) {
+    console.error("Error en handleFormSubmit: ", error);
+    mostrarMensaje(
+      "danger",
+      "circle-x",
+      error.message || "Error al procesar la solicitud",
+    );
   }
-  goToListarView();
 };
 
 /**
@@ -199,30 +199,18 @@ const deleteCategoria = (id, nombre) => {
     confirmText: "Sí, eliminar",
     onConfirm: async () => {
       try {
-        const res = await fetch(`${API_URL}/${id}`, {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-        });
-
-        if (res.ok) {
-          mostrarMensaje(
-            "success",
-            "circle-check",
-            "La categoría ha sido eliminada.",
-          );
-          fetchAndRenderCategorias();
-        } else {
-          mostrarMensaje(
-            "warning",
-            "triangle-alert",
-            "No se pudo eliminar la categoría.",
-          );
-        }
+        await eliminarCategoria(id);
+        mostrarMensaje(
+          "success",
+          "circle-check",
+          "La categoria ha sido eliminada.",
+        );
+        await fetchAndRenderCategorias();
       } catch (error) {
         console.error("Error en deleteCategoria: ", error);
         mostrarMensaje(
           "warning",
-          "triangle-alert",
+          "circle-x",
           "Error al intentar conectar con el servidor.",
         );
       }
@@ -235,11 +223,6 @@ const resetForm = () => {
   idCategoriEdicion = null;
   submitBtn.textContent = "Guardar";
 };
-
-nuevoRegistro.addEventListener("click", (event) => {
-  resetForm();
-  goToFormView();
-});
 
 volver.addEventListener("click", (event) => {
   const formTieneDatos =
@@ -262,11 +245,13 @@ volver.addEventListener("click", (event) => {
   }
 });
 
-btnCancelar.addEventListener("click", () => {
-  const formTieneDatos =
-    inputNombre.value.trim() !== "" || inputDescripcion.value.trim() !== "";
+const confirmarCancelar = () => {
+  const formLoaded =
+    inputNombre.value.trim() !== "" ||
+    inputEstado.value.trim() !== "" ||
+    inputDescripcion.value.trim() !== "";
 
-  if (formTieneDatos) {
+  if (formLoaded) {
     confirmModal.show({
       title: "¿Cancelar registro?",
       message:
@@ -281,6 +266,14 @@ btnCancelar.addEventListener("click", () => {
     resetForm();
     goToListarView();
   }
+};
+
+btnCancelar.addEventListener("click", confirmarCancelar);
+volver.addEventListener("click", confirmarCancelar);
+
+nuevoRegistro.addEventListener("click", (event) => {
+  resetForm();
+  goToFormView();
 });
 
 tbodyCategoria.addEventListener("click", (event) => {

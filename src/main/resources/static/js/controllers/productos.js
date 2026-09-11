@@ -126,11 +126,14 @@ const renderTabla = (productos) => {
                   <td>${producto.nombreProducto}</td>
                   <td class="text-center">${producto.codigo}</td>
                   <td class="text-center">${producto.categoria?.nombreCategoria}</td>
-                  <td class="text-center">${new Intl.NumberFormat("es-ES", {
-                    style: "currency",
-                    currency: "PYG",
-                    maximumFractionDigits: 0,
-                  }).format(producto.pre_venta)}</td>
+                  <td class="text-center px-5">${new Intl.NumberFormat(
+                    "es-ES",
+                    {
+                      style: "currency",
+                      currency: "PYG",
+                      maximumFractionDigits: 0,
+                    },
+                  ).format(producto.pre_venta)}</td>
                   <td class="text-center">${renderStock(producto.stock)}</td>
                   <td class="text-center estado">${renderState(producto.estado)}</td>
                   <td class="flex justify-center gap-2">${botonesHtml}</td>

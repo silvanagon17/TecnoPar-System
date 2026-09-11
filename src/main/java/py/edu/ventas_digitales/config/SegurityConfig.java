@@ -41,7 +41,7 @@ public class SegurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Vincula la configuración CORS
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
@@ -51,12 +51,13 @@ public class SegurityConfig {
                                 "/login.html",
                                 "/favicon.ico",
                                 "/css/**",
-                                "/js/**", // Permite todos los archivos y subcarpetas de JS (bootstrap, etc)
+                                "/js/**",
                                 "/image/**",
                                 "/api/auth/**",
-                                "/error" // CRUCIAL: Evita que el endpoint de error de Spring devuelva 403
-                        ).permitAll()
-                        .requestMatchers("/productos.html", "/categoria.html", "/carrito.html").permitAll()
+                                "/error")
+                        .permitAll()
+                        .requestMatchers("/productos.html", "/categoria.html", "/carrito.html", "/usuario.html")
+                        .permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/categorias/**", "/api/productos/**").permitAll()
                         .requestMatchers("/api/carrito/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/productos/**", "/api/categorias/**")

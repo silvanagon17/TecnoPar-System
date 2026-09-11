@@ -129,7 +129,7 @@ class SidebarElement extends HTMLElement {
             </a>
 
             <a
-              href="#"
+             
               class="w-full menu-item flex items-center space-x-2 px-3 py-[13px] rounded-xl font-medium transition"
             >
               <i data-lucide="newspaper" class="w-5 h-5 shrink-0"></i>
@@ -142,7 +142,7 @@ class SidebarElement extends HTMLElement {
             >
 
             <a
-              href="#"
+                href="usuario.html"
               class="w-full menu-item flex items-center space-x-2 px-3 py-[13px] rounded-xl font-medium transition"
             >
               <i data-lucide="user" class="w-5 h-5 shrink-0"></i>

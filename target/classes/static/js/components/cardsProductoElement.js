@@ -5,8 +5,12 @@ const contenedorPrincipal = document.getElementById("contenedor-catalogo");
 
 const agruparPorCategoria = (productos) => {
   return productos.reduce((acc, producto) => {
-    const esActivo = producto.estado === true || producto.estado === "true";
-    if (!esActivo) return acc;
+    const prodActivo = producto.estado === true || producto.estado === "true";
+    const catActiva =
+      producto.categoria &&
+      (producto.categoria.estado === true ||
+        producto.categoria.estado === "true");
+    if (!prodActivo || !catActiva) return acc;
     const nombreCat = producto.categoria?.nombreCategoria || "Otros Productos";
 
     if (!acc[nombreCat]) {
