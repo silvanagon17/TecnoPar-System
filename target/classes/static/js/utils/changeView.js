@@ -26,3 +26,26 @@ export function closeStockModal() {
     modal.classList.remove("flex");
   }
 }
+
+export function goToHomeView() {
+  document.getElementById("view-detail")?.classList.add("hidden");
+  document.getElementById("vista-catalogo-completo")?.classList.add("hidden");
+  document.getElementById("view-home")?.classList.remove("hidden");
+  document.getElementById("carrusel")?.classList.remove("hidden");
+}
+
+export function goToDetailView() {
+  document.getElementById("view-home")?.classList.add("hidden");
+  document.getElementById("vista-catalogo-completo")?.classList.add("hidden");
+  document.getElementById("view-detail")?.classList.remove("hidden");
+  document.getElementById("carrusel")?.classList.add("hidden");
+}
+
+export function goToCatalogoCompletoView() {
+  document.getElementById("view-home")?.classList.add("hidden");
+  document.getElementById("view-detail")?.classList.add("hidden");
+  document
+    .getElementById("vista-catalogo-completo")
+    ?.classList.remove("hidden");
+  document.getElementById("carrusel")?.classList.add("hidden");
+}

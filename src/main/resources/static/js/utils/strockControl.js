@@ -30,13 +30,13 @@ export const renderState = (estado) => {
 
   if (estaActivo) {
     return `
-      <span class="inline-flex items-center rounded-md bg-emerald-500/10 px-2 py-1 text-xs font-medium text-green-600 ring-1 ring-inset ring-emerald-500/20">
+      <span class="inline-flex items-center  px-2 py-1 text-xs font-medium text-green-500">
         Activo
       </span>`;
   }
 
   return `
-      <span class="inline-flex items-center rounded-md bg-zinc-500/10 px-2 py-1 text-xs font-medium text-zinc-500 ring-1 ring-inset ring-zinc-500/20">
+      <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-zinc-500">
         Inactivo
       </span>`;
 };

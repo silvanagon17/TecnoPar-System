@@ -572,3 +572,18 @@ option {
   background: var(--azul-seccion);
   border-top: 1px solid var(--borde-principal);
 }
+
+/*--------------- Detalle de Producto --------------- */
+.container-detail-prod {
+  background: var(--azul-seccion);
+  border: 1px solid var(--borde-general);
+}
+
+.descripcion-detail,
+.footer-detail {
+  border-top: 1px solid var(--borde-general);
+}
+
+#detalle-categoria {
+  border: 1px solid var(--borde-principal);
+}

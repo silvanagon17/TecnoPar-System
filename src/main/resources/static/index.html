@@ -101,24 +101,12 @@
               onclick="initCarritoDropdown()"
               class="relative"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
+              <i
+                data-lucide="shopping-cart"
+                class="w-5 h-5"
+                stroke-width="1.5"
                 stroke="currentColor"
-                stroke-width="1.25"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-shopping-cart-icon lucide-shopping-cart"
-              >
-                <circle cx="8" cy="21" r="1" />
-                <circle cx="19" cy="21" r="1" />
-                <path
-                  d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"
-                />
-              </svg>
+              ></i>
             </button>
             <div
               id="carrito-dropdown"
@@ -301,7 +289,7 @@
       </nav>
     </header>
 
-    <section>
+    <section id="carrusel">
       <div
         id="carouselExampleIndicators"
         class="carousel slide relative z-0 h-[286px] md:h-[370px] w-full overflow-hidden group mb-14 shadow-2xl"
@@ -596,7 +584,7 @@
 
       <app-confirm-dialog id="confirm-modal" class="flex"></app-confirm-dialog>
 
-      <section class="mb-20">
+      <section id="view-home" class="mx-auto mb-20">
         <h2
           class="text-xl mb-7 uppercase tracking-tighter flex items-center gap-3 font-extrabold"
         >
@@ -784,10 +772,8 @@
             </p>
           </div>
         </div>
-      </section>
 
-      <section>
-        <div id="contenedor-catalogo">
+        <div id="contenedor-catalogo" class="space-y-10 mt-5">
           <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-2">
             <div
               class="cards rounded-3 overflow-hidden group hover:border-blue-500/30 transition-all"
@@ -832,11 +818,9 @@
             </div>
           </div>
         </div>
-      </section>
 
-      <section class="mx-auto py-8">
         <div
-          class="oferta w-full h-60 rounded-2 flex items-center overflow-hidden relative shadow"
+          class="oferta w-full h-60 rounded-2 flex items-center overflow-hidden relative shadow mx-auto py-8 mt-5"
         >
           <div
             class="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-transparent"
@@ -846,6 +830,66 @@
             class="absolute inset-0 w-full h-full object-cover opacity-90"
             alt="Banner"
           />
+        </div>
+      </section>
+
+      <section
+        id="view-detail"
+        class="container mx-auto px-4 py-8 hidden mt-[100px]"
+      >
+        <button
+          id="btn-volver-home"
+          class="inline-flex items-center gap-2 hover:text-slate-600 transition-colors mb-6 font-semibold group"
+        >
+          <i
+            data-lucide="arrow-left"
+            class="w-5 h-5 transition-transform group-hover:-translate-x-1"
+          ></i>
+          <span>Volver a la tienda</span>
+        </button>
+
+        <div
+          class="container-detail-prod grid grid-cols-1 md:grid-cols-2 gap-8 p-6 md:p-8 rounded-2xl backdrop-blur-sm shadow-sm"
+        >
+          <div
+            class="flex justify-center items-center rounded-xl p-4 overflow-hidden"
+          >
+            <img
+              id="detalle-imagen"
+              src=""
+              alt=""
+              class="h-[400px] object-contain rounded-lg"
+            />
+          </div>
+
+          <div class="flex flex-col justify-between space-y-6">
+            <div class="space-y-4">
+              <span
+                id="detalle-categoria"
+                class="inline-block text-xs uppercase tracking-widest text-blue-400 font-bold bg-blue-500/10 px-3 py-1 rounded-md"
+              ></span>
+              <h2 id="detalle-nombre" class="text-3xl font-bold"></h2>
+
+              <div class="pt-4 descripcion-detail">
+                <h4 class="text-xs uppercase tracking-wider font-bold mb-2">
+                  Descripción del producto
+                </h4>
+                <p id="detalle-descripcion" class="text-sm leading-relaxed"></p>
+              </div>
+
+              <p id="detalle-precio" class="text-xl font-bold"></p>
+            </div>
+
+            <div class="pt-4 footer-detail">
+              <button
+                id="detalle-btn-agregar"
+                class="w-full flex justify-center items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-xl transition-all shadow-lg shadow-blue-600/20"
+              >
+                <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                <span>Agregar al Carrito</span>
+              </button>
+            </div>
+          </div>
         </div>
       </section>
     </main>
@@ -981,6 +1025,8 @@
     <script src="js/utils/sidebar.js"></script>
     <script src="js/utils/userInfo.js"></script>
     <script src="js/controllers/authController.js"></script>
+    <script type="module" src="js/controllers/home.js"></script>
+    <script type="module" src="js/controllers/detalleProducto.js"></script>
     <script type="module" src="js/utils/carrito.js"></script>
     <script type="module" src="js/components/cardsProductoElement.js"></script>
   </body>

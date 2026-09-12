@@ -162,7 +162,7 @@ const renderTabla = (productos) => {
                   ).format(producto.pre_venta)}</td>
                   <td class="text-center">${renderStock(producto.stock)}</td>
                   <td class="text-center estado">${renderState(producto.estado)}</td>
-                  <td class="flex justify-center gap-2">${botonesHtml}</td>
+                  <td class="flex justify-center gap-1">${botonesHtml}</td>
         `;
     tbodyProductos.appendChild(tr);
   });

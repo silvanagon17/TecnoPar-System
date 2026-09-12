@@ -67,9 +67,10 @@ const crearTarjetaProducto = (prod) => {
          <div
             class="cards rounded-3 overflow-hidden group hover:border-blue-500/30 transition-all"
             style="height: 390px"
+            data-id="${prod.id}"
           >
             <div
-              class="relative overflow-hidden"
+              class="relative overflow-hidden cursor-pointer img-producto"
               style="display: flex; height: 200px; width: auto"
             >
               <img
@@ -92,17 +93,21 @@ const crearTarjetaProducto = (prod) => {
                   </div>
                 </div>
               </div>
-              <div class="flex items-center pt-1 gap-2">
+              <div class="flex items-center justify-between pt-1 gap-2">
                 <button
                   type="button"
                   data-id="${prod.id}"
-                  class="btn-agregar-carrito flex items-center w-50 justify-center bg-blue-600 hover:bg-blue-500 text-white rounded-3 transition active:scale-95"
+                  class="btn-agregar-carrito flex items-center w-75 justify-center bg-blue-600 hover:bg-blue-500 text-white rounded-3 transition active:scale-95"
                   style="padding: 5px 16px"
                 >
                   <div class="flex justify-content-end items-center pointer-events-none">
                     <i data-lucide="shopping-cart" class="w-4 h-4 mx-1"></i>
                     <span>Agregar</span>
                   </div>
+                </button>
+
+                <button type="button" class="btn-ver-detalle" data-id="${prod.id}"> 
+                  <i data-lucide="eye" class="pointer-events-none"></i> 
                 </button>
               </div>
             </div>

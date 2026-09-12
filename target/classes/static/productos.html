@@ -146,7 +146,7 @@
                       <th class="py-4 px-5">Categoría</th>
                       <th class="py-4 px-5">Precio Venta</th>
                       <th class="py-4 px-5">Stock</th>
-                      <th class="py-4 px-5 text-center estado">Estado</th>
+                      <th class="py-4 px-4 text-center estado">Estado</th>
                       <th class="py-4 px-5 text-center">Acciones</th>
                     </tr>
                   </thead>
@@ -535,7 +535,9 @@
                     class="block text-[10px] c-title font-bold uppercase tracking-widest mb-1"
                     >Stock Actual</span
                   >
-                  <div class="admin-input rounded-xl border h-[45px] p-2">
+                  <div
+                    class="admin-input rounded-xl h-[45px] p-2 focus:outline-none focus:ring-1 focus:ring-blue-300 transition-all"
+                  >
                     <span id="modal-stock-actual" class="text-xl font-bold"
                       >0</span
                     >
@@ -560,9 +562,9 @@
               </div>
 
               <div
-                class="bg-blue-500/10 p-2 rounded-xl border border-blue-500/20 text-center h-[80px]"
+                class="bg-blue-500/10 p-2 rounded-xl border-blue-500/20 text-center h-[80px]"
               >
-                <span class="text-xs text-blue-400 font-medium"
+                <span class="text-xs text-blue-500 font-medium"
                   >Stock Actualizado:</span
                 >
                 <p
