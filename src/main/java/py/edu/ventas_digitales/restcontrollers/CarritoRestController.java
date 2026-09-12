@@ -58,7 +58,6 @@ public class CarritoRestController {
             return ResponseEntity.ok(carrito);
 
         } catch (Exception e) {
-            // Imprime en la consola de Java exactamente qué línea de la BD o Service falló
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error interno en el servidor: " + e.getMessage());

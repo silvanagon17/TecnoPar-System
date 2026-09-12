@@ -43,7 +43,6 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtProvider.generateToken(authentication);
 
-        // Obtenemos el usuario para conocer su tipoUsuario
         Usuario usuario = usuarioRepository.findByEmail(loginDto.getEmail()).orElse(null);
         String tipoUsuario = (usuario != null) ? usuario.getTipoUsuario() : "";
         String nombre = (usuario != null) ? usuario.getNombre() : "";

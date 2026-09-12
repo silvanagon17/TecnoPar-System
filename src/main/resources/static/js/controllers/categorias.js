@@ -158,38 +158,6 @@ const handleFormSubmit = async (event) => {
 
 /**
  * @param {string|number} id
- * @param {Object} datos
- */
-const updateCategoria = async (id, datos) => {
-  try {
-    const response = await fetch(`${API_URL}/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(datos),
-    });
-    if (response.ok) {
-      mostrarMensaje(
-        "success",
-        "circle-check",
-        "La categoría ha sido editada!",
-      );
-      resetForm();
-      fetchAndRenderCategorias();
-    } else {
-      mostrarMensaje(
-        "danger",
-        "circle-x",
-        "No se pudo actualizar la categoría.",
-      );
-    }
-  } catch (error) {
-    console.error("Error en updateCategoria: ", error);
-    alert("Error al intentar actualizar la categoria");
-  }
-};
-
-/**
- * @param {string|number} id
  * @param {string} nombre
  */
 const deleteCategoria = (id, nombre) => {

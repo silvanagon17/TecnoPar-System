@@ -256,35 +256,6 @@ const handleFormSubmit = async (event) => {
 
 /**
  * @param {string|number} id
- * @param {FormData} formData
- */
-const updateProducto = async (id, formData) => {
-  try {
-    const response = await fetch(`${API_URL}/${id}`, {
-      method: "PUT",
-      headers: getAuthHeaders(),
-      body: formData,
-    });
-    if (response.ok) {
-      mostrarMensaje("success", "circle-check", "El producto ha sido editado!");
-      resetForm();
-      fetchAndRenderProductos();
-    } else {
-      mostrarMensaje(
-        "danger",
-        "circle-x",
-        "No se pudo actualizar el producto.",
-      );
-      resetForm();
-    }
-  } catch (error) {
-    console.error("Error en updateProducto: ", error);
-    alert("Error al intentar actualizar la categoria");
-  }
-};
-
-/**
- * @param {string|number} id
  * @param {string} nombre
  */
 const deleteProducto = async (id, nombre) => {

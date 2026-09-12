@@ -114,11 +114,25 @@ const renderizarCarrito = () => {
   const detalles = carritoObjeto?.detalles || [];
 
   if (detalles.length === 0) {
-    listaCarrito.innerHTML = `<p class="text-gray-500 text-center py-4">El carrito está vacío.</p>`;
+    listaCarrito.innerHTML = `
+        <div class="p-6 text-center text-gray-500">
+          <i data-lucide="shopping-bag" class="w-8 h-8 mx-auto mb-2 opacity-40"></i>
+          <p>Tu carrito está vacío.</p>
+        </div>`;
+    if (typeof lucide !== "undefined") {
+      lucide.createIcons();
+    }
     if (totalCont) totalCont.innerText = "Gs. 0";
     if (countCont) countCont.innerText = "0";
-    //if (footerCarrito) footerCarrito.innerHTML = "";
+    if (footerCarrito) {
+      footerCarrito.innerHTML = "";
+      footerCarrito.classList.add("hidden");
+    }
     return;
+  }
+
+  if (footerCarrito) {
+    footerCarrito.classList.remove("hidden");
   }
 
   let totalItems = 0;
