@@ -40,3 +40,9 @@ export const renderState = (estado) => {
         Inactivo
       </span>`;
 };
+
+export const calcularNuevoStock = (actual, ingresar) => {
+  const stockActual = Number(actual) || 0;
+  const stockIngresar = Number(ingresar) || 0;
+  return stockActual + (stockIngresar > 0 ? stockIngresar : 0);
+};

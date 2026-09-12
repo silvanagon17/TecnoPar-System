@@ -1,6 +1,15 @@
 import { mostrarMensaje } from "../components/alerts.js";
-import { goToFormView, goToListarView } from "../utils/changeView.js";
-import { renderStock, renderState } from "../utils/strockControl.js";
+import {
+  goToFormView,
+  goToListarView,
+  openStockModal,
+  closeStockModal,
+} from "../utils/changeView.js";
+import {
+  renderStock,
+  renderState,
+  calcularNuevoStock,
+} from "../utils/strockControl.js";
 import {
   cargarNotificacionStock,
   initNotificationListeners,
@@ -36,6 +45,15 @@ const previewContainer = document.getElementById("preview-container");
 const fileName = document.getElementById("file-name");
 const uploadArea = document.getElementById("upload-area");
 const removeButton = document.getElementById("remove-button");
+
+const formStock = document.getElementById("form-reponer-stock");
+const inputCantidadModal = document.getElementById("modal-input-cantidad");
+const inputProductoIdModal = document.getElementById("modal-producto-id");
+const txtNombreModal = document.getElementById("modal-producto-nombre");
+const txtActualModal = document.getElementById("modal-stock-actual");
+const txtTotalModal = document.getElementById("modal-stock-total");
+const btnCerrarModalStock = document.getElementById("cerrar-modal-stock");
+const btnCancelarModalStock = document.getElementById("btn-cancelar-stock");
 
 const nuevoRegistro = document.getElementById("nuevoRegistro");
 const volver = document.getElementById("volver");
@@ -106,6 +124,14 @@ const renderTabla = (productos) => {
 
     let botonesHtml = `
                         <button
+                          class="btn hover:text-green-500 btn-reponer-stock" data-id="${producto.id}"
+                          data-nombre="${producto.nombreProducto}"
+                          data-stock="${producto.stock}"
+                          title="Reponer Stock"
+                        >
+                          <i data-lucide="package" class="w-5 h-5"></i>
+                        </button>
+                        <button
                           class="btn hover:text-yellow-500 btn-editar" data-id="${producto.id}" 
                           title="Editar"
                           id="btnEditar"
@@ -144,6 +170,59 @@ const renderTabla = (productos) => {
     lucide.createIcons();
   }
 };
+
+const modalStock = (id, nombre, stock) => {
+  inputProductoIdModal.value = id;
+  txtNombreModal.textContent = nombre;
+  txtActualModal.textContent = stock;
+  inputCantidadModal.value = 1;
+
+  txtTotalModal.textContent = calcularNuevoStock(stock, 1);
+  openStockModal();
+};
+
+inputCantidadModal?.addEventListener("input", () => {
+  const stockActual = Number(txtActualModal.textContent) || 0;
+  const stockIngreso = Number(inputCantidadModal.value) || 0;
+  txtTotalModal.textContent = calcularNuevoStock(stockActual, stockIngreso);
+});
+
+btnCerrarModalStock?.addEventListener("click", closeStockModal);
+btnCancelarModalStock?.addEventListener("click", closeStockModal);
+
+formStock?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const id = inputProductoIdModal.value;
+  const cantidadIngresada = parseInt(inputCantidadModal.value, 10);
+
+  if (cantidadIngresada <= 0) return;
+
+  try {
+    const response = await fetch(
+      `/api/productos/${id}/reponer-stock?cantidad=${cantidadIngresada}`,
+      {
+        method: "PATCH",
+        headers: { Authorization: `Bearer ${token}` },
+      },
+    );
+
+    if (response.ok) {
+      closeStockModal();
+      mostrarMensaje(
+        "success",
+        "circle-check",
+        "¡Stock actualizado con éxito!",
+      );
+      await fetchAndRenderProductos();
+    } else {
+      mostrarMensaje("danger", "circle-x", "Error al actualizar el stock.");
+    }
+  } catch (error) {
+    console.error("Error al reponer stock:", error);
+    mostrarMensaje("danger", "circle-x", "Error de conexión con el servidor.");
+  }
+});
 
 /**
  * @param {string|number} id
@@ -351,17 +430,15 @@ const confirmarCancelar = () => {
   }
 };
 
-btnCancelar.addEventListener("click", confirmarCancelar);
-volver.addEventListener("click", confirmarCancelar);
-
-nuevoRegistro.addEventListener("click", (event) => {
-  resetForm();
-  goToFormView();
-});
-
 tbodyProductos.addEventListener("click", (event) => {
   const botonEditar = event.target.closest(".btn-editar");
   const botonEliminar = event.target.closest(".btn-eliminar");
+  const botonStock = event.target.closest(".btn-reponer-stock");
+
+  if (botonStock) {
+    const { id, nombre, stock } = botonStock.dataset;
+    modalStock(id, nombre, stock);
+  }
 
   if (botonEditar) {
     const id = botonEditar.dataset.id;
@@ -370,11 +447,18 @@ tbodyProductos.addEventListener("click", (event) => {
   }
 
   if (botonEliminar) {
-    const id = botonEliminar.dataset.id;
-    const nombre = botonEliminar.dataset.nombre;
+    const { id, nombre } = botonEliminar.dataset;
     deleteProducto(id, nombre);
   }
 });
+
+nuevoRegistro.addEventListener("click", (event) => {
+  resetForm();
+  goToFormView();
+});
+
+btnCancelar.addEventListener("click", confirmarCancelar);
+volver.addEventListener("click", confirmarCancelar);
 
 document.addEventListener("DOMContentLoaded", async () => {
   await cargarCategoria();
