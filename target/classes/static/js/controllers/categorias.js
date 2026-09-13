@@ -7,7 +7,7 @@ import {
   crearCategoria,
   actualizarCategoria,
   eliminarCategoria,
-} from "./categoriaService.js";
+} from "../service/categoriaService.js";
 
 const formCategoria = document.getElementById("formCategoria");
 const tbodyCategoria = document.getElementById("tbody");

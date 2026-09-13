@@ -9,15 +9,18 @@
   --text-white: hsl(0, 0%, 100%);
   --text-light-gray: hsl(0, 0%, 90%);
   --glass-bg-color: #081233a6;
-  --border-color: oklch(27.9% 0.041 260.031);
+  --borde-color: #1d293d;
   --blur: blur(10px);
   --button-hover-color: hsla(0, 0%, 0%, 0.3);
+  --bg-input: #10113ace;
 }
 
 body.modo-claro {
   --blue: hsl(220, 85%, 84%);
   --violet: hsl(315, 100%, 93%);
   --glass-bg-color: #f3f4f8ce;
+  --bg-input: #e6e4ff7c;
+  --borde-color: #dfdfdfc0;
 }
 
 input {
@@ -107,6 +110,7 @@ input {
 
 .input-control {
   border: 1px solid var(--border-color);
+  background: var(--bg-input);
   border-radius: 0.75rem;
   padding: 0.75rem 1rem;
   margin-top: 0.35rem;

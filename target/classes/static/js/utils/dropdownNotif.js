@@ -1,4 +1,4 @@
-import { obtenerProductos } from "../controllers/productoService.js";
+import { obtenerProductos } from "../service/productoService.js";
 
 let notificaciones =
   JSON.parse(localStorage.getItem("app_notificaciones")) || [];

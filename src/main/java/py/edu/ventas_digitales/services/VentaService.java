@@ -1,17 +1,21 @@
 package py.edu.ventas_digitales.services;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import py.edu.ventas_digitales.dto.CompletarPerfilDto;
 import py.edu.ventas_digitales.dto.ItemCarritoDto;
-import py.edu.ventas_digitales.dto.VentaRequestDto;
+import py.edu.ventas_digitales.dto.ProcesarVentaDto;
+import py.edu.ventas_digitales.models.Carrito;
 import py.edu.ventas_digitales.models.DetalleVenta;
 import py.edu.ventas_digitales.models.Producto;
 import py.edu.ventas_digitales.models.Usuario;
 import py.edu.ventas_digitales.models.Venta;
+import py.edu.ventas_digitales.repositories.CarritoRepository;
 import py.edu.ventas_digitales.repositories.ProductoRepository;
 import py.edu.ventas_digitales.repositories.UsuarioRepository;
 import py.edu.ventas_digitales.repositories.VentaRepository;
@@ -22,12 +26,26 @@ public class VentaService {
 
     private final VentaRepository ventaRepository;
     private final ProductoRepository productoRepository;
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final CarritoRepository carritoRepository;
 
-    @Transactional
-    public Venta procesarVenta(VentaRequestDto request) {
-        Usuario usuario = usuarioRepository.findById(request.getUsuarioId())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado ID: " + request.getUsuarioId()));
+    @Transactional(rollbackFor = Exception.class)
+    public Venta procesarVenta(Long usuarioId, ProcesarVentaDto request) {
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado ID: " + usuarioId));
+
+        if (request.getDatosPerfil() != null) {
+            CompletarPerfilDto perfil = request.getDatosPerfil();
+
+            if (perfil.getTelefono() != null)
+                usuario.setTelefono(perfil.getTelefono());
+            if (perfil.getDireccion() != null)
+                usuario.setDireccion(perfil.getDireccion());
+            if (perfil.getDocumento() != null)
+                usuario.setDocumento(perfil.getDocumento());
+
+            usuarioRepository.save(usuario);
+        }
 
         Venta venta = new Venta();
         venta.setUsuario(usuario);
@@ -59,7 +77,18 @@ public class VentaService {
             totalAcumulado = totalAcumulado.add(subtotal);
         }
         venta.setPrecioTotal(totalAcumulado);
-        return ventaRepository.save(venta);
+        Venta ventaGuardada = ventaRepository.save(venta);
+
+        Optional<Carrito> carritoOpt = carritoRepository.findByUsuarioIdAndEstado(usuarioId, "ACTIVO");
+
+        if (carritoOpt.isPresent()) {
+            Carrito carrito = carritoOpt.get();
+            carrito.getDetalles().clear();
+            carrito.setMontoTotal(BigDecimal.ZERO);
+
+            carritoRepository.saveAndFlush(carrito);
+        }
+        return ventaGuardada;
     }
 
 }

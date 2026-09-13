@@ -12,7 +12,9 @@
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/login.css" />
     <link rel="stylesheet" href="css/scroll.css" />
+    <link rel="stylesheet" href="css/notify.css" />
     <script src="js/components/confirmDialog.js"></script>
   </head>
   <body>
@@ -583,7 +585,7 @@
       </aside>
 
       <app-confirm-dialog id="confirm-modal" class="flex"></app-confirm-dialog>
-
+      <div id="notify-container"></div>
       <section id="view-home" class="mx-auto mb-20">
         <h2
           class="text-xl mb-7 uppercase tracking-tighter flex items-center gap-3 font-extrabold"
@@ -892,6 +894,120 @@
           </div>
         </div>
       </section>
+
+      <section id="view-checkout" class="hidden container mt-[100px]">
+        <div class="row justify-content-center">
+          <div class="form-content col-md-8 p-4 shadow-lg">
+            <h3 class="fw-bold-3">Datos de Envío y Pago</h3>
+
+            <form id="formCheckout">
+              <div class="row g-3 mb-3">
+                <div id="seccionDatosPersonales">
+                  <h4 class="fw-bold-3">Datos Personales</h4>
+
+                  <div class="col-md-6">
+                    <label
+                      for="telefono"
+                      class="c-title form-label text-xs font-bold uppercase"
+                      >Teléfono / WhatsApp
+                      <span class="text-red-400">*</span></label
+                    >
+                    <input
+                      type="tel"
+                      id="telefono"
+                      class="form-control text-sm"
+                      placeholder="Ej: 098352849"
+                      required
+                    />
+                  </div>
+
+                  <div class="col-md-6">
+                    <label
+                      for="documento"
+                      class="c-title form-label text-xs font-bold uppercase"
+                      >RUC / CI <span class="text-red-400">*</span></label
+                    >
+                    <input
+                      type="tel"
+                      id="documento"
+                      class="form-control text-sm"
+                      placeholder="Ej: 1234567-8"
+                      required
+                    />
+                  </div>
+
+                  <div class="col-12">
+                    <label
+                      for="direccion"
+                      class="c-title form-label text-xs font-bold uppercase"
+                      >Dirección de Entrega
+                      <span class="text-red-400">*</span></label
+                    >
+                    <input
+                      type="tel"
+                      id="direccion"
+                      class="form-control text-sm"
+                      placeholder="Ciudad, calle, barrio y referencia"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <h4 class="fw-bold-3">Datos Personales</h4>
+                <div class="col-md-12">
+                  <label
+                    for="notas"
+                    class="c-title form-label text-xs font-bold uppercase"
+                    >Observación</label
+                  >
+                  <textarea
+                    id="notas"
+                    class="form-control text-sm"
+                    rows="2"
+                    placeholder="Ej: Dejar con el guardia"
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label
+                  for="metodoPago"
+                  class="c-title form-label text-xs font-bold uppercase"
+                  >Método de Pago <span class="text-red-400">*</span></label
+                >
+                <select id="metodoPago" class="form-select" required>
+                  <option value="" selected disabled>
+                    Selecciona una opción
+                  </option>
+                  <option value="EFECTIVO">
+                    Efectivo / POS contra entrega
+                  </option>
+                  <option value="TRANFERENCIA">Tranferencia Bancaria</option>
+                  <option value="TARJETA">Tarjeta de Crédito / Débito</option>
+                </select>
+              </div>
+
+              <div
+                class="d-flex justify-content-between items-center pt-3 border-top"
+              >
+                <button
+                  type="button"
+                  onclick="cancelarCheckout()"
+                  class="btn btn-outline-secondary text-sm"
+                >
+                  Volver al carrito
+                </button>
+                <button
+                  type="submit"
+                  class="btn bg-blue-600 hover:bg-blue-700 text-white text-sm fw-bold px-4"
+                >
+                  Confirmar y Finalizar Pedido
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer class="footer pt-20 pb-10 px-6 mt-20">
@@ -1025,6 +1141,7 @@
     <script src="js/utils/sidebar.js"></script>
     <script src="js/utils/userInfo.js"></script>
     <script src="js/controllers/authController.js"></script>
+    <script type="module" src="js/controllers/ventaController.js"></script>
     <script type="module" src="js/controllers/home.js"></script>
     <script type="module" src="js/controllers/detalleProducto.js"></script>
     <script type="module" src="js/utils/carrito.js"></script>

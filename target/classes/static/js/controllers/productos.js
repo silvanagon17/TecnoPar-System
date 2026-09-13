@@ -20,7 +20,7 @@ import {
   crearProducto,
   actualizarProducto,
   eliminarProducto,
-} from "./productoService.js";
+} from "../service/productoService.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   initNotificationListeners();
@@ -129,7 +129,7 @@ const renderTabla = (productos) => {
                           data-stock="${producto.stock}"
                           title="Reponer Stock"
                         >
-                          <i data-lucide="package" class="w-5 h-5"></i>
+                          <i data-lucide="archive-restore" class="w-5 h-5"></i>
                         </button>
                         <button
                           class="btn hover:text-yellow-500 btn-editar" data-id="${producto.id}" 

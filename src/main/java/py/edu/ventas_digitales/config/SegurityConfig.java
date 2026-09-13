@@ -58,7 +58,9 @@ public class SegurityConfig {
                         .permitAll()
                         .requestMatchers("/productos.html", "/categoria.html", "/carrito.html", "/usuario.html")
                         .permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/categorias/**", "/api/productos/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/categorias/**", "/api/productos/**", "/api/ventas/**",
+                                "/api/usuarios/**")
+                        .permitAll()
                         .requestMatchers("/api/carrito/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/productos/**", "/api/categorias/**")
                         .hasAnyAuthority("ADMIN", "ROLE_ADMIN")

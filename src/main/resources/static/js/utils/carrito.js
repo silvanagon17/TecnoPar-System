@@ -237,6 +237,26 @@ function eventos() {
   if (btnCompra) {
     btnCompra.addEventListener("click", () => {
       console.log("Comenzando el proceso de Checkout...");
+
+      const viewHome = document.getElementById("view-home");
+      if (viewHome) {
+        viewHome.classList.add("hidden");
+      }
+
+      const viewCheckout = document.getElementById("view-checkout");
+      if (viewCheckout) {
+        viewCheckout.classList.remove("hidden");
+      }
+
+      const carrusel = document.getElementById("carrusel");
+      if (carrusel) {
+        carrusel.classList.add("hidden");
+      }
+
+      const dropdown = document.getElementById("carrito-dropdown");
+      if (dropdown) {
+        dropdown.classList.add("hidden");
+      }
     });
   }
 }
@@ -270,4 +290,13 @@ document.addEventListener("DOMContentLoaded", () => {
   if (obtenerTokenLimpio) {
     inicializar();
   }
+});
+
+export function vaciarEstadoCarrito() {
+  carritoObjeto = { detalles: [], montoTotal: 0 };
+  renderizarCarrito();
+}
+
+window.addEventListener("carritoActualizado", () => {
+  vaciarEstadoCarrito();
 });
