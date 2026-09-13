@@ -1,4 +1,4 @@
-import { obtenerProductos } from "./productoService.js";
+import { obtenerProductos } from "../service/productoService.js";
 import {
   verDetalleProducto,
   inicializarEventosDetalle,

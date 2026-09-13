@@ -28,7 +28,15 @@ public class DetalleVenta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "cantidad", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "venta_id", nullable = false)
+    private Venta venta;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "producto_id", nullable = false)
+    private Producto producto;
+
+    @Column(nullable = false)
     private Integer cantidad;
 
     @Column(name = "precio_unitario", nullable = false, precision = 10, scale = 2)
@@ -36,9 +44,5 @@ public class DetalleVenta {
 
     @Column(name = "sub_total", nullable = false, precision = 10, scale = 2)
     private BigDecimal subTotal;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "venta_id", nullable = false)
-    private Venta venta;
 
 }

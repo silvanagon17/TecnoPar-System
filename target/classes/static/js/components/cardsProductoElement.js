@@ -1,4 +1,4 @@
-import { obtenerProductos } from "../controllers/productoService.js";
+import { obtenerProductos } from "../service/productoService.js";
 import { addToCart } from "../utils/carrito.js";
 
 const contenedorPrincipal = document.getElementById("contenedor-catalogo");
