@@ -6,6 +6,10 @@ const footerCarrito = document.getElementById("carrito-footer");
 let carritoObjeto = null;
 const formatoMoneda = new Intl.NumberFormat("es-PY");
 
+export function obtenerEstadoCarrito() {
+  return carritoObjeto;
+}
+
 const obtenerTokenLimpio = () => {
   let token = localStorage.getItem("token");
   if (!token) return null;
@@ -236,27 +240,7 @@ function eventos() {
   const btnCompra = document.getElementById("btn-procesar-compra");
   if (btnCompra) {
     btnCompra.addEventListener("click", () => {
-      console.log("Comenzando el proceso de Checkout...");
-
-      const viewHome = document.getElementById("view-home");
-      if (viewHome) {
-        viewHome.classList.add("hidden");
-      }
-
-      const viewCheckout = document.getElementById("view-checkout");
-      if (viewCheckout) {
-        viewCheckout.classList.remove("hidden");
-      }
-
-      const carrusel = document.getElementById("carrusel");
-      if (carrusel) {
-        carrusel.classList.add("hidden");
-      }
-
-      const dropdown = document.getElementById("carrito-dropdown");
-      if (dropdown) {
-        dropdown.classList.add("hidden");
-      }
+      window.location.href = "checkout.html";
     });
   }
 }

@@ -1,0 +1,195 @@
+<!-- checkout.html -->
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Finalizar Compra - Resumen</title>
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/form.css" />
+    <link rel="stylesheet" href="css/scroll.css" />
+    <link rel="stylesheet" href="css/notify.css" />
+    <script src="js/components/navbarHeaderElement.js"></script>
+  </head>
+  <body>
+    <nav-header></nav-header>
+    <main class="container mx-auto py-10 px-4 mt-[140px]">
+      <div id="notify-container"></div>
+      <section id="view-resumen" class="">
+        <div class="form-checkout max-w-5xl mx-auto rounded-2xl shadow-xl p-6">
+          <div class="text-center border-b pb-4 mb-6">
+            <h2 class="text-2xl font-bold">Resumen de tu Pedido</h2>
+            <p class="text-sm">Revisá tus productos antes de confirmar</p>
+          </div>
+
+          <div id="productos-list" class="mb-6"></div>
+          <table class="w-100">
+            <thead class="text-center">
+              <tr class="head-resumen">
+                <th>Producto</th>
+                <th>Precio Unitario</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-resumen-body" class="text-center"></tbody>
+          </table>
+
+          <div class="flex justify-between text-xl font-bold py-4">
+            <span>Total a pagar:</span>
+            <span id="monto-total">Gs. 0</span>
+          </div>
+          <div
+            class="buttons-container d-flex justify-content-between items-center pt-3"
+          >
+            <button
+              id="btn-volver-inicio"
+              class="btn btn-outline-secondary text-sm"
+            >
+              Cancelar
+            </button>
+
+            <button
+              id="btn-aceptar-resumen"
+              type="button"
+              class="btn bg-blue-600 hover:bg-blue-700 text-white text-sm fw-bold px-4"
+            >
+              Aceptar y Continuar
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-checkout" class="container hidden">
+        <div class="row justify-content-center">
+          <div
+            class="form-content form-checkout max-w-3xl mx-auto col-md-8 p-4 shadow-lg"
+          >
+            <h3 class="fw-bold-3">Datos de Envío y Pago</h3>
+
+            <form id="formCheckout">
+              <div class="row g-3 mb-3">
+                <div id="seccionDatosPersonales">
+                  <h4 class="fw-bold-3">Datos Personales</h4>
+
+                  <div class="justify-content-between flex">
+                    <div class="col-6 pr-3">
+                      <label
+                        for="telefono"
+                        class="c-title form-label text-xs font-bold uppercase"
+                        >Teléfono / WhatsApp
+                        <span class="text-red-400">*</span></label
+                      >
+                      <input
+                        type="tel"
+                        id="telefono"
+                        class="input-control flex flex-column w-100 text-sm focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent transition-all"
+                        placeholder="Ej: 098352849"
+                        required
+                      />
+                    </div>
+
+                    <div class="col-6 pl-3">
+                      <label
+                        for="documento"
+                        class="c-title form-label text-xs font-bold uppercase"
+                        >RUC / CI <span class="text-red-400">*</span></label
+                      >
+                      <input
+                        type="tel"
+                        id="documento"
+                        class="input-control flex flex-column w-100 text-sm focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent transition-all"
+                        placeholder="Ej: 1234567-8"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <label
+                      for="direccion"
+                      class="c-title form-label text-xs font-bold uppercase"
+                      >Dirección de Entrega
+                      <span class="text-red-400">*</span></label
+                    >
+                    <input
+                      type="tel"
+                      id="direccion"
+                      class="input-control flex flex-column w-100 text-sm focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent transition-all"
+                      placeholder="Ciudad, calle, barrio y referencia"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <h4 class="fw-bold-3">Datos de Envío</h4>
+                <div class="col-md-12">
+                  <label
+                    for="notas"
+                    class="c-title form-label text-xs font-bold uppercase"
+                    >Observación</label
+                  >
+                  <textarea
+                    id="notas"
+                    class="input-control flex flex-column w-100 text-sm focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent transition-all"
+                    rows="2"
+                    placeholder="Ej: Dejar con el guardia"
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label
+                  for="metodoPago"
+                  class="c-title form-label text-xs font-bold uppercase"
+                  >Método de Pago <span class="text-red-400">*</span></label
+                >
+                <select
+                  id="metodoPago"
+                  class="input-control flex-column flex w-100 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent transition-all"
+                  required
+                >
+                  <option value="" selected disabled>
+                    Selecciona una opción
+                  </option>
+                  <option value="EFECTIVO">
+                    Efectivo / POS contra entrega
+                  </option>
+                  <option value="TRANFERENCIA">Tranferencia Bancaria</option>
+                  <option value="TARJETA">Tarjeta de Crédito / Débito</option>
+                </select>
+              </div>
+
+              <div
+                class="buttons-container d-flex justify-content-between items-center pt-3"
+              >
+                <button
+                  id="btn-volver-resumen"
+                  type="button"
+                  class="btn btn-outline-secondary text-sm"
+                >
+                  Volver al resumen
+                </button>
+                <button
+                  type="submit"
+                  class="btn bg-blue-600 hover:bg-blue-700 text-white text-sm fw-bold px-4"
+                >
+                  Confirmar y Finalizar Pedido
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="js/utils/theme.js"></script>
+    <script>
+      lucide.createIcons();
+    </script>
+    <script src="js/utils/userInfo.js"></script>
+    <script type="module" src="js/controllers/ventaController.js"></script>
+  </body>
+</html>

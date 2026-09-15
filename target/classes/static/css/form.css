@@ -13,6 +13,7 @@
   --blur: blur(10px);
   --button-hover-color: hsla(0, 0%, 0%, 0.3);
   --bg-input: #10113ace;
+  --bg-form-check: #232e479a;
 }
 
 body.modo-claro {
@@ -21,6 +22,7 @@ body.modo-claro {
   --glass-bg-color: #f3f4f8ce;
   --bg-input: #e6e4ff7c;
   --borde-color: #dfdfdfc0;
+  --bg-form-check: #fdfdffdc;
 }
 
 input {
@@ -137,4 +139,17 @@ input {
 
 .form-content {
   text-align: center;
+}
+
+.form-checkout {
+  background: var(--bg-form-check);
+  border: 1px solid var(--borde-color);
+}
+
+.head-resumen {
+  border-bottom: 1px solid var(--borde-color);
+}
+
+.buttons-container {
+  border-top: 1px solid var(--borde-color);
 }
