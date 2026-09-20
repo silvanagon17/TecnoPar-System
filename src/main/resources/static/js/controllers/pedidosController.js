@@ -1,3 +1,4 @@
+import { cambiarEstado, obtenerVentas } from "../service/ventaService.js";
 import { goToFormView, goToListarView } from "../utils/changeView.js";
 import { mostrarMensaje } from "../components/alerts.js";
 
@@ -55,7 +56,7 @@ async function cargarPedidosPendientes() {
 
   try {
     const res = await fetch(
-      "http://localhost:8080/api/ventas/estado?estado=COMPLETADO",
+      "http://localhost:8080/api/ventas/estado?estado=PENDIENTE",
       {
         headers: { Authorization: token ? `Bearer ${token}` : "" },
       },
@@ -105,9 +106,9 @@ function renderizarTabla(pedidos) {
       <td class="py-4 px-5">${fecha}</td>
       <td class="py-4 px-5">Gs. ${formatoMoneda.format(p.precioTotal || p.total || 0)}</td>
       <td class="py-4 px-4 text-center">
-        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-green-600/10 text-xs font-medium text-green-600 ring-1 ring-inset ring-green-500/20">
-          <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
-          COMPLETADO
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-yellow-600/10 text-xs font-medium text-yellow-600 ring-1 ring-inset ring-amber-500/20">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+          PENDIENTE
         </span>
       </td>
       <td class="py-4 px-5 text-center">
@@ -115,11 +116,17 @@ function renderizarTabla(pedidos) {
           <button 
             class="btn-ver-detalle px-3 py-1.5 text-xs font-semibold text-blue-600 hover:bg-blue-50 rounded-lg transition"
             data-id="${p.id}"
-            title="Ver detalle de la Venta"
+            title="Ver detalle del pedido"
           >
             Ver Detalle
           </button>
-          
+          <button 
+            class="btn-finalizar-directo px-3 py-1.5 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-sm transition"
+            data-id="${p.id}"
+            title="Completar pedido"
+          >
+            Finalizar
+          </button>
         </div>
       </td>
     `;
@@ -198,20 +205,22 @@ function mostrarDetallePedido(pedidoId) {
 }
 
 async function finalizarPedido(id) {
-  const token = obtenerToken();
-
   try {
-    const res = await fetch(
-      `http://localhost:8080/api/ventas/${id}/finalizar`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: token ? `Bearer ${token}` : "",
-          "Content-Type": "application/json",
-        },
-      },
-    );
+    await cambiarEstado(id);
+
+    mostrarMensaje("success", "circle-check", "¡Pedido finalizado!");
+    const viewForm = document.getElementById("view-formulario");
+    if (viewForm && !viewForm.classList.contains("hidden")) {
+      goToListarView("view-listado", "view-formulario");
+    }
+
+    await cargarPedidosPendientes();
   } catch (error) {
     console.error("Error al finalizar pedido:", error);
+    mostrarMensaje(
+      "danger",
+      "circle-x",
+      "No se pudo cambiar el estado del pedido.",
+    );
   }
 }

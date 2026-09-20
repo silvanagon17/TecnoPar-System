@@ -1,147 +1,142 @@
-import { procesarVenta } from "../service/ventaService.js";
-import { obtenerUsuarioPorId } from "../service/UsuarioService.js";
-import {
-  vaciarEstadoCarrito,
-  inicializar as reconsultarCarrito,
-} from "../utils/carrito.js";
+import { goToFormView, goToListarView } from "../utils/changeView.js";
 import { mostrarMensaje } from "../components/alerts.js";
 
-document.addEventListener("DOMContentLoaded", async () => {
-  const formCheckout = document.getElementById("formCheckout");
+let pedidoSeleccionadoId = null;
+let listaPedidosPendientes = [];
 
-  if (formCheckout) {
-    formCheckout.addEventListener("submit", gestionarFinalizarCompra);
-  }
+document.addEventListener("DOMContentLoaded", () => {
+  cargarPedidosPendientes();
 
-  await cargarResumen();
-  verificarDatosUsuario();
-
-  const btnAceptarResumen = document.getElementById("btn-aceptar-resumen");
-  const btnVolverResumen = document.getElementById("btn-volver-resumen");
-  const btnVolverCheckout = document.getElementById("btn-volver-checkout");
-  const btnVolverInicio = document.getElementById("btn-volver-inicio");
-
-  const vistaResumen = document.getElementById("view-resumen");
-  const vistaCheckout = document.getElementById("view-checkout");
-
-  if (btnAceptarResumen) {
-    btnAceptarResumen.addEventListener("click", () => {
-      if (vistaResumen) vistaResumen.classList.add("hidden");
-      if (vistaCheckout) vistaCheckout.classList.remove("hidden");
-      window.scrollTo({ top: 0, behavior: "smooth" });
+  const btnVolver = document.getElementById("volver");
+  if (btnVolver) {
+    btnVolver.addEventListener("click", () => {
+      goToListarView("view-listado", "view-formulario");
+      pedidoSeleccionadoId = null;
     });
   }
 
-  if (btnVolverResumen) {
-    btnVolverResumen.addEventListener("click", () => {
-      if (vistaCheckout) vistaCheckout.classList.add("hidden");
-      if (vistaResumen) vistaResumen.classList.remove("hidden");
+  const btnCompletar = document.getElementById("btn-completar-venta");
+  if (btnCompletar) {
+    btnCompletar.addEventListener("click", () => {
+      if (pedidoSeleccionadoId) {
+        finalizarPedido(pedidoSeleccionadoId);
+      }
     });
   }
 
-  if (btnVolverCheckout) {
-    btnVolverCheckout.addEventListener("click", () => {
-      if (vistaCheckout) vistaCheckout.classList.add("hidden");
-      if (vistaResumen) vistaResumen.classList.add("hidden");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-  }
-
-  if (btnVolverInicio) {
-    btnVolverInicio.addEventListener("click", () => {
-      window.location.href = "index.html";
+  const searchInput = document.getElementById("searchInput");
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+      const termino = e.target.value.toLowerCase();
+      const filtrados = listaPedidosPendientes.filter(
+        (p) =>
+          p.id.toString().includes(termino) ||
+          (p.usuario &&
+            `${p.usuario.nombre} ${p.usuario.apellido}`
+              .toLowerCase()
+              .includes(termino)),
+      );
+      renderizarTabla(filtrados);
     });
   }
 });
 
-async function cargarResumen() {
-  const token = localStorage
+function obtenerToken() {
+  return localStorage
     .getItem("token")
     ?.replace(/^["'](.*)["']$/, "$1")
     .trim();
-  if (!token) return;
+}
+
+async function cargarPedidosPendientes() {
+  const token = obtenerToken();
+  const tbody = document.getElementById("tbody");
+  if (!tbody) return;
 
   try {
-    const res = await fetch("http://localhost:8080/api/carrito/mi-carrito", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await fetch(
+      "http://localhost:8080/api/ventas/estado?estado=COMPLETADO",
+      {
+        headers: { Authorization: token ? `Bearer ${token}` : "" },
+      },
+    );
 
     if (res.ok) {
-      const carritoData = await res.json();
-      renderizarVista(carritoData);
+      listaPedidosPendientes = await res.json();
+      renderizarTabla(listaPedidosPendientes);
     }
-  } catch (e) {
-    console.error("Error al cargar el resumen:", e);
+  } catch (error) {
+    console.error("Error al obtener los pedidos pendientes:", error);
   }
 }
 
-function renderizarVista(carrito) {
-  const tbody =
-    document.getElementById("tabla-resumen-body") ||
-    document.getElementById("ticket-productos-list");
-  const totalCont =
-    document.getElementById("monto-total") ||
-    document.getElementById("ticket-monto-total");
-  const btnAceptarResumen = document.getElementById("btn-aceptar-resumen");
+function renderizarTabla(pedidos) {
+  const tbody = document.getElementById("tbody");
   const formatoMoneda = new Intl.NumberFormat("es-PY");
 
-  if (!tbody) return;
   tbody.innerHTML = "";
 
-  const detalles = carrito?.detalles || [];
-
-  if (detalles.length === 0) {
+  if (!pedidos || pedidos.length === 0) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="5" class="py-6 text-center text-gray-500">
-          Tu carrito está vacío.
+        <td colspan="6" class="py-6 text-center">
+          No hay pedidos pendientes por procesar.
         </td>
       </tr>
     `;
-    if (totalCont) totalCont.innerText = "Gs. 0";
-    if (btnAceptarResumen) btnAceptarResumen.disabled = true;
     return;
   }
 
-  if (btnAceptarResumen) btnAceptarResumen.disabled = false;
-
-  detalles.forEach((item) => {
-    const precioBase = item.precioUnitario || item.producto.pre_venta || 0;
-    const subtotal = precioBase * item.cantidad;
+  pedidos.forEach((p) => {
+    const cliente = p.usuario
+      ? `${p.usuario.nombre || ""} ${p.usuario.apellido || ""}`.trim()
+      : "Cliente";
+    const fecha = p.fechaVenta
+      ? new Date(p.fechaVenta).toLocaleString("es-PY")
+      : new Date().toLocaleString("es-PY");
 
     const tr = document.createElement("tr");
-    tr.className = "transition";
+    tr.id = `pedido-row-${p.id}`;
+    tr.className = "text-center";
+
     tr.innerHTML = `
-      <td class="py-3 px-2 text-left font-medium">
-        <div class="flex items-center gap-3">
-          <img src="${item.producto.url_imagen || ""}" class="w-10 h-10 object-cover rounded" alt="producto" />
-          <span>${item.producto.nombreProducto || item.producto.nombre}</span>
-        </div>
+      <td class="py-4 px-5 ">#${p.id}</td>
+      <td class="py-4 px-5">${cliente}</td>
+      <td class="py-4 px-5">${fecha}</td>
+      <td class="py-4 px-5">Gs. ${formatoMoneda.format(p.precioTotal || p.total || 0)}</td>
+      <td class="py-4 px-4 text-center">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-green-600/10 text-xs font-medium text-green-600 ring-1 ring-inset ring-green-500/20">
+          <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+          COMPLETADO
+        </span>
       </td>
-      <td class="py-3 px-2 text-center">Gs. ${formatoMoneda.format(precioBase)}</td>
-      <td class="py-3 px-2 text-center">${item.cantidad}</td>
-      <td class="py-3 px-2 text-center">Gs. ${formatoMoneda.format(subtotal)}</td>
-      <td class="py-3 px-2 text-center">
-        <button
-          class="btn text-gray-400 hover:text-red-500 transition btn-eliminar-item-resumen"
-          data-detalle-id="${item.id}"
-          title="Eliminar producto"
-        >
-          <i data-lucide="trash-2" class="w-5 h-5 inline"></i>
-        </button>
+      <td class="py-4 px-5 text-center">
+        <div class="flex items-center justify-center gap-2">
+          <button 
+            class="btn-ver-detalle px-3 py-1.5 text-xs font-semibold text-blue-600 hover:bg-blue-50 rounded-lg transition"
+            data-id="${p.id}"
+            title="Ver detalle de la Venta"
+          >
+            Ver Detalle
+          </button>
+          
+        </div>
       </td>
     `;
     tbody.appendChild(tr);
   });
 
-  if (totalCont) {
-    totalCont.innerText = `Gs. ${formatoMoneda.format(carrito.montoTotal || 0)}`;
-  }
+  document.querySelectorAll(".btn-ver-detalle").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const id = Number(e.currentTarget.getAttribute("data-id"));
+      mostrarDetallePedido(id);
+    });
+  });
 
-  document.querySelectorAll(".btn-eliminar-item-resumen").forEach((btn) => {
-    btn.addEventListener("click", async (e) => {
-      const idDetalle = e.currentTarget.getAttribute("data-detalle-id");
-      await eliminarItemResumen(idDetalle);
+  document.querySelectorAll(".btn-finalizar-directo").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const id = Number(e.currentTarget.getAttribute("data-id"));
+      finalizarPedido(id);
     });
   });
 
@@ -150,178 +145,73 @@ function renderizarVista(carrito) {
   }
 }
 
-async function eliminarItemResumen(detalleId) {
-  const token = localStorage
-    .getItem("token")
-    ?.replace(/^["'](.*)["']$/, "$1")
-    .trim();
-  if (!token) return;
+function mostrarDetallePedido(pedidoId) {
+  const p = listaPedidosPendientes.find((item) => item.id === pedidoId);
+  if (!p) return;
+
+  pedidoSeleccionadoId = p.id;
+  const formatoMoneda = new Intl.NumberFormat("es-PY");
+
+  document.getElementById("detalle-id-venta").textContent = p.id;
+  document.getElementById("detalle-fecha").textContent = p.fecha
+    ? new Date(p.fecha).toLocaleString("es-PY")
+    : new Date().toLocaleString("es-PY");
+
+  const nombreCliente = p.usuario
+    ? `${p.usuario.nombre || ""} ${p.usuario.apellido || ""}`.trim()
+    : "Cliente Desconocido";
+  document.getElementById("detalle-cliente-nombre").textContent = nombreCliente;
+  document.getElementById("detalle-cliente-documento").textContent =
+    p.usuario?.documento || p.datosPerfil?.documento || "Sin datos";
+  document.getElementById("detalle-cliente-telefono").textContent =
+    p.usuario?.telefono || p.datosPerfil?.telefono || "Sin datos";
+  document.getElementById("detalle-cliente-direccion").textContent =
+    p.usuario?.direccion || p.datosPerfil?.direccion || "Sin dirección";
+  document.getElementById("detalle-metodo-pago").textContent =
+    p.metodoPago || "EFECTIVO";
+
+  const tbodyItems = document.getElementById("tabla-items-detalle-body");
+  tbodyItems.innerHTML = "";
+
+  const detalles = p.detalles || p.items || [];
+  detalles.forEach((d) => {
+    const nombreProd =
+      d.producto?.nombreProducto || d.producto?.nombre || "Producto";
+    const precio = d.precioUnitario || d.precio || 0;
+    const subtotal = d.subTotal || precio * d.cantidad;
+
+    const tr = document.createElement("tr");
+    tr.className = "border-b border-gray-100 hover:bg-gray-50/50";
+    tr.innerHTML = `
+      <td class="py-3 px-3 font-medium">${nombreProd}</td>
+      <td class="py-3 px-3 text-center">Gs. ${formatoMoneda.format(precio)}</td>
+      <td class="py-3 px-3 text-center font-bold">x${d.cantidad}</td>
+      <td class="py-3 px-3 text-center">Gs. ${formatoMoneda.format(subtotal)}</td>
+    `;
+    tbodyItems.appendChild(tr);
+  });
+
+  document.getElementById("detalle-monto-total").textContent =
+    `Gs. ${formatoMoneda.format(p.precioTotal || p.total || 0)}`;
+
+  goToFormView("view-formulario", "view-listado");
+}
+
+async function finalizarPedido(id) {
+  const token = obtenerToken();
 
   try {
     const res = await fetch(
-      `http://localhost:8080/api/carrito/item/${detalleId}`,
+      `http://localhost:8080/api/ventas/${id}/finalizar`,
       {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      },
-    );
-
-    if (res.ok) {
-      const carritoActualizado = await res.json();
-      renderizarVista(carritoActualizado);
-      reconsultarCarrito();
-    }
-  } catch (error) {
-    console.error("Error al eliminar item del resumen:", error);
-  }
-}
-
-const obtenerIdDesdeToken = async () => {
-  const token = localStorage
-    .getItem("token")
-    ?.replace(/^["'](.*)["']$/, "$1")
-    .trim();
-  if (!token) return null;
-
-  try {
-    const base64Url = token.split(".")[1];
-    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-    const jsonPayload = decodeURIComponent(
-      atob(base64)
-        .split("")
-        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-        .join(""),
-    );
-
-    const payload = JSON.parse(jsonPayload);
-
-    if (payload.id && !isNaN(payload.id)) return payload.id;
-    if (payload.usuarioId && !isNaN(payload.usuarioId))
-      return payload.usuarioId;
-
-    const email = payload.sub;
-    if (email) {
-      const res = await fetch(`http://localhost:8080/api/usuarios`, {
+        method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
+          Authorization: token ? `Bearer ${token}` : "",
+          "Content-Type": "application/json",
         },
-      });
-
-      if (res.ok) {
-        const usuarios = await res.json();
-        const usuarioEncontrado = usuarios.find(
-          (u) => u.email === email || u.nombre === email,
-        );
-        if (usuarioEncontrado) return usuarioEncontrado.id;
-      }
-    }
-
-    return null;
-  } catch (e) {
-    console.error("Error al obtener ID del usuario:", e);
-    return null;
-  }
-};
-
-async function verificarDatosUsuario() {
-  const usuarioId = await obtenerIdDesdeToken();
-  if (!usuarioId) return;
-
-  try {
-    const usuario = await obtenerUsuarioPorId(usuarioId);
-
-    if (usuario && usuario.telefono && usuario.documento) {
-      const seccionDatos = document.getElementById("seccionDatosPersonales");
-      if (seccionDatos) {
-        seccionDatos.style.display = "none";
-      }
-
-      ["telefono", "direccion", "documento"].forEach((id) => {
-        const input = document.getElementById(id);
-        if (input) input.required = false;
-      });
-    }
-  } catch (error) {
-    console.warn("No se pudo verificar los datos previos del usuario:", error);
-  }
-}
-
-async function gestionarFinalizarCompra(e) {
-  e.preventDefault();
-
-  try {
-    const idDeToken = await obtenerIdDesdeToken();
-
-    if (!idDeToken) {
-      mostrarMensaje("Sesión no válida. Inicie sesión nuevamente.", "error");
-      return;
-    }
-
-    const usuarioId = idDeToken;
-
-    const token = localStorage
-      .getItem("token")
-      ?.replace(/^["'](.*)["']$/, "$1")
-      .trim();
-    const resCarrito = await fetch(
-      "http://localhost:8080/api/carrito/mi-carrito",
-      {
-        headers: { Authorization: `Bearer ${token}` },
       },
     );
-
-    if (!resCarrito.ok) {
-      alert("Error al consultar el Carrito");
-      return;
-    }
-
-    const carritoData = await resCarrito.json();
-    const detalles = carritoData.detalles || [];
-
-    if (detalles.length === 0) {
-      mostrarMensaje(
-        "warning",
-        "triangle-alert",
-        "El carrito está vacío. Agrega productos antes de finalizar la compra.",
-        "info",
-      );
-      return;
-    }
-
-    const itemsDto = detalles.map((d) => ({
-      productoId: d.producto.id,
-      cantidad: d.cantidad,
-    }));
-
-    const datosProcesarVenta = {
-      datosPerfil: {
-        telefono: document.getElementById("telefono")?.value || null,
-        direccion: document.getElementById("direccion")?.value || null,
-        documento: document.getElementById("documento")?.value || null,
-      },
-      metodoPago: document.getElementById("metodoPago")?.value || "EFECTIVO",
-      items: itemsDto,
-    };
-
-    const ventaCreada = await procesarVenta(usuarioId, datosProcesarVenta);
-    localStorage.removeItem("carrito");
-    localStorage.removeItem("carritoItems");
-    vaciarEstadoCarrito();
-    window.dispatchEvent(new Event("carritoActualizado"));
-    if (typeof vaciarEstadoCarrito === "function") {
-      vaciarEstadoCarrito();
-    }
-    mostrarMensaje(
-      "success",
-      "circle-check",
-      "¡Compra realizada exitosamente!",
-    );
-    setTimeout(() => {
-      window.location.href = "/index.html";
-    }, 2500);
   } catch (error) {
-    console.error("Error al obtener el carrito: ", error);
-    mostrarMensaje("danger", "circle-x", "No se pudo completar la compra");
+    console.error("Error al finalizar pedido:", error);
   }
 }

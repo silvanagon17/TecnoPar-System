@@ -47,8 +47,8 @@ class navHeader extends HTMLElement {
             class="hidden flex items-center gap-1 text-gray-700 hover:text-blue-600 font-semibold px-3 py-1 rounded-lg border border-gray-300 hover:border-blue-500 transition"
             title="Ir al Panel de Administración"
           >
-            <i data-lucide="shield-alert" class="w-5 h-5 text-blue-600"></i>
-            <span class="text-sm">Panel Admin</span>
+            <i data-lucide="layers-plus" class="w-5 h-5 text-blue-600"></i>
+            <span class="text-sm">Admin</span>
           </a>
           <div class="mini-switch-container">
             <input type="checkbox" id="checkbox" class="checkbox-input" />

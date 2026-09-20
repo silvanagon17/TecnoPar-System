@@ -52,3 +52,22 @@ export const obtenerVentaPorId = async (id) => {
   }
   return await respuesta.json();
 };
+
+export const cambiarEstado = async (id) => {
+  const respuesta = await fetch(`${API_URL}/${id}/finalizar`, {
+    method: "POST",
+    headers: getAuthHeaders(),
+  });
+
+  const textoRespuesta = await respuesta.text().catch(() => "");
+  if (!respuesta.ok)
+    throw new Error(
+      textoRespuesta || "No se pudo cambiar el estado del pedido.",
+    );
+
+  try {
+    return JSON.parse(textoRespuesta);
+  } catch (error) {
+    return { ok: true };
+  }
+};

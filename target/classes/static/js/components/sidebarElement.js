@@ -110,7 +110,7 @@ class SidebarElement extends HTMLElement {
             >
 
             <a
-              href="#"
+              href="pedido.html"
               class="w-full menu-item flex items-center space-x-2 px-3 py-[13px] rounded-xl font-medium transition"
             >
               <i data-lucide="package" class="w-5 h-5 shrink-0"></i>
@@ -118,7 +118,7 @@ class SidebarElement extends HTMLElement {
             </a>
 
             <a
-              href="#"
+              href="venta.html"
               class="w-full menu-item flex items-center space-x-2 px-3 py-[13px] rounded-xl font-medium transition"
             >
               <i
@@ -160,15 +160,13 @@ class SidebarElement extends HTMLElement {
         </div>
 
         <div class="footer-sidebar p-3 md:p-4">
-          <a
-            href="#"
-            class="hidden md:flex items-center justify-center text-[10px] bg-red-500/10 hover:bg-red-500/30 text-red-500 rounded-xl w-full space-x-2 px-2 py-[17px] transition"
-          >
-            <i data-lucide="log-out"></i>
-            <p class="sidebar-text text-[14px] font-bold leading-none">
-              Cerrar Sesión
-            </p>
-          </a>
+          <button
+                id="btn-logout-sb"
+                class="text-[14px] font-bold leading-none bg-red-500/10 hover:bg-red-500/30 text-red-500 rounded-xl w-full flex items-center justify-center text-[10px] space-x-2 px-2 py-[17px]"
+              >
+                <i data-lucide="log-out" class="w-5 h-5 shrink-0"></i>
+                <span class="sidebar-text"> Cerrar Sesión</span>
+              </button>
         </div>
       </aside>
     `;

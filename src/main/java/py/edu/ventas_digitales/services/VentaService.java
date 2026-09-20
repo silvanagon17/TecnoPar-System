@@ -1,10 +1,12 @@
 package py.edu.ventas_digitales.services;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
 import py.edu.ventas_digitales.dto.CompletarPerfilDto;
@@ -29,6 +31,17 @@ public class VentaService {
     private final UsuarioRepository usuarioRepository;
     private final CarritoRepository carritoRepository;
 
+    public List<Venta> obtenerVentasPorEstado(@RequestParam String estado) {
+        return ventaRepository.findByEstado(estado);
+    }
+
+    public Venta cambiarEstado(Long ventaId, String nuevoEstado) {
+        Venta venta = ventaRepository.findById(ventaId)
+                .orElseThrow(() -> new RuntimeException("Venta no encontrada con ID: " + ventaId));
+        venta.setEstado(nuevoEstado);
+        return ventaRepository.save(venta);
+    }
+
     @Transactional(rollbackFor = Exception.class)
     public Venta procesarVenta(Long usuarioId, ProcesarVentaDto request) {
         Usuario usuario = usuarioRepository.findById(usuarioId)
@@ -50,7 +63,7 @@ public class VentaService {
         Venta venta = new Venta();
         venta.setUsuario(usuario);
         venta.setMetodoPago(request.getMetodoPago());
-        venta.setEstado("COMPLETADO");
+        venta.setEstado("PENDIENTE");
         venta.setPrecioTotal(BigDecimal.ZERO);
 
         BigDecimal totalAcumulado = BigDecimal.ZERO;

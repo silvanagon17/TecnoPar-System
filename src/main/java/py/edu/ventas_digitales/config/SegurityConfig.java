@@ -56,14 +56,16 @@ public class SegurityConfig {
                                 "/api/auth/**",
                                 "/error")
                         .permitAll()
-                        .requestMatchers("/productos.html", "/categoria.html", "/carrito.html", "/usuario.html",
+                        .requestMatchers("/productos.html", "/categoria.html", "/pedido.html", "/carrito.html",
+                                "/usuario.html", "/venta.html",
                                 "/checkout.html")
                         .permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/categorias/**", "/api/productos/**", "/api/ventas/**",
                                 "/api/usuarios/**")
                         .permitAll()
                         .requestMatchers("/api/carrito/**").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/api/productos/**", "/api/categorias/**")
+                        .requestMatchers("/api/ventas/usuario/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/productos/**", "/api/categorias/**", "/api/ventas/**")
                         .hasAnyAuthority("ADMIN", "ROLE_ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/productos/**", "/api/categorias/**")
                         .hasAnyAuthority("ADMIN", "ROLE_ADMIN")
@@ -84,7 +86,7 @@ public class SegurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOriginPatterns(List.of("*"));
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-Requested-With"));
         configuration.setAllowCredentials(true);
 

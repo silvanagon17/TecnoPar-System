@@ -92,7 +92,7 @@ function expandMenu(id, arrowId) {
 
   arrow.classList.toggle("rotate-180");
 }
-document.getElementById("menu-sidebar").addEventListener("mouseleave", () => {
+document.getElementById("menu-sidebar")?.addEventListener("mouseleave", () => {
   const dropdown = document.getElementById("dropdown-cats");
   const arrow = document.getElementById("arrow-icon");
   dropdown.classList.add("hidden");

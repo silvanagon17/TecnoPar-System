@@ -2,6 +2,8 @@ package py.edu.ventas_digitales.models;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -30,6 +32,7 @@ public class DetalleVenta {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "venta_id", nullable = false)
+    @JsonIgnoreProperties("detalles")
     private Venta venta;
 
     @ManyToOne(fetch = FetchType.LAZY)

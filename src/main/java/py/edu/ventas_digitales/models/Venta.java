@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,6 +29,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Venta {
 
     @Id
@@ -42,13 +45,15 @@ public class Venta {
     @Column(name = "fecha_venta", nullable = false)
     private LocalDateTime fechaVenta = LocalDateTime.now();
 
-    @Column(nullable = false)
+    @Column(name = "estado", nullable = false)
     private String estado;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", nullable = false)
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "ventas" })
     private Usuario usuario;
 
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("venta")
     private List<DetalleVenta> detalles = new ArrayList<>();
 }
