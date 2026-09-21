@@ -300,6 +300,7 @@ async function gestionarFinalizarCompra(e) {
         direccion: document.getElementById("direccion")?.value || null,
         documento: document.getElementById("documento")?.value || null,
       },
+      observacion: document.getElementById("observacion")?.value || null,
       metodoPago: document.getElementById("metodoPago")?.value || "EFECTIVO",
       items: itemsDto,
     };

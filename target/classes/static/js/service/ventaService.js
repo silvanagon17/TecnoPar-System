@@ -53,6 +53,16 @@ export const obtenerVentaPorId = async (id) => {
   return await respuesta.json();
 };
 
+export const obtenerVentasPorEstado = async (estado) => {
+  const respuesta = await fetch(`${API_URL}/estado?estado=${estado}`, {
+    headers: getAuthHeaders(),
+  });
+  if (!respuesta.ok) {
+    throw new Error(`Error al obtener ventas con estado ${estado}`);
+  }
+  return await respuesta.json();
+};
+
 export const cambiarEstado = async (id) => {
   const respuesta = await fetch(`${API_URL}/${id}/finalizar`, {
     method: "POST",

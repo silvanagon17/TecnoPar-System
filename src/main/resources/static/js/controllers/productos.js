@@ -121,7 +121,7 @@ const renderTabla = (productos) => {
   }
   productos.forEach((producto) => {
     const tr = document.createElement("tr");
-
+    tr.className = "item-table";
     let botonesHtml = `
                         <button
                           class="btn hover:text-green-500 btn-reponer-stock" data-id="${producto.id}"

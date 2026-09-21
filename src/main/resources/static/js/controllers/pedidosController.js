@@ -98,7 +98,7 @@ function renderizarTabla(pedidos) {
 
     const tr = document.createElement("tr");
     tr.id = `pedido-row-${p.id}`;
-    tr.className = "text-center";
+    tr.className = "text-center item-pedido";
 
     tr.innerHTML = `
       <td class="py-4 px-5 ">#${p.id}</td>
@@ -174,6 +174,8 @@ function mostrarDetallePedido(pedidoId) {
     p.usuario?.telefono || p.datosPerfil?.telefono || "Sin datos";
   document.getElementById("detalle-cliente-direccion").textContent =
     p.usuario?.direccion || p.datosPerfil?.direccion || "Sin dirección";
+  document.getElementById("detalle-cliente-observacion").textContent =
+    p.observacion || "";
   document.getElementById("detalle-metodo-pago").textContent =
     p.metodoPago || "EFECTIVO";
 
@@ -188,7 +190,7 @@ function mostrarDetallePedido(pedidoId) {
     const subtotal = d.subTotal || precio * d.cantidad;
 
     const tr = document.createElement("tr");
-    tr.className = "border-b border-gray-100 hover:bg-gray-50/50";
+    tr.className = "item-pedido";
     tr.innerHTML = `
       <td class="py-3 px-3 font-medium">${nombreProd}</td>
       <td class="py-3 px-3 text-center">Gs. ${formatoMoneda.format(precio)}</td>

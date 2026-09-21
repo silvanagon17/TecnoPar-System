@@ -42,6 +42,9 @@ public class Venta {
     @Column(name = "metodo_pago", nullable = false)
     private String metodoPago;
 
+    @Column(nullable = true)
+    private String observacion;
+
     @Column(name = "fecha_venta", nullable = false)
     private LocalDateTime fechaVenta = LocalDateTime.now();
 
@@ -50,10 +53,10 @@ public class Venta {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", nullable = false)
-    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "ventas" })
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "ventas", "password" })
     private Usuario usuario;
 
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("venta")
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "venta" })
     private List<DetalleVenta> detalles = new ArrayList<>();
 }

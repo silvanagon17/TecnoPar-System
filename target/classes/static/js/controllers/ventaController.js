@@ -97,7 +97,7 @@ function renderizarTabla(pedidos) {
 
     const tr = document.createElement("tr");
     tr.id = `pedido-row-${p.id}`;
-    tr.className = "text-center";
+    tr.className = "text-center item-table";
 
     tr.innerHTML = `
       <td class="py-4 px-5 ">#${p.id}</td>
@@ -167,6 +167,8 @@ function mostrarDetallePedido(pedidoId) {
     p.usuario?.telefono || p.datosPerfil?.telefono || "Sin datos";
   document.getElementById("detalle-cliente-direccion").textContent =
     p.usuario?.direccion || p.datosPerfil?.direccion || "Sin dirección";
+  document.getElementById("detalle-cliente-observacion").textContent =
+    p.observacion || "";
   document.getElementById("detalle-metodo-pago").textContent =
     p.metodoPago || "EFECTIVO";
 

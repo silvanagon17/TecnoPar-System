@@ -13,6 +13,7 @@ public class ProcesarVentaDto {
 
     private CompletarPerfilDto datosPerfil;
     private String metodoPago;
+    private String observacion;
     private List<ItemCarritoDto> items;
 
 }

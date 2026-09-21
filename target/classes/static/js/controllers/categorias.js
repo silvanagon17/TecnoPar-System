@@ -52,7 +52,8 @@ const renderTabla = (categorias) => {
   }
   categorias.forEach((categoria) => {
     const tr = document.createElement("tr");
-    const esActivo = categoria.estado === "true" || categoria.estado === true;
+    tr.className = "text-center item-table";
+
     let botonesHtml = `
                         <button
                           class="btn hover:text-yellow-500 btn-editar" data-id="${categoria.id}" 

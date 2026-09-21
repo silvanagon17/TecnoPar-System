@@ -57,8 +57,7 @@ public class SegurityConfig {
                                 "/error")
                         .permitAll()
                         .requestMatchers("/productos.html", "/categoria.html", "/pedido.html", "/carrito.html",
-                                "/usuario.html", "/venta.html",
-                                "/checkout.html")
+                                "/usuario.html", "/venta.html", "/checkout.html", "/dashboard.html")
                         .permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/categorias/**", "/api/productos/**", "/api/ventas/**",
                                 "/api/usuarios/**")

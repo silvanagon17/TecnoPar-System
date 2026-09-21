@@ -17,6 +17,7 @@
   --azul-buscador: #293153be;
   --azul-switch: #09133f;
   --azul-hover: #2e568da8;
+  --azul-table-item: #0f233f;
 
   /* --- Transparencias --- */
   --azul-transparente-nav: #000729d8;
@@ -52,6 +53,7 @@ body.modo-claro {
   --azul-boton: #e5edf7;
   --azul-acento: #3b82f6;
   --azul-hover: #7caaeb88;
+  --azul-table-item: #ecf2fc;
   --borde-general: #dfdfdfc0;
 
   --texto-sidebar: #05002e;
@@ -506,6 +508,10 @@ option {
   vertical-align: middle;
 }
 
+.item-table:hover {
+  background-color: var(--azul-table-item);
+}
+
 .text-custom {
   max-width: 150px;
   white-space: nowrap;
@@ -568,6 +574,10 @@ option {
   border-bottom: 1px solid var(--borde-general);
 }
 
+.border-t {
+  border-top: 1px solid var(--borde-general);
+}
+
 #carrito-footer {
   background: var(--azul-seccion);
   border-top: 1px solid var(--borde-principal);
@@ -586,4 +596,21 @@ option {
 
 #detalle-categoria {
   border: 1px solid var(--borde-principal);
+}
+
+/*--------------- Detalle pedido --------------- */
+
+.detalle-container {
+  background: var(--azul-seccion);
+  border: 1px solid var(--borde-general);
+}
+
+.item-pedido:hover {
+  background: var(--azul-table-item);
+}
+
+.contains-table {
+  border: 1px solid var(--borde-general);
+  border-radius: 10px;
+  padding: 10px;
 }

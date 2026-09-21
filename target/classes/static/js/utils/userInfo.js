@@ -4,12 +4,24 @@ document.addEventListener("DOMContentLoaded", function () {
   const divAnonimo = document.getElementById("usuario-anonimo");
   const divLogueado = document.getElementById("usuario-logueado");
   const navUsername = document.getElementById("nav-username");
+  const tituloUser = document.getElementById("titulo-user");
 
   if (token && divLogueado) {
     if (divAnonimo) divAnonimo.classList.add("hidden");
     if (divLogueado) divLogueado.classList.remove("hidden");
 
     if (navUsername) navUsername.textContent = nombreCompleto;
+    if (divLogueado) {
+      if (tituloUser) {
+        tituloUser.innerHTML = `
+       <h2
+                class="text-2xl md:text-3xl font-extrabold tracking-tight"
+              >
+                Bienvenido, ${nombreCompleto}
+              </h2>
+      `;
+      }
+    }
 
     const btnUserMenu = document.getElementById("btn-user-menu");
     const userDropdown = document.getElementById("user-dropdown");

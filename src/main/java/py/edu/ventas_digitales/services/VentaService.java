@@ -63,6 +63,7 @@ public class VentaService {
         Venta venta = new Venta();
         venta.setUsuario(usuario);
         venta.setMetodoPago(request.getMetodoPago());
+        venta.setObservacion(request.getObservacion());
         venta.setEstado("PENDIENTE");
         venta.setPrecioTotal(BigDecimal.ZERO);
 
