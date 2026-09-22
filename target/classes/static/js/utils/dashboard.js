@@ -59,13 +59,20 @@ function renderizarUltimosPedidos(ultimosPedidos) {
     const cliente = v.usuario
       ? `${v.usuario.nombre || ""} ${v.usuario.apellido || ""}`.trim()
       : "Cliente";
+    const fecha = v.fechaVenta
+      ? new Date(v.fechaVenta).toLocaleString("es-PY")
+      : new Date().toLocaleString("es-PY");
     const tr = document.createElement("tr");
-    tr.classList = "px-3";
+    tr.classList = "px-3 item-pedido";
     tr.innerHTML = `
-      <td class="">#${v.id}</td>
-      <td class="">${cliente}</td>
-      <td class="">Gs. ${formatoMoneda.format(v.precioTotal || v.total || 0)}</td>
-      <td class=""><span>${v.estado}</span></td>
+      <td class="py-3 text-center">#${v.id}</td>
+      <td class="py-3 text-center">${cliente}</td>
+      <td class="py-3 text-center">${fecha}</td>
+      <td class="py-3 text-center">Gs. ${formatoMoneda.format(v.precioTotal || v.total || 0)}</td>
+      <td class="py-3 text-center"><span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-yellow-600/10 text-xs font-medium text-yellow-600 ring-1 ring-inset ring-amber-500/20">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+          ${v.estado}
+        </span></td>
     `;
     tbody.appendChild(tr);
   });
@@ -78,10 +85,11 @@ function renderizarTablaStock(productosBajos) {
   tbody.innerHTML = "";
   productosBajos.forEach((p) => {
     const tr = document.createElement("tr");
-    tr.classList = "px-3";
+    tr.classList = "px-3 item-pedido";
     tr.innerHTML = `
-      <td class="">${p.nombreProducto || p.nombre}</td>
-      <td class=" text-red-500 font-bold">${p.stock} un.</td>
+      <td class="py-3 text-center">${p.id}</td>
+      <td class="py-3 text-center">${p.nombreProducto || p.nombre}</td>
+      <td class="py-3 text-center text-red-500 font-bold">${p.stock} un.</td>
     `;
     tbody.appendChild(tr);
   });

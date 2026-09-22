@@ -29,14 +29,22 @@ document.addEventListener("DOMContentLoaded", () => {
   if (searchInput) {
     searchInput.addEventListener("input", (e) => {
       const termino = e.target.value.toLowerCase();
-      const filtrados = listaPedidosPendientes.filter(
-        (p) =>
-          p.id.toString().includes(termino) ||
-          (p.usuario &&
-            `${p.usuario.nombre} ${p.usuario.apellido}`
-              .toLowerCase()
-              .includes(termino)),
-      );
+      const filtrados = listaPedidosPendientes.filter((p) => {
+        const cliente = p.usuario
+          ? `${p.usuario.nombre} ${p.usuario.apellido}`.toLowerCase()
+          : "";
+        const direccion = (
+          p.direccion ||
+          p.usuario?.direccion ||
+          ""
+        ).toLowerCase();
+        const idPedido = p.id.toString();
+        return (
+          idPedido.includes(termino) ||
+          cliente.includes(termino) ||
+          direccion.includes(termino)
+        );
+      });
       renderizarTabla(filtrados);
     });
   }

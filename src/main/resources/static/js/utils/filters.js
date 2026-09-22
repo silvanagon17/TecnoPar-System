@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   searchInput.addEventListener("input", filtrarProductos);
-  statusFilter.addEventListener("change", filtrarProductos);
+  statusFilter?.addEventListener("change", filtrarProductos);
 
   if (comboCategoriaInput) {
     comboCategoriaInput.addEventListener("change", filtrarProductos);
@@ -18,7 +18,7 @@ function filtrarProductos() {
     .getElementById("searchInput")
     .value.toLowerCase()
     .trim();
-  const estadoSeleccionado = document.getElementById("statusFilter").value;
+  const estadoSeleccionado = document.getElementById("statusFilter")?.value;
   const idCategoriaSeleccionada =
     document.querySelector("#combobox-categoria-table .combo-value")?.value ||
     "";

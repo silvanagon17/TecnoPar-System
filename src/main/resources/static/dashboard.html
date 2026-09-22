@@ -122,41 +122,34 @@
 
           <div class="grid col-12 gap-6 d-flex justify-content-center p-3">
             <div
-              class="dashboard-bg p-4 col-8 shadow-sm flex flex-column rounded-2xl"
+              class="dashboard-bg col-8 shadow-sm flex flex-column rounded-2xl"
             >
-              <p
-                class="text-xs font-bold text-slate-400 uppercase tracking-wider"
-              >
-                Pedidos Recientes
-              </p>
               <div class="contains-table w-100">
                 <table class="w-100">
-                  <thead class="border-b">
-                    <tr class="">
-                      <th>Id</th>
-                      <th>Cliente</th>
-                      <th>Total</th>
-                      <th>Estado</th>
+                  <thead class="border-b table-head">
+                    <tr>
+                      <th class="py-2 px- text-center">Id</th>
+                      <th class="py-2 px-5 text-center">Cliente</th>
+                      <th class="py-2 px-5 text-center">Fecha</th>
+                      <th class="py-2 px-5 text-center">Total</th>
+                      <th class="py-2 px-5 text-center">Estado</th>
                     </tr>
                   </thead>
                   <tbody id="tbody-ultimos-pedidos"></tbody>
                 </table>
               </div>
             </div>
+
             <div
-              class="dashboard-bg p-4 col-4 shadow-sm flex flex-column rounded-2xl"
+              class="dashboard-bg col-4 shadow-sm flex flex-column rounded-2xl"
             >
-              <p
-                class="text-xs font-bold text-slate-400 uppercase tracking-wider"
-              >
-                Stock Critico
-              </p>
               <div class="contains-table w-100">
                 <table class="w-100">
-                  <thead class="border-b head-table">
+                  <thead class="border-b table-head">
                     <tr>
-                      <th>Producto</th>
-                      <th>Stock</th>
+                      <th class="py-2 px- text-center">Id</th>
+                      <th class="py-2 px- text-center">Producto</th>
+                      <th class="py-2 px- text-center">Stock</th>
                     </tr>
                   </thead>
                   <tbody id="tbody-stock"></tbody>

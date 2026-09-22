@@ -2,10 +2,33 @@ import { goToFormView, goToListarView } from "../utils/changeView.js";
 import { mostrarMensaje } from "../components/alerts.js";
 
 let pedidoSeleccionadoId = null;
-let listaPedidosPendientes = [];
+let listaVentaCompleta = [];
 
-document.addEventListener("DOMContentLoaded", () => {
-  cargarPedidosPendientes();
+document.addEventListener("DOMContentLoaded", async () => {
+  cargarVentasCompletas();
+
+  document
+    .getElementById("searchInput")
+    ?.addEventListener("input", aplicarFiltros);
+  document
+    .getElementById("fecha-inicio")
+    ?.addEventListener("change", aplicarFiltros);
+  document
+    .getElementById("fecha-fin")
+    ?.addEventListener("change", aplicarFiltros);
+  document
+    .getElementById("select-metodo-pago")
+    ?.addEventListener("change", aplicarFiltros);
+
+  document
+    .getElementById("btn-limpiar-filtros")
+    ?.addEventListener("click", () => {
+      document.getElementById("searchInput").value = "";
+      document.getElementById("fecha-inicio").value = "";
+      document.getElementById("fecha-fin").value = "";
+      document.getElementById("select-metodo-pago").value = "";
+      renderizarTabla(listaVentaCompleta);
+    });
 
   const btnVolver = document.getElementById("volver");
   if (btnVolver) {
@@ -23,22 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-
-  const searchInput = document.getElementById("searchInput");
-  if (searchInput) {
-    searchInput.addEventListener("input", (e) => {
-      const termino = e.target.value.toLowerCase();
-      const filtrados = listaPedidosPendientes.filter(
-        (p) =>
-          p.id.toString().includes(termino) ||
-          (p.usuario &&
-            `${p.usuario.nombre} ${p.usuario.apellido}`
-              .toLowerCase()
-              .includes(termino)),
-      );
-      renderizarTabla(filtrados);
-    });
-  }
 });
 
 function obtenerToken() {
@@ -48,7 +55,7 @@ function obtenerToken() {
     .trim();
 }
 
-async function cargarPedidosPendientes() {
+async function cargarVentasCompletas() {
   const token = obtenerToken();
   const tbody = document.getElementById("tbody");
   if (!tbody) return;
@@ -62,21 +69,68 @@ async function cargarPedidosPendientes() {
     );
 
     if (res.ok) {
-      listaPedidosPendientes = await res.json();
-      renderizarTabla(listaPedidosPendientes);
+      listaVentaCompleta = await res.json();
+      renderizarTabla(listaVentaCompleta);
     }
   } catch (error) {
     console.error("Error al obtener los pedidos pendientes:", error);
   }
 }
 
-function renderizarTabla(pedidos) {
+function aplicarFiltros() {
+  const busqueda = document
+    .getElementById("searchInput")
+    .value.toLowerCase()
+    .trim();
+  const fechaInicioVal = document.getElementById("fecha-inicio").value;
+  const fechaFinVal = document.getElementById("fecha-fin").value;
+  const metodoPago = document.getElementById("select-metodo-pago").value;
+
+  const resultado = listaVentaCompleta.filter((v) => {
+    const cliente = v.usuario
+      ? `${v.usuario.nombre} ${v.usuario.apellido}`.toLowerCase()
+      : "";
+    const direccion = (v.direccion || v.usuario?.direccion || "").toLowerCase();
+    const id = v.id.toString();
+
+    const coincideTexto =
+      id.includes(busqueda) ||
+      cliente.includes(busqueda) ||
+      direccion.includes(busqueda);
+
+    const coincideMetodo =
+      !metodoPago ||
+      (v.metodoPago && v.metodoPago.toUpperCase() === metodoPago.toUpperCase());
+
+    let coincideFecha = true;
+    if (v.fechaVenta || v.fecha) {
+      const fechaVenta = new Date(v.fechaVenta || v.fecha);
+
+      if (fechaInicioVal) {
+        const fechaIni = new Date(fechaInicioVal);
+        fechaIni.setHours(0, 0, 0, 0);
+        coincideFecha = coincideFecha && fechaVenta >= fechaIni;
+      }
+
+      if (fechaFinVal) {
+        const fechaFin = new Date(fechaFinVal);
+        fechaFin.setHours(23, 59, 59, 999);
+        coincideFecha = coincideFecha && fechaVenta <= fechaFin;
+      }
+    }
+    return coincideTexto && coincideMetodo && coincideFecha;
+  });
+  renderizarTabla(resultado);
+}
+
+function renderizarTabla(ventas) {
   const tbody = document.getElementById("tbody");
+  if (!tbody) return;
   const formatoMoneda = new Intl.NumberFormat("es-PY");
 
   tbody.innerHTML = "";
 
-  if (!pedidos || pedidos.length === 0) {
+  if (!ventas || ventas.length === 0) {
     tbody.innerHTML = `
       <tr>
         <td colspan="6" class="py-6 text-center">
@@ -87,23 +141,23 @@ function renderizarTabla(pedidos) {
     return;
   }
 
-  pedidos.forEach((p) => {
-    const cliente = p.usuario
-      ? `${p.usuario.nombre || ""} ${p.usuario.apellido || ""}`.trim()
+  ventas.forEach((v) => {
+    const cliente = v.usuario
+      ? `${v.usuario.nombre || ""} ${v.usuario.apellido || ""}`.trim()
       : "Cliente";
-    const fecha = p.fechaVenta
-      ? new Date(p.fechaVenta).toLocaleString("es-PY")
+    const fecha = v.fechaVenta
+      ? new Date(v.fechaVenta).toLocaleString("es-PY")
       : new Date().toLocaleString("es-PY");
 
     const tr = document.createElement("tr");
-    tr.id = `pedido-row-${p.id}`;
+    tr.id = `pedido-row-${v.id}`;
     tr.className = "text-center item-table";
 
     tr.innerHTML = `
-      <td class="py-4 px-5 ">#${p.id}</td>
+      <td class="py-4 px-5 ">#${v.id}</td>
       <td class="py-4 px-5">${cliente}</td>
       <td class="py-4 px-5">${fecha}</td>
-      <td class="py-4 px-5">Gs. ${formatoMoneda.format(p.precioTotal || p.total || 0)}</td>
+      <td class="py-4 px-5">Gs. ${formatoMoneda.format(v.precioTotal || v.total || 0)}</td>
       <td class="py-4 px-4 text-center">
         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-green-600/10 text-xs font-medium text-green-600 ring-1 ring-inset ring-green-500/20">
           <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
@@ -114,7 +168,7 @@ function renderizarTabla(pedidos) {
         <div class="flex items-center justify-center gap-2">
           <button 
             class="btn-ver-detalle px-3 py-1.5 text-xs font-semibold text-blue-600 hover:bg-blue-50 rounded-lg transition"
-            data-id="${p.id}"
+            data-id="${v.id}"
             title="Ver detalle de la Venta"
           >
             Ver Detalle
@@ -145,37 +199,37 @@ function renderizarTabla(pedidos) {
   }
 }
 
-function mostrarDetallePedido(pedidoId) {
-  const p = listaPedidosPendientes.find((item) => item.id === pedidoId);
-  if (!p) return;
+function mostrarDetallePedido(ventaId) {
+  const v = listaVentaCompleta.find((item) => item.id === ventaId);
+  if (!v) return;
 
-  pedidoSeleccionadoId = p.id;
+  pedidoSeleccionadoId = v.id;
   const formatoMoneda = new Intl.NumberFormat("es-PY");
 
-  document.getElementById("detalle-id-venta").textContent = p.id;
-  document.getElementById("detalle-fecha").textContent = p.fecha
-    ? new Date(p.fecha).toLocaleString("es-PY")
+  document.getElementById("detalle-id-venta").textContent = v.id;
+  document.getElementById("detalle-fecha").textContent = v.fecha
+    ? new Date(v.fecha).toLocaleString("es-PY")
     : new Date().toLocaleString("es-PY");
 
-  const nombreCliente = p.usuario
-    ? `${p.usuario.nombre || ""} ${p.usuario.apellido || ""}`.trim()
+  const nombreCliente = v.usuario
+    ? `${v.usuario.nombre || ""} ${v.usuario.apellido || ""}`.trim()
     : "Cliente Desconocido";
   document.getElementById("detalle-cliente-nombre").textContent = nombreCliente;
   document.getElementById("detalle-cliente-documento").textContent =
-    p.usuario?.documento || p.datosPerfil?.documento || "Sin datos";
+    v.usuario?.documento || v.datosPerfil?.documento || "Sin datos";
   document.getElementById("detalle-cliente-telefono").textContent =
-    p.usuario?.telefono || p.datosPerfil?.telefono || "Sin datos";
+    v.usuario?.telefono || v.datosPerfil?.telefono || "Sin datos";
   document.getElementById("detalle-cliente-direccion").textContent =
-    p.usuario?.direccion || p.datosPerfil?.direccion || "Sin dirección";
+    v.usuario?.direccion || v.datosPerfil?.direccion || "Sin dirección";
   document.getElementById("detalle-cliente-observacion").textContent =
-    p.observacion || "";
+    v.observacion || "";
   document.getElementById("detalle-metodo-pago").textContent =
-    p.metodoPago || "EFECTIVO";
+    v.metodoPago || "EFECTIVO";
 
   const tbodyItems = document.getElementById("tabla-items-detalle-body");
   tbodyItems.innerHTML = "";
 
-  const detalles = p.detalles || p.items || [];
+  const detalles = v.detalles || v.items || [];
   detalles.forEach((d) => {
     const nombreProd =
       d.producto?.nombreProducto || d.producto?.nombre || "Producto";
@@ -194,7 +248,7 @@ function mostrarDetallePedido(pedidoId) {
   });
 
   document.getElementById("detalle-monto-total").textContent =
-    `Gs. ${formatoMoneda.format(p.precioTotal || p.total || 0)}`;
+    `Gs. ${formatoMoneda.format(v.precioTotal || v.total || 0)}`;
 
   goToFormView("view-formulario", "view-listado");
 }
