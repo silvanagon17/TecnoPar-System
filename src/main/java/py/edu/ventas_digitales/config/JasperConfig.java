@@ -13,22 +13,25 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 
 @Component
 public class JasperConfig {
 
-    public ResponseEntity<Resource> reportePdf(Map<String, Object> parametros, String archivoJasper, String nombreFinal,
+    public ResponseEntity<Resource> reportePdf(Map<String, Object> parametros, String archivoJrxml, String nombreFinal,
             Connection con) {
         try {
-            InputStream stream = getClass().getResourceAsStream("/reports/" + archivoJasper + ".jasper");
+            InputStream stream = getClass().getResourceAsStream("/reportes/" + archivoJrxml + ".jrxml");
             if (stream == null) {
                 throw new IllegalArgumentException("No se encontro el archivo");
             }
 
-            JasperPrint print = JasperFillManager.fillReport(stream, parametros, con);
+            JasperReport report = JasperCompileManager.compileReport(stream);
+            JasperPrint print = JasperFillManager.fillReport(report, parametros, con);
 
             byte[] reporte = JasperExportManager.exportReportToPdf(print);
             String newFilename = nombreFinal + ".pdf";

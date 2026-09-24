@@ -83,6 +83,14 @@
                 </div>
               </div>
               <button
+                id="btnGenerarReporte"
+                onclick="imprimirReporteVentas()"
+                class="flex text-center transition space-x-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-md shadow-blue-500/15 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+              >
+                <i data-lucide="file-text" class="h-4 w-4 mx-1"></i>
+                Reporte
+              </button>
+              <button
                 id="btn-limpiar-filtros"
                 class="transition space-x-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-md shadow-blue-500/15 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
               >
@@ -247,6 +255,7 @@
     <script src="js/utils/filters.js"></script>
     <script src="js/utils/userInfo.js"></script>
     <script type="module" src="js/utils/dropdownNotif.js"></script>
+    <script src="js/controllers/reporteController.js"></script>
     <script type="module" src="js/controllers/ventaController.js"></script>
     <script src="js/bootstrap/bootstrap.min.js"></script>
   </body>

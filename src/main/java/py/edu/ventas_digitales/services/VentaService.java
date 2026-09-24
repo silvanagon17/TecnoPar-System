@@ -1,8 +1,10 @@
 package py.edu.ventas_digitales.services;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import py.edu.ventas_digitales.dto.CompletarPerfilDto;
 import py.edu.ventas_digitales.dto.ItemCarritoDto;
 import py.edu.ventas_digitales.dto.ProcesarVentaDto;
+import py.edu.ventas_digitales.dto.VentaReporteDto;
 import py.edu.ventas_digitales.models.Carrito;
 import py.edu.ventas_digitales.models.DetalleVenta;
 import py.edu.ventas_digitales.models.Producto;
@@ -105,4 +108,56 @@ public class VentaService {
         return ventaGuardada;
     }
 
+    public List<VentaReporteDto> obtenerVentasParaReporte(String nombreUsuarioLogueado) {
+
+        List<Venta> todasLasVentas = ventaRepository.findAll();
+        List<VentaReporteDto> listaReporte = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+        for (Venta venta : todasLasVentas) {
+
+            if (venta.getEstado() != null && venta.getEstado().equalsIgnoreCase("PENDIENTE")) {
+                continue;
+            }
+
+            String clienteCompleto = "Sin Cliente";
+            if (venta.getUsuario() != null) {
+                String nom = venta.getUsuario().getNombre() != null ? venta.getUsuario().getNombre() : "";
+                String ape = venta.getUsuario().getApellido() != null ? venta.getUsuario().getApellido() : "";
+                clienteCompleto = (nom + " " + ape).trim();
+            }
+
+            String direccion = (venta.getUsuario() != null && venta.getUsuario().getDireccion() != null)
+                    ? venta.getUsuario().getDireccion()
+                    : "";
+            String ciudad = direccion.contains(",") ? direccion.split(",")[0].trim() : direccion;
+
+            int totalArticulos = 0;
+            if (venta.getDetalles() != null) {
+                for (DetalleVenta det : venta.getDetalles()) {
+                    if (det.getCantidad() != null) {
+                        totalArticulos += det.getCantidad();
+                    }
+                }
+            }
+
+            String fechaFormateada = (venta.getFechaVenta() != null)
+                    ? venta.getFechaVenta().format(formatter)
+                    : "";
+
+            VentaReporteDto dto = new VentaReporteDto();
+            dto.setId(venta.getId());
+            dto.setFecha(fechaFormateada);
+            dto.setCliente(clienteCompleto.isEmpty() ? "Sin Nombre" : clienteCompleto);
+            dto.setCiudad(ciudad);
+            dto.setMetodoPago(venta.getMetodoPago() != null ? venta.getMetodoPago() : "Efectivo");
+            dto.setCantidad(totalArticulos);
+            dto.setMontoTotal(venta.getPrecioTotal());
+            dto.setUsuario(nombreUsuarioLogueado != null ? nombreUsuarioLogueado : "Admin");
+
+            listaReporte.add(dto);
+        }
+
+        return listaReporte;
+    }
 }

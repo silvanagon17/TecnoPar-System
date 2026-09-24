@@ -28,10 +28,13 @@ py\edu\ventas_digitales\services\VentaService.class
 py\edu\ventas_digitales\repositories\CarritoRepository.class
 py\edu\ventas_digitales\VentasDigitalesApplication.class
 py\edu\ventas_digitales\repositories\CarritoDetalleRepository.class
+py\edu\ventas_digitales\services\ReporteVentaService.class
+py\edu\ventas_digitales\restcontrollers\ReporteRestController.class
 py\edu\ventas_digitales\restcontrollers\ProductoRestController.class
 py\edu\ventas_digitales\services\CategoriaService.class
 py\edu\ventas_digitales\dto\AuthResponseDto.class
 py\edu\ventas_digitales\models\Carrito.class
+py\edu\ventas_digitales\restcontrollers\GlobalExceptionHandler.class
 py\edu\ventas_digitales\config\JasperConfig.class
 py\edu\ventas_digitales\models\Usuario.class
 py\edu\ventas_digitales\models\CarritoDetalle.class

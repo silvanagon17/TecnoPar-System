@@ -30,7 +30,9 @@ C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\repositori
 C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\restcontrollers\AuthController.java
 C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\restcontrollers\CarritoRestController.java
 C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\restcontrollers\CategoriaRestController.java
+C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\restcontrollers\GlobalExceptionHandler.java
 C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\restcontrollers\ProductoRestController.java
+C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\restcontrollers\ReporteRestController.java
 C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\restcontrollers\UsuarioRestController.java
 C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\restcontrollers\VentaRestController.java
 C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\services\CarritoService.java
@@ -38,6 +40,7 @@ C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\services\C
 C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\services\CustomUserDetailsService.java
 C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\services\ImageService.java
 C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\services\ProductoService.java
+C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\services\ReporteVentaService.java
 C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\services\UsuarioService.java
 C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\services\VentaService.java
 C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\VentasDigitalesApplication.java
