@@ -1,8 +1,10 @@
 import { obtenerVentasPorEstado } from "../service/ventaService.js";
 import { obtenerProductos } from "../service/productoService.js";
+import { initNotificationListeners } from "../utils/dropdownNotif.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   await cargarMetricasDashboard();
+  initNotificationListeners();
 });
 
 async function cargarMetricasDashboard() {

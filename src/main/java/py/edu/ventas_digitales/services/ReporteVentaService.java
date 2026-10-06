@@ -13,12 +13,12 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import py.edu.ventas_digitales.dto.VentaReporteDto;
+import py.edu.ventas_digitales.dto.ReporteVentaDto;
 
 @Service
 public class ReporteVentaService {
 
-    public byte[] generarReporteVentasPdf(List<VentaReporteDto> ventas) throws Exception {
+    public byte[] generarReporteVentasPdf(List<ReporteVentaDto> ventas) throws Exception {
         InputStream jrxmlStream = getClass().getResourceAsStream("/reportes/reporte_venta.jrxml");
         if (jrxmlStream == null) {
             throw new IllegalArgumentException("No se encontró el archivo /reportes/reporte_venta.jrxml");

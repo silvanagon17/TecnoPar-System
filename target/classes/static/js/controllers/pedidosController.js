@@ -1,5 +1,6 @@
 import { cambiarEstado, obtenerVentas } from "../service/ventaService.js";
 import { goToFormView, goToListarView } from "../utils/changeView.js";
+import { initNotificationListeners } from "../utils/dropdownNotif.js";
 import { mostrarMensaje } from "../components/alerts.js";
 
 let pedidoSeleccionadoId = null;
@@ -7,7 +8,7 @@ let listaPedidosPendientes = [];
 
 document.addEventListener("DOMContentLoaded", () => {
   cargarPedidosPendientes();
-
+  initNotificationListeners();
   const btnVolver = document.getElementById("volver");
   if (btnVolver) {
     btnVolver.addEventListener("click", () => {

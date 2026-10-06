@@ -1,10 +1,10 @@
 package py.edu.ventas_digitales.services;
 
 import java.math.BigDecimal;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.time.format.DateTimeFormatter;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 import py.edu.ventas_digitales.dto.CompletarPerfilDto;
 import py.edu.ventas_digitales.dto.ItemCarritoDto;
 import py.edu.ventas_digitales.dto.ProcesarVentaDto;
-import py.edu.ventas_digitales.dto.VentaReporteDto;
+import py.edu.ventas_digitales.dto.ReporteVentaDto;
 import py.edu.ventas_digitales.models.Carrito;
 import py.edu.ventas_digitales.models.DetalleVenta;
 import py.edu.ventas_digitales.models.Producto;
@@ -108,10 +108,10 @@ public class VentaService {
         return ventaGuardada;
     }
 
-    public List<VentaReporteDto> obtenerVentasParaReporte(String nombreUsuarioLogueado) {
+    public List<ReporteVentaDto> obtenerVentasParaReporte(String nombreUsuarioLogueado) {
 
         List<Venta> todasLasVentas = ventaRepository.findAll();
-        List<VentaReporteDto> listaReporte = new ArrayList<>();
+        List<ReporteVentaDto> listaReporte = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
         for (Venta venta : todasLasVentas) {
@@ -145,7 +145,7 @@ public class VentaService {
                     ? venta.getFechaVenta().format(formatter)
                     : "";
 
-            VentaReporteDto dto = new VentaReporteDto();
+            ReporteVentaDto dto = new ReporteVentaDto();
             dto.setId(venta.getId());
             dto.setFecha(fechaFormateada);
             dto.setCliente(clienteCompleto.isEmpty() ? "Sin Nombre" : clienteCompleto);
@@ -160,4 +160,5 @@ public class VentaService {
 
         return listaReporte;
     }
+
 }

@@ -1,6 +1,7 @@
 package py.edu.ventas_digitales.restcontrollers;
 
 import java.security.Principal;
+
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import py.edu.ventas_digitales.dto.ProcesarVentaDto;
-import py.edu.ventas_digitales.dto.VentaReporteDto;
+import py.edu.ventas_digitales.dto.ReporteVentaDto;
 import py.edu.ventas_digitales.models.Venta;
 import py.edu.ventas_digitales.services.ReporteVentaService;
 import py.edu.ventas_digitales.services.VentaService;
@@ -65,7 +66,7 @@ public class VentaRestController {
             if (principal != null) {
                 nombreUsuarioLogueado = principal.getName();
             }
-            List<VentaReporteDto> listaVentas = ventaService.obtenerVentasParaReporte(nombreUsuarioLogueado);
+            List<ReporteVentaDto> listaVentas = ventaService.obtenerVentasParaReporte(nombreUsuarioLogueado);
             byte[] pdfBytes = reporteVentaService.generarReporteVentasPdf(listaVentas);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);

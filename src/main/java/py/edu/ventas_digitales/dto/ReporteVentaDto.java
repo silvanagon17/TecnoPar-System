@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class VentaReporteDto {
+public class ReporteVentaDto {
 
     private Long id;
     private String fecha;

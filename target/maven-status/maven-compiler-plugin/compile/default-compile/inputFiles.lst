@@ -11,6 +11,7 @@ C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\dto\ItemCa
 C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\dto\LoginDto.java
 C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\dto\ProcesarVentaDto.java
 C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\dto\RegistroDto.java
+C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\dto\ReporteVentaDto.java
 C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\dto\VentaRequestDto.java
 C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\models\Carrito.java
 C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\models\CarritoDetalle.java
@@ -40,7 +41,6 @@ C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\services\C
 C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\services\CustomUserDetailsService.java
 C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\services\ImageService.java
 C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\services\ProductoService.java
-C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\services\ReporteVentaService.java
 C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\services\UsuarioService.java
 C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\services\VentaService.java
 C:\Lenguaje II\ventas_digitales\src\main\java\py\edu\ventas_digitales\VentasDigitalesApplication.java

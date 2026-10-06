@@ -2,6 +2,7 @@ package py.edu.ventas_digitales.config;
 
 import java.io.InputStream;
 import java.sql.Connection;
+import java.util.Collection;
 import java.util.Map;
 
 import org.springframework.core.io.ByteArrayResource;
@@ -18,6 +19,7 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @Component
 public class JasperConfig {
@@ -45,5 +47,19 @@ public class JasperConfig {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    public byte[] generarBytesDesdeLista(Map<String, Object> parametros, String archivoJrxml, Collection<?> listaDatos)
+            throws Exception {
+        InputStream stream = getClass().getResourceAsStream("/reportes/" + archivoJrxml + ".jrxml");
+        if (stream == null) {
+            throw new IllegalArgumentException("No se encontro el archivo /reportes/" + archivoJrxml + ".jrxml");
+        }
+
+        JasperReport report = JasperCompileManager.compileReport(stream);
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(listaDatos);
+        JasperPrint print = JasperFillManager.fillReport(report, parametros, dataSource);
+
+        return JasperExportManager.exportReportToPdf(print);
     }
 }

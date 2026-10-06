@@ -18,6 +18,7 @@ py\edu\ventas_digitales\repositories\VentaRepository.class
 py\edu\ventas_digitales\repositories\ProductoRepository.class
 py\edu\ventas_digitales\config\WebConfig.class
 py\edu\ventas_digitales\restcontrollers\AuthController.class
+py\edu\ventas_digitales\dto\ReporteVentaDto.class
 py\edu\ventas_digitales\models\Producto.class
 py\edu\ventas_digitales\restcontrollers\UsuarioRestController.class
 py\edu\ventas_digitales\dto\ItemCarritoDto.class
@@ -28,7 +29,6 @@ py\edu\ventas_digitales\services\VentaService.class
 py\edu\ventas_digitales\repositories\CarritoRepository.class
 py\edu\ventas_digitales\VentasDigitalesApplication.class
 py\edu\ventas_digitales\repositories\CarritoDetalleRepository.class
-py\edu\ventas_digitales\services\ReporteVentaService.class
 py\edu\ventas_digitales\restcontrollers\ReporteRestController.class
 py\edu\ventas_digitales\restcontrollers\ProductoRestController.class
 py\edu\ventas_digitales\services\CategoriaService.class

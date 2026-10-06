@@ -1,4 +1,5 @@
 import { goToFormView, goToListarView } from "../utils/changeView.js";
+import { initNotificationListeners } from "../utils/dropdownNotif.js";
 import { mostrarMensaje } from "../components/alerts.js";
 
 let pedidoSeleccionadoId = null;
@@ -6,6 +7,7 @@ let listaVentaCompleta = [];
 
 document.addEventListener("DOMContentLoaded", async () => {
   cargarVentasCompletas();
+  initNotificationListeners();
 
   document
     .getElementById("searchInput")
