@@ -75,7 +75,7 @@ async function cargarVentasCompletas() {
       renderizarTabla(listaVentaCompleta);
     }
   } catch (error) {
-    console.error("Error al obtener los pedidos pendientes:", error);
+    console.error("Error al obtener los pedidos completados:", error);
   }
 }
 

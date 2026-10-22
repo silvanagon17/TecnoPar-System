@@ -29,16 +29,16 @@ export const obtenerUsuarioPorId = async (id) => {
   return await respuesta.json();
 };
 
-export const actualizarUsuario = async (id, datosPerfil) => {
-  const respuesta = await fetch(`${API_URL}/${id}`, {
+export async function actualizarUsuario(usuarioId, datosActualizados) {
+  const respuesta = await fetch(`${API_URL}/${usuarioId}`, {
     method: "PUT",
     headers: getAuthHeaders(),
-    body: JSON.stringify(datosPerfil),
+    body: JSON.stringify(datosActualizados),
   });
 
   if (!respuesta.ok) {
-    const errorData = await respuesta.json().catch(() => ({}));
-    throw new Error(errorData.message || "Error al actualizar el usuario");
+    const errorText = await respuesta.text();
+    throw new Error(errorText || "Error al actualizar el usuario");
   }
-  return respuesta;
-};
+  return await respuesta.json();
+}

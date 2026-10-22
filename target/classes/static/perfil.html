@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perfil</title>
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/form.css" />
+    <link rel="stylesheet" href="css/scroll.css" />
+    <link rel="stylesheet" href="css/notify.css" />
+    <script src="js/components/confirmDialog.js"></script>
+    <script src="js/components/navbarElement.js"></script>
+  </head>
+  <body class="h-full transition-colors duration-200 flex flex-col font-sans">
+    <main-header></main-header>
+    <main
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-grow space-y-6 mt-[60px]"
+    >
+      <div id="encabezado">
+        <h2 class="text-2xl font-black">Mi Perfil</h2>
+        <p class="text-xs text-slate-500 mt-0.5">
+          Gestiona tus datos de cuenta y revisa tu historial de compras.
+        </p>
+      </div>
+      <div id="notify-container"></div>
+      <div
+        class="card-perfil gap-6 rounded-2xl flex flex-column gap-3 shadow-sm"
+      >
+        <div
+          id="datos-perfil"
+          class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch"
+        >
+          <div class="h-100 p-3 flex flex-column justify-content-center gap-5">
+            <div
+              class="space-y-5 text-center sm:text-left mt-4 flex justify-center items-center"
+            >
+              <div class="flex flex-column sm:flex-row items-center">
+                <div
+                  id="siglasUser"
+                  class="w-16 h-16 rounded-5 bg-gradient-to-br from-indigo-500 to-indigo-700 text-white flex items-center justify-center font-black text-xl shadow-md shadow-indigo-500/20 ring-4 ring-indigo-50 shrink-0"
+                >
+                  AM
+                </div>
+                <div class="overflow-hidden w-full mt-2">
+                  <h2
+                    id="card-user-nombre"
+                    class="text-lg font-extrabold mt-1 truncate"
+                  >
+                    Alexis Martínez
+                  </h2>
+                  <p id="card-usser-email" class="text-xs truncate">
+                    alexismartinez@email.com
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="space-y-2.5 pt-2 flex flex-column items-end">
+              <button
+                id="btn-editar"
+                class="w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2"
+              >
+                <i data-lucide="pencil" class="w-5 h-5 shrink-0"></i> Editar
+                Perfil
+              </button>
+
+              <button
+                id="btn-logout"
+                class="w-full py-2.5 px-4 bg-slate-500/20 hover:bg-red-400/20 hover:text-rose-600 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-2"
+              >
+                <i data-lucide="log-out" class="w-5 h-5 shrink-0"></i>Cerrar
+                Sesión
+              </button>
+            </div>
+          </div>
+          <div
+            class="lg:col-span-2 p-6 space-y-6 flex flex-col justify-between"
+          >
+            <div class="space-y-6">
+              <div class="flex items-center justify-between border-b pb-3">
+                <div class="flex items-center gap-2">
+                  <div
+                    class="w-7 h-7 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center text-xs"
+                  >
+                    <i data-lucide="user" class="h-5 w-5"></i>
+                  </div>
+                  <h2 class="text-base font-bold">Datos Personales</h2>
+                </div>
+                <button
+                  id="editarContrasenha"
+                  class="text-xs text-blue-500 hover:text-blue-600 font-bold flex items-center gap-1 transition"
+                >
+                  <i data-lucide="key-round" class="h-4 w-4"></i> Cambiar
+                  Contraseña
+                </button>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div class="dato-usuario py-2 px-3 rounded-xl">
+                  <span
+                    class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block"
+                    >Nombre</span
+                  >
+                  <input
+                    type="text"
+                    id="field-nombre"
+                    class="text-xs font-bold w-100 focus:outline-none"
+                    disabled
+                  />
+                </div>
+                <div class="dato-usuario py-2 px-3 rounded-xl">
+                  <span
+                    class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block"
+                    >Apellido</span
+                  >
+                  <input
+                    type="text"
+                    id="field-apellido"
+                    class="text-xs font-bold w-100 focus:outline-none"
+                    disabled
+                  />
+                </div>
+
+                <div class="dato-usuario py-2 px-3 rounded-xl">
+                  <span
+                    class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block"
+                    >Documento (Nº CI / DNI)</span
+                  >
+                  <input
+                    type="text"
+                    id="field-documento"
+                    class="text-xs font-bold w-100 focus:outline-none"
+                    disabled
+                  />
+                </div>
+
+                <div class="dato-usuario py-2 px-3 rounded-xl">
+                  <span
+                    class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block"
+                    >Teléfono</span
+                  >
+                  <input
+                    type="text"
+                    id="field-telefono"
+                    class="text-xs font-bold w-100 focus:outline-none"
+                    disabled
+                  />
+                </div>
+
+                <div class="dato-usuario py-2 px-3 rounded-xl sm:col-span-2">
+                  <span
+                    class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block"
+                    >Correo Electrónico</span
+                  >
+                  <input
+                    type="text"
+                    id="field-correo"
+                    class="text-xs font-bold w-100 focus:outline-none"
+                    disabled
+                  />
+                </div>
+
+                <div class="dato-usuario py-2 px-3 rounded-xl sm:col-span-2">
+                  <span
+                    class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block"
+                    >Dirección de Entrega</span
+                  >
+                  <input
+                    type="text"
+                    id="field-direccion"
+                    class="text-xs font-bold w-100 focus:outline-none"
+                    disabled
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="ultimas-compras" class="p-6 space-y-4">
+          <div class="flex items-center justify-between border-b pb-3">
+            <div class="flex items-center gap-2">
+              <div
+                class="w-7 h-7 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center text-xs"
+              >
+                <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h2 class="text-base font-bold">Compras Recientes</h2>
+                <p class="text-[11px]">
+                  Tus últimos movimientos registrados en la tienda
+                </p>
+              </div>
+            </div>
+
+            <button
+              onclick="verTodasLasCompras()"
+              class="px-3.5 py-1.5 bg-blue-500/20 hover:bg-blue-500/30 rounded-xl text-xs font-bold transition flex items-center gap-1.5"
+            >
+              Ver todas las compras
+              <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </button>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs text-slate-600">
+              <thead
+                class="bg-slate-50 text-slate-400 uppercase font-extrabold text-[10px] tracking-wider rounded-lg"
+              >
+                <tr>
+                  <th class="py-2.5 px-3 rounded-l-lg">Nº de Orden</th>
+                  <th class="py-2.5 px-3">Fecha</th>
+                  <th class="py-2.5 px-3">Artículos</th>
+                  <th class="py-2.5 px-3">Monto Total</th>
+                  <th class="py-2.5 px-3">Estado</th>
+                  <th class="py-2.5 px-3 text-right rounded-r-lg">Acción</th>
+                </tr>
+              </thead>
+              <tbody
+                id="tabla-compra"
+                class="divide-y divide-slate-100 font-medium"
+              >
+                <tr class="hover:bg-slate-50/80 transition">
+                  <td class="py-3 px-3 font-bold text-slate-900">
+                    #ORD-2026-994
+                  </td>
+                  <td class="py-3 px-3">10 Oct, 2026</td>
+                  <td class="py-3 px-3">2 productos</td>
+
+                  <td class="py-3 px-3">Gs. 600.000</td>
+                  <td class="py-3 px-3">
+                    <span
+                      class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-green-600/10 text-xs font-medium text-green-600 ring-1 ring-inset ring-green-500/20"
+                    >
+                      <span
+                        class="w-1.5 h-1.5 rounded-full bg-green-500"
+                      ></span>
+                      COMPLETADO
+                    </span>
+                  </td>
+                  <td class="py-3 px-3 text-right">
+                    <button
+                      onclick="descargarFactura('994')"
+                      class="text-indigo-600 hover:text-indigo-800 font-bold hover:underline"
+                      title="Ver comprobante de compra"
+                    >
+                      Ver Factura
+                    </button>
+                  </td>
+                </tr>
+
+                <tr class="hover:bg-slate-50/80 transition">
+                  <td class="py-3 px-3 font-bold text-slate-900">
+                    #ORD-2026-720
+                  </td>
+                  <td class="py-3 px-3">15 Ago, 2026</td>
+                  <td class="py-3 px-3">4 productos</td>
+                  <td class="py-3 px-3">Gs. 2.300.000</td>
+                  <td class="py-3 px-3">
+                    <span
+                      class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-yellow-600/10 text-xs font-medium text-yellow-600 ring-1 ring-inset ring-amber-500/20"
+                    >
+                      <span
+                        class="w-1.5 h-1.5 rounded-full bg-amber-500"
+                      ></span>
+                      PENDIENTE
+                    </span>
+                  </td>
+                  <td class="py-3 px-3 text-right">
+                    <button
+                      onclick="descargarFactura('720')"
+                      class="text-indigo-600 hover:text-indigo-800 font-bold hover:underline"
+                      title="Ver comprobante de compra"
+                    >
+                      Ver Factura
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="lista-compras" class="hidden">
+        <div
+          class="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+        >
+          <div class="flex items-center space-x-4">
+            <button
+              id="volver"
+              class="btn-return p-2.5 rounded-xl transition-all"
+              title="Regresar al listado"
+              onclick="volver()"
+            >
+              <i data-lucide="arrow-left" class="w-5 h-5"></i>
+            </button>
+            <div>
+              <h2 class="text-2xl font-black">Visualizar todas tus compras</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-perfil rounded-2xl p-6 space-y-4 shadow-sm">
+          <div class="flex items-center justify-between border-b pb-3">
+            <div class="flex items-center gap-2">
+              <div
+                class="w-7 h-7 rounded-lg bg-blue-500/10 text-indigo-600 flex items-center justify-center text-xs"
+              >
+                <i data-lucide="shopping-bag"></i>
+              </div>
+              <div>
+                <h2 class="text-base font-bold">Tus Compras</h2>
+                <p class="text-[11px]">Tus compras registradas en la tienda</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs text-slate-600">
+              <thead
+                class="bg-slate-50 text-slate-400 uppercase font-extrabold text-[10px] tracking-wider rounded-lg"
+              >
+                <tr>
+                  <th class="py-2.5 px-3 rounded-l-lg">Nº de Orden</th>
+                  <th class="py-2.5 px-3">Fecha</th>
+                  <th class="py-2.5 px-3">Artículos</th>
+                  <th class="py-2.5 px-3">Monto Total</th>
+                  <th class="py-2.5 px-3 text-right rounded-r-lg">Acción</th>
+                </tr>
+              </thead>
+              <tbody
+                id="tabla-todas-compras"
+                class="divide-y divide-slate-100 font-medium"
+              >
+                <tr class="hover:bg-slate-50/80 transition">
+                  <td class="py-3 px-3 font-bold text-slate-900">
+                    #ORD-2026-994
+                  </td>
+                  <td class="py-3 px-3 text-slate-500">10 Oct, 2026</td>
+                  <td class="py-3 px-3">2 productos</td>
+
+                  <td class="py-3 px-3 font-extrabold text-slate-900">
+                    Gs. 600.000
+                  </td>
+                  <td class="py-3 px-3 text-right">
+                    <button
+                      onclick="descargarFactura('994')"
+                      class="text-indigo-600 hover:text-indigo-800 font-bold hover:underline"
+                      title="Ver comprobante de compra"
+                    >
+                      Ver Factura
+                    </button>
+                  </td>
+                </tr>
+
+                <tr class="hover:bg-slate-50/80 transition">
+                  <td class="py-3 px-3 font-bold text-slate-900">
+                    #ORD-2026-720
+                  </td>
+                  <td class="py-3 px-3 text-slate-500">15 Ago, 2026</td>
+                  <td class="py-3 px-3">4 productos</td>
+                  <td class="py-3 px-3 font-extrabold text-slate-900">
+                    Gs. 2.300.000
+                  </td>
+                  <td class="py-3 px-3 text-right">
+                    <button
+                      onclick="descargarFactura('720')"
+                      class="text-indigo-600 hover:text-indigo-800 font-bold hover:underline"
+                      title="Ver comprobante de compra"
+                    >
+                      Ver Factura
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      lucide.createIcons();
+    </script>
+    <script src="js/utils/theme.js"></script>
+    <script src="https://unpkg.com/lenis@1.3.25/dist/lenis.min.js"></script>
+    <script src="js/bootstrap/bootstrap.min.js"></script>
+    <script src="js/utils/scroll.js"></script>
+    <script src="js/controllers/authController.js"></script>
+    <script src="js/utils/cambiar.js"></script>
+    <script src="js/utils/userInfo.js"></script>
+    <script type="module" src="js/controllers/usuario.js"></script>
+  </body>
+</html>

@@ -3,6 +3,8 @@ package py.edu.ventas_digitales.restcontrollers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,8 +21,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RequestMapping("/api/usuarios")
 public class UsuarioRestController {
 
+    private final PasswordEncoder passwordEncoder;
     @Autowired
     private UsuarioService uService;
+
+    UsuarioRestController(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @GetMapping
     public List<Usuario> getAllUsuarios() {
@@ -38,20 +45,9 @@ public class UsuarioRestController {
     }
 
     @PutMapping("/{id}")
-    public Usuario updateUsuario(@PathVariable Long id, @RequestBody Usuario usuarioUpdate) {
-        Usuario usuarioExistente = uService.getUsuarioById(id);
-
-        usuarioExistente.setNombre(usuarioUpdate.getNombre());
-        usuarioExistente.setApellido(usuarioUpdate.getApellido());
-        usuarioExistente.setEmail(usuarioUpdate.getEmail());
-        usuarioExistente.setTelefono(usuarioUpdate.getTelefono());
-        usuarioExistente.setContrasenha(usuarioUpdate.getContrasenha());
-        usuarioExistente.setTipoUsuario(usuarioUpdate.getTipoUsuario());
-        usuarioExistente.setTipoDocumento(usuarioUpdate.getTipoDocumento());
-        usuarioExistente.setDocumento(usuarioUpdate.getDocumento());
-        usuarioExistente.setDireccion(usuarioUpdate.getDireccion());
-
-        return uService.saveUsuario(usuarioExistente);
+    public ResponseEntity<?> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuarioUpdate) {
+        Usuario usuarioModificado = uService.actualizarDatosUsuario(id, usuarioUpdate);
+        return ResponseEntity.ok(usuarioModificado);
     }
 
     @DeleteMapping("/{id}")

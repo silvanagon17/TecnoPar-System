@@ -5,7 +5,7 @@
   --azul-noche-profundo: #03071f;
   --azul-noche-medio: #00092c;
   --azul-noche-tarjeta: #0a112be5;
-  --azul-seccion: #0f1738;
+  --azul-seccion: #111a3d;
   --azul-menu-oscuro: #040a25;
 
   /* --- Azules de Componentes e Interacción --- */
@@ -38,6 +38,7 @@
   --sombra-blanca: #d6d6d654;
 
   --input-cantidad: #38455cd3;
+  --input-usuario: #24344ed3;
 }
 
 body.modo-claro {
@@ -73,6 +74,7 @@ body.modo-claro {
   --azul-opcion: #f0f5fc;
 
   --input-cantidad: #fafcffd3;
+  --input-usuario: #f7f6ffd3;
 }
 
 /*--------------- General --------------- */
@@ -612,4 +614,19 @@ option {
 .contains-table {
   border: 1px solid var(--borde-general);
   border-radius: 10px;
+}
+
+/*--------------- Detalle Perfil --------------- */
+.card-perfil {
+  background: var(--azul-seccion);
+  border: 1px solid var(--borde-general);
+}
+
+.dato-usuario {
+  background-color: var(--input-usuario);
+  border: 1px solid var(--borde-general);
+}
+
+#ultimas-compras {
+  border-top: 1px solid var(--borde-general);
 }

@@ -44,11 +44,12 @@ public class AuthController {
         String token = jwtProvider.generateToken(authentication);
 
         Usuario usuario = usuarioRepository.findByEmail(loginDto.getEmail()).orElse(null);
+        Long id = (usuario != null) ? usuario.getId() : null;
         String tipoUsuario = (usuario != null) ? usuario.getTipoUsuario() : "";
         String nombre = (usuario != null) ? usuario.getNombre() : "";
         String apellido = (usuario != null) ? usuario.getApellido() : "";
 
-        return new ResponseEntity<>(new AuthResponseDto(token, tipoUsuario, nombre, apellido), HttpStatus.OK);
+        return new ResponseEntity<>(new AuthResponseDto(token, id, tipoUsuario, nombre, apellido), HttpStatus.OK);
     }
 
     @PostMapping("/registro")

@@ -57,14 +57,15 @@ public class SegurityConfig {
                                 "/error")
                         .permitAll()
                         .requestMatchers("/productos.html", "/categoria.html", "/pedido.html", "/carrito.html",
-                                "/usuario.html", "/venta.html", "/checkout.html", "/dashboard.html")
+                                "/usuario.html", "/venta.html", "/checkout.html", "/dashboard.html", "/perfil.html")
                         .permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/categorias/**", "/api/productos/**", "/api/ventas/**",
                                 "/api/usuarios/**", "/api/reportes/**", "/reporte/pdf/**", "api/ventas/reporte/pdf",
-                                "/ventas/pdf/**", "/error")
+                                "/ventas/pdf/**", "/error", "/api/auth/**")
                         .permitAll()
                         .requestMatchers("/api/carrito/**").authenticated()
                         .requestMatchers("/api/ventas/usuario/**").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/usuarios/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/productos/**", "/api/categorias/**", "/api/ventas/**")
                         .hasAnyAuthority("ADMIN", "ROLE_ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/productos/**", "/api/categorias/**")

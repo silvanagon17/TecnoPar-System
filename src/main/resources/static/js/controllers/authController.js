@@ -24,6 +24,12 @@ document.addEventListener("DOMContentLoaded", function () {
           const data = await response.json();
           localStorage.setItem("token", data.token);
 
+          const userId =
+            data.id || data.usuarioId || (data.usuario && data.usuario.id);
+          if (userId) {
+            localStorage.setItem("usuarioId", userId);
+          }
+
           const nombre =
             data.nombre || (data.usuario && data.usuario.nombre) || "";
           const apellido =
@@ -78,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
           }),
         });
 
-        if (response.ok || response.status === 201) {
+        if (response.ok) {
           alert("¡Usuario registrado con éxito! Ahora podés iniciar sesión.");
           registroFrom.reset();
         } else {

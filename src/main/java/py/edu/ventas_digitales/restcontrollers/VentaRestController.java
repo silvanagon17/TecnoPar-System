@@ -59,6 +59,12 @@ public class VentaRestController {
         }
     }
 
+    @GetMapping("/usuario/{usuarioId}")
+    public ResponseEntity<List<Venta>> obtenerVentasPorUsuario(@PathVariable Long usuarioId) {
+        List<Venta> ventas = ventaService.obtenerVentasPorUsuario(usuarioId);
+        return ResponseEntity.ok(ventas);
+    }
+
     @GetMapping("/reporte/pdf")
     public ResponseEntity<byte[]> generarReportePdf(Principal principal) {
         try {

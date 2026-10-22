@@ -38,6 +38,10 @@ public class VentaService {
         return ventaRepository.findByEstado(estado);
     }
 
+    public List<Venta> obtenerVentasPorUsuario(Long usuarioId) {
+        return ventaRepository.findByUsuarioId(usuarioId);
+    }
+
     public Venta cambiarEstado(Long ventaId, String nuevoEstado) {
         Venta venta = ventaRepository.findById(ventaId)
                 .orElseThrow(() -> new RuntimeException("Venta no encontrada con ID: " + ventaId));

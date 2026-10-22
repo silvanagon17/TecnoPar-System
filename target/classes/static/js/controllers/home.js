@@ -4,6 +4,8 @@ import {
   inicializarEventosDetalle,
 } from "./detalleProducto.js";
 
+const btnIrAdmin = document.getElementById("btn-link-admin");
+
 let listaProductos = [];
 
 document.addEventListener("DOMContentLoaded", async () => {

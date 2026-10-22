@@ -3,6 +3,7 @@ function toggleSidebar() {
   const aside = document.getElementById("sidebar");
   const toggleIcon = document.getElementById("toggle-icon");
   const sidebarTexts = document.querySelectorAll(".sidebar-text");
+  const cTitles = document.querySelectorAll(".cTitle");
 
   if (!aside) return;
 
@@ -27,8 +28,8 @@ function toggleSidebar() {
     sidebarTexts.forEach((el) => el.classList.add("hidden"));
     cTitles.forEach((el) => el.classList.add("hidden"));
 
-    const dropdownContent = document.getElementById("dropdown-content");
-    const dropdownArrow = document.getElementById("dropdown-arrow");
+    const dropdownContent = document.getElementById("sidebar");
+    const dropdownArrow = document.getElementById("toggle-btn");
     dropdownContent.classList.remove("open");
     dropdownArrow.style.transform = "rotate(0deg)";
   }

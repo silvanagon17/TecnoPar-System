@@ -1,6 +1,7 @@
 package py.edu.ventas_digitales.restcontrollers;
 
 import java.sql.Connection;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,10 +31,10 @@ public class ReporteRestController {
     public ResponseEntity<Resource> generarReporteVentasConSql(
             @RequestParam(required = false, defaultValue = "") String fechaInicio,
             @RequestParam(required = false, defaultValue = "") String fechaFin) {
-
         try (Connection con = dataSource.getConnection()) {
             Map<String, Object> parametros = new HashMap<>();
-            parametros.put("FECHA_INICIO", fechaInicio);
+            parametros.put("fechaInicio",
+                    fechaInicio.length() < 4 ? LocalDate.parse("2025-01-01") : LocalDate.parse(fechaInicio));
             parametros.put("FECHA_FIN", fechaFin);
 
             return jasperConfig.reportePdf(parametros, "reporte_venta", "reporte_venta", con);

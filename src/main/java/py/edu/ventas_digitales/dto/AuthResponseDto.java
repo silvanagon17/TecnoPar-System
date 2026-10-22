@@ -2,13 +2,15 @@ package py.edu.ventas_digitales.dto;
 
 public class AuthResponseDto {
     private String token;
+    private Long id;
     private String tokenType = "Bearer";
     private String tipoUsuario;
     private String nombre;
     private String apellido;
 
-    public AuthResponseDto(String token, String tipoUsuario, String nombre, String apellido) {
+    public AuthResponseDto(String token, Long id, String tipoUsuario, String nombre, String apellido) {
         this.token = token;
+        this.id = id;
         this.tipoUsuario = tipoUsuario;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -52,6 +54,14 @@ public class AuthResponseDto {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
 }

@@ -44,7 +44,7 @@ class navHeader extends HTMLElement {
           <a
             id="btn-link-admin"
             href="productos.html"
-            class="hidden flex items-center gap-1 text-gray-700 hover:text-blue-600 font-semibold px-3 py-1 rounded-lg border border-gray-300 hover:border-blue-500 transition"
+            class="hidden flex items-center gap-1 hover:text-blue-600 font-semibold px-3 py-1 rounded-lg border border-gray-300 hover:border-blue-500 transition"
             title="Ir al Panel de Administración"
           >
             <i data-lucide="layers-plus" class="w-5 h-5 text-blue-600"></i>
@@ -192,6 +192,13 @@ class navHeader extends HTMLElement {
                 id="user-dropdown"
                 class="notif-dropdown absolute right-0 mt-2 w-48 rounded-xl shadow-xl py-2 hidden z-50"
               >
+                <a
+                    href="perfil.html"
+                  class="w-full menu-item flex items-center space-x-2 px-3 py-[13px] rounded-xl font-medium transition"
+                >
+                  <i data-lucide="user" class="w-5 h-5 shrink-0"></i>
+                  <span class="sidebar-text hidden md:inline text-sm">Usuarios</span>
+                </a>
                 <button
                   id="btn-logout"
                   class="w-full text-left px-4 py-2 text-sm hover:bg-blue-600/20 flex items-center gap-2 transition"
