@@ -3,14 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pedidos</title>
-    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <title>Ventas</title>
+    <link rel="stylesheet" href="../../css/bootstrap/bootstrap.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="css/notify.css" />
-    <link rel="stylesheet" href="css/styles.css" />
-    <link rel="stylesheet" href="css/scroll.css" />
-    <script src="js/components/navbarElement.js"></script>
-    <script src="js/components/confirmDialog.js"></script>
+    <link rel="stylesheet" href="../../css/notify.css" />
+    <link rel="stylesheet" href="../../css/styles.css" />
+    <link rel="stylesheet" href="../../css/scroll.css" />
+    <script src="../../js/components/navbarElement.js"></script>
+    <script src="../../js/components/sidebarElement.js"></script>
+    <script src="../../js/components/confirmDialog.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body class="h-full transition-colors duration-200 flex flex-col font-sans">
     <main-header></main-header>
@@ -30,7 +32,7 @@
           >
             <div>
               <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight">
-                Pedidos
+                Ventas
               </h2>
             </div>
           </div>
@@ -55,7 +57,47 @@
                     class="buscador w-full pl-9 pr-4 py-2.5 text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   />
                 </div>
+
+                <div class="flex items-center gap-2">
+                  <input
+                    type="date"
+                    id="fecha-inicio"
+                    class="buscador px-3 py-2 text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  />
+                  <span class="text-gray-400 text-sm">hasta</span>
+                  <input
+                    type="date"
+                    id="fecha-fin"
+                    class="buscador px-3 py-2 text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  />
+                </div>
+
+                <div>
+                  <select
+                    id="select-metodo-pago"
+                    class="buscador px-3 py-2 text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  >
+                    <option value="">Todos los métodos</option>
+                    <option value="EFECTIVO">Efectivo</option>
+                    <option value="TRANSFERENCIA">Transferencia</option>
+                    <option value="TARJETA">Tarjeta</option>
+                  </select>
+                </div>
               </div>
+              <button
+                id="btnGenerarReporte"
+                onclick="imprimirReporteVentas()"
+                class="flex text-center transition space-x-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-md shadow-blue-500/15 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+              >
+                <i data-lucide="file-text" class="h-4 w-4 mx-1"></i>
+                Reporte
+              </button>
+              <button
+                id="btn-limpiar-filtros"
+                class="transition space-x-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-md shadow-blue-500/15 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+              >
+                Limpiar filtros
+              </button>
             </div>
 
             <div class="overflow-x-auto">
@@ -79,7 +121,7 @@
                     <tr
                       class="table-head no-scrollbar text-center text-xs font-bold uppercase sticky top-0 z-10"
                     >
-                      <th class="py-4 px-5 text-center">Número de Pedido</th>
+                      <th class="py-4 px-5 text-center">Número de Venta</th>
                       <th class="py-4 px-5">Cliente / Usuario</th>
                       <th class="py-4 px-5">Fecha</th>
                       <th class="py-4 px-5">Total</th>
@@ -118,7 +160,7 @@
                     id="form-titulo-pantalla"
                     class="text-2xl md:text-3xl font-extrabold tracking-tight"
                   >
-                    Numero de Pedido: <span id="detalle-id-venta"></span>
+                    Numero de Venta: <span id="detalle-id-venta"></span>
                   </h2>
                   <p class="text-sm">Fecha: <span id="detalle-fecha"></span></p>
                 </div>
@@ -126,7 +168,7 @@
             </div>
 
             <div
-              class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6 p-4 rounded-md"
+              class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 p-4 rounded-md"
             >
               <div>
                 <span class="block text-xs uppercase font-semibold"
@@ -171,9 +213,7 @@
                 <span id="detalle-metodo-pago" class="font-medium">-</span>
               </div>
             </div>
-            <h3 class="font-semibold text-lg mb-3 px-3 border-b">
-              Productos solicitados
-            </h3>
+            <h3 class="font-semibold text-lg mb-3 border-b px-3">Productos</h3>
             <div class="overflow-x-auto mb-6 py-2">
               <table class="w-full text-left border-collapse">
                 <thead class="border-b">
@@ -188,7 +228,7 @@
               </table>
             </div>
             <div
-              class="flex flex-col md:flex-row justify-between items-center pt-4 px-4 gap-4 border-t"
+              class="flex flex-col md:flex-row justify-between items-center pt-4 gap-4 border-t"
             >
               <div>
                 <span class="text-sm">Monto Total del Pedido:</span>
@@ -198,15 +238,6 @@
                 >
                   Gs. 0
                 </div>
-              </div>
-
-              <div class="flex gap-3">
-                <button
-                  id="btn-completar-venta"
-                  class="px-6 py-2 bg-blue-600 text-white rounded font-medium hover:bg-blue-700 transition"
-                >
-                  Finalizado
-                </button>
               </div>
             </div>
           </div>
@@ -218,14 +249,19 @@
     <script>
       lucide.createIcons();
     </script>
-    <script src="js/components/sidebarElement.js"></script>
-    <script src="js/utils/theme.js"></script>
+    <script src="../../js/components/sidebarElement.js"></script>
+    <script src="../../js/utils/theme.js"></script>
     <script src="https://unpkg.com/lenis@1.3.25/dist/lenis.min.js"></script>
-    <script src="js/utils/scroll.js"></script>
-    <script src="js/utils/sidebar.js"></script>
-    <script src="js/utils/userInfo.js"></script>
-    <script type="module" src="js/utils/dropdownNotif.js"></script>
-    <script type="module" src="js/controllers/pedidosController.js"></script>
-    <script src="js/bootstrap/bootstrap.min.js"></script>
+    <script src="../../js/utils/scroll.js"></script>
+    <script src="../../js/utils/sidebar.js"></script>
+    <script src="../../js/utils/filters.js"></script>
+    <script src="../../js/utils/userInfo.js"></script>
+    <script type="module" src="../../js/utils/dropdownNotif.js"></script>
+    <script src="../../js/controllers/reporteController.js"></script>
+    <script
+      type="module"
+      src="../../js/controllers/ventaController.js"
+    ></script>
+    <script src="../../js/bootstrap/bootstrap.min.js"></script>
   </body>
 </html>

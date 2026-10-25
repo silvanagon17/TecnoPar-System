@@ -56,12 +56,11 @@ public class SegurityConfig {
                                 "/api/auth/**",
                                 "/error")
                         .permitAll()
-                        .requestMatchers("/productos.html", "/categoria.html", "/pedido.html", "/carrito.html",
-                                "/usuario.html", "/venta.html", "/checkout.html", "/dashboard.html", "/perfil.html")
-                        .permitAll()
+                        .requestMatchers("/pages/client/**").permitAll()
+                        .requestMatchers("/pages/admin/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/categorias/**", "/api/productos/**", "/api/ventas/**",
-                                "/api/usuarios/**", "/api/reportes/**", "/reporte/pdf/**", "api/ventas/reporte/pdf",
-                                "/ventas/pdf/**", "/error", "/api/auth/**")
+                                "/api/usuarios/**", "/api/reportes/**", "/reporte/pdf/**", "/api/ventas/reporte/pdf",
+                                "/ventas/pdf/**", "/api/auth/**", "/error")
                         .permitAll()
                         .requestMatchers("/api/carrito/**").authenticated()
                         .requestMatchers("/api/ventas/usuario/**").authenticated()

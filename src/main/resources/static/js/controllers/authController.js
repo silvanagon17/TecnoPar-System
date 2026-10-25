@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
           localStorage.setItem("tipoUsuario", rol);
 
           if (rol === "ADMIN") {
-            window.location.href = "/productos.html";
+            window.location.href = "/pages/admin/dashboard.html";
           } else {
             window.location.href = "/index.html";
           }

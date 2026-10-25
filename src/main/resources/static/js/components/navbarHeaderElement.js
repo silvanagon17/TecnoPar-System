@@ -8,7 +8,7 @@ class navHeader extends HTMLElement {
         <div class="d-flex items-center gap-2 cursor-pointer">
           <div>
             <img
-              src="image/estatico/logoTecnoPar.png"
+              src="../../image/estatico/logoTecnoPar.png"
               class="logo mr-2"
               style="width: 26px"
               alt="Logo TecnoPar"
@@ -130,7 +130,7 @@ class navHeader extends HTMLElement {
           <div class="user relative">
             <div id="usuario-anonimo">
               <a
-                href="login.html"
+                href="pages/client/login.html"
                 class="flex items-center gap-2 hover:text-blue-400 transition"
               >
                 <div class="hidden lg:block text-left">
@@ -193,11 +193,11 @@ class navHeader extends HTMLElement {
                 class="notif-dropdown absolute right-0 mt-2 w-48 rounded-xl shadow-xl py-2 hidden z-50"
               >
                 <a
-                    href="perfil.html"
+                    href="pages/client/perfil.html"
                   class="w-full menu-item flex items-center space-x-2 px-3 py-[13px] rounded-xl font-medium transition"
                 >
                   <i data-lucide="user" class="w-5 h-5 shrink-0"></i>
-                  <span class="sidebar-text hidden md:inline text-sm">Usuarios</span>
+                  <span class="sidebar-text hidden md:inline text-sm">Perfil</span>
                 </a>
                 <button
                   id="btn-logout"
@@ -281,7 +281,7 @@ class navHeader extends HTMLElement {
               >Accesorios</a
             >
             <a
-              href="productos.html"
+              href="pages/admin/dashboard.html"
               class="hover:text-blue-600 transition-colors"
               >Panel Admin</a
             >

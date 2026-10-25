@@ -1,7 +1,10 @@
 import { obtenerProductos } from "../service/productoService.js";
 import { addToCart } from "../utils/carrito.js";
+import { goToCatalogoCompletoView, goToHomeView } from "../utils/changeView.js";
 
 const contenedorPrincipal = document.getElementById("contenedor-catalogo");
+
+let categoriaSeleccionada = null;
 
 const agruparPorCategoria = (productos) => {
   return productos.reduce((acc, producto) => {
@@ -33,23 +36,52 @@ const renderizarProductosPorCategoria = async () => {
     return;
   }
 
+  if (categoriaSeleccionada) {
+    const listaProductos = productosAgrupados[categoriaSeleccionada] || [];
+
+    contenedorPrincipal.innerHTML = `
+      <div class="mb-8 mt-[100px]">
+        <div class="flex items-center space-x-4 mb-4 pb-3 border-b">
+          <button
+            id="btn-volver"
+            class="btn-return p-2 rounded-xl transition-all"
+          >
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          </button>
+          <div class="header-categoria ">
+            <h2 class="text-2xl uppercase font-extrabold">${categoriaSeleccionada}</h2>
+          </div>
+        </div>
+        <div class="grid-productos grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-5">
+          ${listaProductos.map((prod) => crearTarjetaProducto(prod)).join("")}
+        </div>
+      </div>`;
+    if (typeof lucide !== "undefined") {
+      lucide.createIcons();
+    }
+    return;
+  }
+
   for (const [categoria, listaProductos] of Object.entries(
     productosAgrupados,
   )) {
+    const productosInicio = listaProductos.slice(0, 5);
     const seccionCategoria = document.createElement("section");
     seccionCategoria.className = "seccion-categoria mb-8";
     seccionCategoria.innerHTML = `<div class="header-categoria flex justify-between items-center mb-4">
         <h2 class="text-xl uppercase flex items-center gap-3 font-extrabold ">${categoria}</h2>
           <button
-            class="principal px-6 py-2 rounded-xl text-xs font-bold transition"
-          >
+            type="button"
+            class="btn-ver-todo principal px-6 py-2 rounded-xl text-xs font-bold transition"
+            data-categoria="${categoria}"
+            >
             Ver todo el catálogo
           </button>
       </div>
       
          
       <div class="grid-productos grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-2 mb-5">
-        ${listaProductos.map((prod) => crearTarjetaProducto(prod)).join("")}
+        ${productosInicio.map((prod) => crearTarjetaProducto(prod)).join("")}
       </div>`;
     contenedorPrincipal.appendChild(seccionCategoria);
     if (typeof lucide !== "undefined") {
@@ -129,6 +161,26 @@ document.addEventListener("click", (e) => {
     } else {
       console.error("ID de producto inválido:", productoIdRaw);
     }
+  }
+
+  const btnVerTodo = e.target.closest(".btn-ver-todo");
+  if (btnVerTodo) {
+    e.preventDefault();
+    categoriaSeleccionada = btnVerTodo.getAttribute("data-categoria");
+    renderizarProductosPorCategoria();
+    goToCatalogoCompletoView();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    return;
+  }
+
+  const btnVolver = e.target.closest("#btn-volver");
+  if (btnVolver) {
+    e.preventDefault();
+    categoriaSeleccionada = null;
+    renderizarProductosPorCategoria();
+    goToHomeView();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    return;
   }
 });
 

@@ -4,20 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Perfil</title>
-    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../css/bootstrap/bootstrap.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="css/styles.css" />
-    <link rel="stylesheet" href="css/form.css" />
-    <link rel="stylesheet" href="css/scroll.css" />
-    <link rel="stylesheet" href="css/notify.css" />
-    <script src="js/components/confirmDialog.js"></script>
-    <script src="js/components/navbarElement.js"></script>
+    <link rel="stylesheet" href="../../css/styles.css" />
+    <link rel="stylesheet" href="../../css/form.css" />
+    <link rel="stylesheet" href="../../css/scroll.css" />
+    <link rel="stylesheet" href="../../css/notify.css" />
+    <script src="../../js/components/confirmDialog.js"></script>
+    <script src="../../js/components/navbarElement.js"></script>
   </head>
   <body class="h-full transition-colors duration-200 flex flex-col font-sans">
     <main-header></main-header>
     <main
       class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-grow space-y-6 mt-[60px]"
     >
+      <app-confirm-dialog id="confirm-modal"></app-confirm-dialog>
       <div id="encabezado">
         <h2 class="text-2xl font-black">Mi Perfil</h2>
         <p class="text-xs text-slate-500 mt-0.5">
@@ -26,7 +27,8 @@
       </div>
       <div id="notify-container"></div>
       <div
-        class="card-perfil gap-6 rounded-2xl flex flex-column gap-3 shadow-sm"
+        id="vista-perfil"
+        class="card-perfil gap-6 rounded-2xl flex flex-column gap-3"
       >
         <div
           id="datos-perfil"
@@ -66,7 +68,7 @@
               </button>
 
               <button
-                id="btn-logout"
+                id="btn-cerrar"
                 class="w-full py-2.5 px-4 bg-slate-500/20 hover:bg-red-400/20 hover:text-rose-600 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-2"
               >
                 <i data-lucide="log-out" class="w-5 h-5 shrink-0"></i>Cerrar
@@ -283,7 +285,7 @@
 
       <div id="lista-compras" class="hidden">
         <div
-          class="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+          class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-3"
         >
           <div class="flex items-center space-x-4">
             <button
@@ -382,13 +384,13 @@
     <script>
       lucide.createIcons();
     </script>
-    <script src="js/utils/theme.js"></script>
+    <script src="../../js/utils/theme.js"></script>
     <script src="https://unpkg.com/lenis@1.3.25/dist/lenis.min.js"></script>
-    <script src="js/bootstrap/bootstrap.min.js"></script>
-    <script src="js/utils/scroll.js"></script>
-    <script src="js/controllers/authController.js"></script>
-    <script src="js/utils/cambiar.js"></script>
-    <script src="js/utils/userInfo.js"></script>
-    <script type="module" src="js/controllers/usuario.js"></script>
+    <script src="../../js/bootstrap/bootstrap.min.js"></script>
+    <script src="../../js/utils/scroll.js"></script>
+    <script src="../../js/controllers/authController.js"></script>
+    <script src="../../js/utils/cambiar.js"></script>
+    <script src="../../js/utils/userInfo.js"></script>
+    <script type="module" src="../../js/controllers/usuario.js"></script>
   </body>
 </html>

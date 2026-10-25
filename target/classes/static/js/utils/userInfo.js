@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnLogout = document.getElementById("btn-logout");
     const btnLogoutSb = document.getElementById("btn-logout-sb");
     const confirmModal = document.getElementById("confirm-modal");
+    const btnCerrar = document.getElementById("btn-cerrar");
 
     if (btnUserMenu && userDropdown) {
       btnUserMenu.addEventListener("click", (e) => {
@@ -42,6 +43,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (btnLogout) {
       btnLogout.addEventListener("click", () => {
+        confirmModal.show({
+          title: "¿Quieres cerrar sesión?",
+          message: `¿Estás seguro de que quieres cerrar sesión?`,
+          confirmText: "Sí, cerrar sesión",
+          onConfirm: async () => {
+            localStorage.clear();
+            window.location.href = "/index.html";
+          },
+        });
+      });
+    }
+
+    if (btnCerrar) {
+      btnCerrar.addEventListener("click", () => {
         confirmModal.show({
           title: "¿Quieres cerrar sesión?",
           message: `¿Estás seguro de que quieres cerrar sesión?`,

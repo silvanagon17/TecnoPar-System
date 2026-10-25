@@ -34,7 +34,7 @@ async function cargarDatosUsuario() {
       console.warn(
         "No se encontró una sesión activa. Redirigiendo al login...",
       );
-      window.location.href = "login.html";
+      // window.location.href = "login.html";
       return;
     }
 

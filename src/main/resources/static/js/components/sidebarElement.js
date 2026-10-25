@@ -21,8 +21,11 @@ class SidebarElement extends HTMLElement {
     const links = this.querySelectorAll("a");
     links.forEach((link) => {
       const href = link.getAttribute("href");
-      if (href && href === currentPath) {
-        link.classList.add("bg-blue-400/20", "border-1", "border-blue-400/20");
+      if (href) {
+        const hrefFileName = href.split("/").pop();
+        if (hrefFileName === currentPath) {
+          link.classList.add("bg-blue-400/20", "border", "border-blue-400/20");
+        }
       }
     });
   }
@@ -55,7 +58,7 @@ class SidebarElement extends HTMLElement {
           </button>
           <nav class="space-y-1">
             <a
-              href="index.html"
+              href="/index.html"
               class="w-full menu-item flex items-center space-x-2 px-3 py-[13px] rounded-xl font-medium transition"
             >
               <i data-lucide="house" class="w-5 h-5 shrink-0"></i>
@@ -68,7 +71,7 @@ class SidebarElement extends HTMLElement {
             >
             
             <a
-              href="dashboard.html"
+              href="/pages/admin/dashboard.html"
               class="w-full menu-item flex items-center space-x-2 px-3 py-[13px] rounded-xl font-medium transition"
             >
               <i data-lucide="layout-grid" class="w-5 h-5 shrink-0"></i>
@@ -89,7 +92,7 @@ class SidebarElement extends HTMLElement {
             >
 
             <a
-              href="productos.html"
+              href="/pages/admin/productos.html"
               class="w-full menu-item flex items-center space-x-2 px-3 py-[13px] rounded-xl font-medium transition"
             >
               <i data-lucide="layers" class="w-5 h-5 shrink-0"></i>
@@ -97,7 +100,7 @@ class SidebarElement extends HTMLElement {
             </a>
 
             <a
-              href="categoria.html"
+              href="/pages/admin/categoria.html"
               class="w-full menu-item flex items-center space-x-2 px-3 py-[13px] rounded-xl font-medium transition"
             >
               <i data-lucide="tags" class="w-5 h-5 shrink-0"></i>
@@ -110,7 +113,7 @@ class SidebarElement extends HTMLElement {
             >
 
             <a
-              href="pedido.html"
+              href="/pages/admin/pedido.html"
               class="w-full menu-item flex items-center space-x-2 px-3 py-[13px] rounded-xl font-medium transition"
             >
               <i data-lucide="package" class="w-5 h-5 shrink-0"></i>
@@ -118,7 +121,7 @@ class SidebarElement extends HTMLElement {
             </a>
 
             <a
-              href="venta.html"
+              href="/pages/admin/venta.html"
               class="w-full menu-item flex items-center space-x-2 px-3 py-[13px] rounded-xl font-medium transition"
             >
               <i
@@ -128,21 +131,13 @@ class SidebarElement extends HTMLElement {
               <span class="sidebar-text hidden md:inline text-sm">Ventas</span>
             </a>
 
-            <a
-             
-              class="w-full menu-item flex items-center space-x-2 px-3 py-[13px] rounded-xl font-medium transition"
-            >
-              <i data-lucide="newspaper" class="w-5 h-5 shrink-0"></i>
-              <span class="sidebar-text hidden md:inline text-sm">Facturas</span>
-            </a>
-
             <span
               class="c-title text-[10px] sidebar-text font-bold uppercase tracking-widest px-3 block pt-4 mb-3"
               >Usuario y Soporte</span
             >
 
             <a
-                href="usuario.html"
+                href="/pages/admin/usuario.html"
               class="w-full menu-item flex items-center space-x-2 px-3 py-[13px] rounded-xl font-medium transition"
             >
               <i data-lucide="user" class="w-5 h-5 shrink-0"></i>

@@ -1,5 +1,5 @@
 import { procesarVenta } from "../service/ventaService.js";
-import { obtenerUsuarioPorId } from "../service/UsuarioService.js";
+import { obtenerUsuarioPorId } from "../service/usuarioService.js";
 import {
   vaciarEstadoCarrito,
   inicializar as reconsultarCarrito,

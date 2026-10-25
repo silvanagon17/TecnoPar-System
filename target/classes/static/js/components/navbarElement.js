@@ -8,7 +8,7 @@ class Header extends HTMLElement {
         <div class="d-flex items-center gap-2 cursor-pointer">
           <div>
             <img
-              src="image/estatico/logoTecnoPar.png"
+              src="../../image/estatico/logoTecnoPar.png"
               class="logo mr-2"
               style="width: 26px"
               alt="Logo TecnoPar"
@@ -101,7 +101,7 @@ class Header extends HTMLElement {
               id="notif-list"
               class="max-h-64 overflow-y-auto"
             >
-              <!-- Insertadas por JS -->
+        
             </div>
           </div>
           </div>
