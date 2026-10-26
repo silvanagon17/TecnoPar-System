@@ -32,6 +32,7 @@ export function goToHomeView() {
   document.getElementById("vista-catalogo-completo")?.classList.add("hidden");
   document.getElementById("view-home")?.classList.remove("hidden");
   document.getElementById("carrusel")?.classList.remove("hidden");
+  document.getElementById("contenedor-catalogo")?.classList.remove("hidden");
 }
 
 export function goToDetailView() {
@@ -39,6 +40,7 @@ export function goToDetailView() {
   document.getElementById("vista-catalogo-completo")?.classList.add("hidden");
   document.getElementById("view-detail")?.classList.remove("hidden");
   document.getElementById("carrusel")?.classList.add("hidden");
+  document.getElementById("contenedor-catalogo")?.classList.add("hidden");
 }
 
 export function goToCatalogoCompletoView() {

@@ -240,7 +240,7 @@ function eventos() {
   const btnCompra = document.getElementById("btn-procesar-compra");
   if (btnCompra) {
     btnCompra.addEventListener("click", () => {
-      window.location.href = "checkout.html";
+      window.location.href = "pages/client/checkout.html";
     });
   }
 }

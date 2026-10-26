@@ -43,9 +43,9 @@ class navHeader extends HTMLElement {
 
         <div class="flex items-center justify-content-between gap-4">
           <a
-            id="btn-link-admin"
-            href="productos.html"
-            class="hidden flex items-center gap-1 hover:text-blue-600 font-semibold px-3 py-1 rounded-lg border border-gray-300 hover:border-blue-500 transition"
+            id="btn-panel-admin"
+            href="pages/admin/productos.html"
+            class="flex items-center gap-1 hover:text-blue-600 font-semibold px-3 py-1 rounded-lg border border-gray-300 hover:border-blue-500 transition"
             title="Ir al Panel de Administración"
           >
             <i data-lucide="layers-plus" class="w-5 h-5 text-blue-600"></i>
@@ -254,33 +254,10 @@ class navHeader extends HTMLElement {
               Todo
             </button>
           </el-dropdown>
-          <div
+          <div id="link-categoria-container"
             class="flex items-center gap-8 text-[11px] font-bold uppercase tracking-wider opacity-60"
           >
-            <a href="#" class="hover:text-blue-600 transition-colors"
-              >Notebook</a
-            >
-            <a href="#" class="hover:text-blue-600 transition-colors"
-              >Hardware</a
-            >
-            <a href="#" class="hover:text-blue-600 transition-colors"
-              >Consola</a
-            >
-            <a href="#" class="hover:text-blue-600 transition-colors"
-              >Redes y Conectividad</a
-            >
-            <a
-              href="#"
-              class="text-pink-500 italic hover:text-amber-300 transition-colors"
-              >Ofertas Flash
-              <i class="bi bi-fire"></i>
-            </a>
-            <a href="#" class="hover:text-blue-600 transition-colors"
-              >Periféricos</a
-            >
-            <a href="#" class="hover:text-blue-600 transition-colors"
-              >Accesorios</a
-            >
+
             <a
               href="pages/admin/dashboard.html"
               class="hover:text-blue-600 transition-colors"

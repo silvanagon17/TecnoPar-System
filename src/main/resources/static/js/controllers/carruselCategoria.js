@@ -1,6 +1,4 @@
 import { obtenerProductos } from "../service/productoService.js";
-import { goToCatalogoCompletoView, goToSearch } from "../utils/changeView.js";
-import { renderizarProductosPorCategoria } from "../components/cardsProductoElement.js";
 
 const obtenerIconoCategoria = (nombreCategoria) => {
   const iconMap = {
@@ -17,6 +15,41 @@ const obtenerIconoCategoria = (nombreCategoria) => {
 
   const clave = nombreCategoria.toLowerCase().trim();
   return iconMap[clave] || "tag";
+};
+
+const inicializarCategorias = async () => {
+  const categoriaContainer = document.getElementById(
+    "link-categoria-container",
+  );
+
+  if (!categoriaContainer) return;
+
+  const productos = await obtenerProductos();
+  const categoriaMap = new Map();
+
+  productos.forEach((prod) => {
+    const cate = prod.categoria;
+    const catActiva = cate && (cate.estado === true || cate.estado === "true");
+
+    if (catActiva && cate.nombreCategoria) {
+      categoriaMap.set(cate.nombreCategoria, cate);
+    }
+  });
+
+  const listaCategorias = Array.from(categoriaMap.values());
+
+  categoriaContainer.innerHTML = "";
+
+  listaCategorias.forEach((cat) => {
+    const nombreCat = cat.nombreCategoria;
+
+    const itemHTML = `
+            <a class="hover:text-blue-600 btn-ver-todo transition-colors cursor-pointer"
+              data-categoria="${nombreCat}"
+              >${nombreCat}</a
+            >`;
+    categoriaContainer.innerHTML += itemHTML;
+  });
 };
 
 const inicializarCarruselCategoria = async () => {
@@ -58,7 +91,7 @@ const inicializarCarruselCategoria = async () => {
             </div>
           </div>
           <p
-            class="text-xs font-black group-hover:text-white tracking-widest gap-8 font-extrabold uppercase opacity-80 pointer-events-none"
+            class="text-xs font-black hover:text-slate-500 tracking-widest gap-8 font-extrabold uppercase opacity-80 pointer-events-none"
           >
             ${nombreCat}
           </p>
@@ -71,4 +104,7 @@ const inicializarCarruselCategoria = async () => {
   }
 };
 
-document.addEventListener("DOMContentLoaded", inicializarCarruselCategoria);
+document.addEventListener("DOMContentLoaded", async () => {
+  await inicializarCarruselCategoria();
+  await inicializarCategorias();
+});

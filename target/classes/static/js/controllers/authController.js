@@ -98,3 +98,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const tipoUsuario = localStorage.getItem("tipoUsuario");
+  const btnPanelAdmin = document.getElementById("btn-panel-admin"); // Asegúrate de darle este ID a tu botón o enlace en el HTML
+
+  if (btnPanelAdmin) {
+    if (tipoUsuario === "ADMIN") {
+      btnPanelAdmin.style.display = "flex"; // O "flex" / "inline-block" según tu diseño CSS
+    } else {
+      btnPanelAdmin.style.display = "none"; // Lo oculta completamente para clientes
+    }
+  }
+});

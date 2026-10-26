@@ -10,7 +10,13 @@ const filtrarYMostrarProductos = async () => {
   const terminoBusqueda = inputBuscador.value.trim().toLowerCase();
   const productos = await obtenerProductos();
 
-  if (!terminoBusqueda) return;
+  if (!terminoBusqueda) {
+    if (contenedorResultados) contenedorResultados.innerHTML = "";
+    if (typeof goToHomeView === "function") {
+      goToHomeView();
+    }
+    return;
+  }
 
   const productosFiltrados = productos.filter((prod) => {
     const prodActivo = prod.estado === true || prod.estado === "true";
@@ -77,4 +83,28 @@ if (inputBuscador) {
       filtrarYMostrarProductos();
     }
   });
+
+  inputBuscador.addEventListener("input", () => {
+    if (inputBuscador.value.trim() === "") {
+      if (contenedorResultados) contenedorResultados.innerHTML = "";
+      if (typeof goToHomeView === "function") {
+        goToHomeView();
+      }
+    }
+  });
 }
+
+document.addEventListener("click", (e) => {
+  const btnVolver = e.target.closest("#btn-volver");
+  const btnVerTodo = e.target.closest(".btn-ver-todo");
+  const categoriaItem = e.target.closest(".categoria-item");
+
+  if (btnVolver || btnVerTodo || categoriaItem) {
+    if (inputBuscador) {
+      inputBuscador.value = "";
+    }
+    if (contenedorResultados && (btnVerTodo || categoriaItem)) {
+      contenedorResultados.innerHTML = "";
+    }
+  }
+});

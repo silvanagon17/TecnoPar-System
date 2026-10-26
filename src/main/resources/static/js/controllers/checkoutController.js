@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   if (btnVolverInicio) {
     btnVolverInicio.addEventListener("click", () => {
-      window.location.href = "index.html";
+      window.location.href = "/index.html";
     });
   }
 });
@@ -318,8 +318,8 @@ async function gestionarFinalizarCompra(e) {
       "¡Compra realizada exitosamente!",
     );
     setTimeout(() => {
-      window.location.href = "index.html";
-    }, 2500);
+      window.location.href = "/index.html";
+    }, 2000);
   } catch (error) {
     console.error("Error al obtener el carrito: ", error);
     mostrarMensaje("danger", "circle-x", "No se pudo completar la compra");
