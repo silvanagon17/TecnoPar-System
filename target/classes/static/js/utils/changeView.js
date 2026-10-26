@@ -49,3 +49,13 @@ export function goToCatalogoCompletoView() {
     ?.classList.remove("hidden");
   document.getElementById("carrusel")?.classList.add("hidden");
 }
+
+export function goToSearch() {
+  document.getElementById("view-home")?.classList.add("hidden");
+  document.getElementById("view-detail")?.classList.add("hidden");
+  document
+    .getElementById("vista-catalogo-completo")
+    ?.classList.remove("hidden");
+  document.getElementById("carrusel")?.classList.add("hidden");
+  document.getElementById("contenedor-catalogo")?.classList.add("hidden");
+}

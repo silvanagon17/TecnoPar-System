@@ -36,6 +36,7 @@ class navHeader extends HTMLElement {
           <input
             type="text"
             placeholder="¿Qué vas a buscar hoy?"
+            id="search-input"
             class="principal w-full rounded-4 h-[38px] py-2.5 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 transition-all"
           />
         </div>

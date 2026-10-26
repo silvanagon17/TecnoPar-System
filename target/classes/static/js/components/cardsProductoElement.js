@@ -90,7 +90,7 @@ const renderizarProductosPorCategoria = async () => {
   }
 };
 
-const crearTarjetaProducto = (prod) => {
+export const crearTarjetaProducto = (prod) => {
   const precioFormateado = new Intl.NumberFormat("es-PY").format(
     prod.pre_venta || 0,
   );
