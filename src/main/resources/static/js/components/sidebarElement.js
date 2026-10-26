@@ -24,7 +24,7 @@ class SidebarElement extends HTMLElement {
       if (href) {
         const hrefFileName = href.split("/").pop();
         if (hrefFileName === currentPath) {
-          link.classList.add("bg-blue-400/20", "border", "border-blue-400/20");
+          link.classList.add("bg-blue-400/20");
         }
       }
     });

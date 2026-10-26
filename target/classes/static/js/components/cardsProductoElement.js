@@ -24,7 +24,7 @@ const agruparPorCategoria = (productos) => {
   }, {});
 };
 
-const renderizarProductosPorCategoria = async () => {
+export const renderizarProductosPorCategoria = async () => {
   const productos = await obtenerProductos();
   const productosAgrupados = agruparPorCategoria(productos);
 
@@ -37,7 +37,11 @@ const renderizarProductosPorCategoria = async () => {
   }
 
   if (categoriaSeleccionada) {
-    const listaProductos = productosAgrupados[categoriaSeleccionada] || [];
+    const catBusqueda = categoriaSeleccionada.trim().toLowerCase();
+    const claveCat = Object.keys(productosAgrupados).find(
+      (key) => key.trim().toLowerCase() === catBusqueda,
+    );
+    const listaProductos = claveCat ? productosAgrupados[claveCat] : [];
 
     contenedorPrincipal.innerHTML = `
       <div class="mb-8 mt-[100px]">
@@ -179,7 +183,7 @@ document.addEventListener("click", (e) => {
     categoriaSeleccionada = null;
     renderizarProductosPorCategoria();
     goToHomeView();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 1, behavior: "smooth" });
     return;
   }
 });
