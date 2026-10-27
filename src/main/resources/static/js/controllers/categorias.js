@@ -73,7 +73,7 @@ const renderTabla = (categorias) => {
     tr.innerHTML = `
                 <td class="text-left px-5 ">${categoria.id}</td>
                   <td class="text-center">${categoria.nombreCategoria}</td>
-                  <td class="text-center">${categoria.descripcion}</td>
+                  <td class="text-left">${categoria.descripcion}</td>
                   <td class="text-center">${renderState(categoria.estado)}</td>
                   <td class="flex justify-center gap-2">${botonesHtml}</td>       
     `;

@@ -20,6 +20,85 @@
 
       <main class="flex-1 min-w-0 p-6 md:p-8 mt-[30px]">
         <app-confirm-dialog id="confirm-modal"></app-confirm-dialog>
+        <div
+          id="view-listado"
+          class="space-y-8 transition-opacity duration-300"
+        >
+          <div id="notify-container"></div>
+
+          <div
+            class="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+          >
+            <div>
+              <h2 class="text-4xl md:text-3xl font-extrabold tracking-tight">
+                Usuarios
+              </h2>
+            </div>
+          </div>
+
+          <div class="table-container rounded-2xl shadow-sm overflow-hidden">
+            <div
+              class="buscador-container p-4 flex flex-col lg:flex-row items-center justify-between gap-4"
+            >
+              <div
+                class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto flex-1"
+              >
+                <div class="relative flex-1 max-w-md">
+                  <i
+                    data-lucide="search"
+                    class="absolute left-3 top-3 h-4 w-4 text-slate-400"
+                  ></i>
+                  <input
+                    type="text"
+                    id="searchInput"
+                    autocomplete="off"
+                    placeholder="Buscar usuario..."
+                    class="buscador w-full pl-9 pr-4 py-2.5 text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  />
+                </div>
+
+                <select
+                  id="statusFilter"
+                  class="buscador rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                >
+                  <option value="todos">Todos los estados</option>
+                  <option value="activo">Solo Activos</option>
+                  <option value="inactivo">Solo Inactivos</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="overflow-x-auto">
+              <div
+                id="navbar-example2"
+                class="table-responsive p-0"
+                style="
+                  max-height: 600px;
+                  overflow-y: auto;
+                  scrollbar-width: unset;
+                "
+              >
+                <table class="w-full text-left border-collapse relative">
+                  <thead>
+                    <tr
+                      class="table-head no-scrollbar text-center text-xs font-bold uppercase sticky top-0 z-10"
+                    >
+                      <th class="py-4 px-5 text-left">ID</th>
+                      <th class="py-4 px-3">Usuario</th>
+                      <th class="py-4 px-5">Email</th>
+                      <th class="py-4 px-5 text-center">Documento</th>
+                      <th class="py-4 px-5">Direccion</th>
+                    </tr>
+                  </thead>
+
+                  <tbody id="tbody" class="text-sm">
+                    <tr class="border-table"></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </main>
     </div>
 
@@ -36,6 +115,9 @@
     <script src="../../js/utils/theme.js"></script>
     <script src="../../js/utils/userInfo.js"></script>
     <script type="module" src="../../js/utils/dropdownNotif.js"></script>
-    <script type="module" src="../../js/controllers/categorias.js"></script>
+    <script
+      type="module"
+      src="../../js/controllers/usuarioController.js"
+    ></script>
   </body>
 </html>
