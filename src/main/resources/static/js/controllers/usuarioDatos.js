@@ -168,24 +168,25 @@ function renderizarTablaCompras(ventas, tbodyId) {
       : new Date().toLocaleString("es-PY");
 
     const tr = document.createElement("tr");
-    tr.className = "hover:bg-slate-50/80 transition text-slate-600";
+    tr.className =
+      "hover:bg-blue-500/10 transition text-slate-400 border-b item-table";
 
     tr.innerHTML = `
-      <td class="py-4 px-5 ">#${v.id}</td>
-      <td class="py-4 px-5">${fecha}</td>
-      <td class="py-3 px-3">${v.detalles ? v.detalles.length : 1} productos</td>
-      <td class="py-4 px-5">Gs. ${formatoMoneda.format(v.precioTotal || v.total || 0)}</td>
-      <td class="py-3 px-3">
+      <td class="text-center py-3">#${v.id}</td>
+      <td class="text-center py-3">${fecha}</td>
+      <td class="text-center py-3">${v.detalles ? v.detalles.length : 1} productos</td>
+      <td class="text-center py-3">Gs. ${formatoMoneda.format(v.precioTotal || v.total || 0)}</td>
+      <td class="text-center py-3">
         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${badgeClase} ring-1 ring-inset">
           ${v.estado || "PENDIENTE"}
         </span>
       </td>
-      <td class="py-3 px-3 text-right">
+      <td class="flex justify-center items-center py-3">
         <button
-          onclick="descargarComprobante('${v.id}')"
-          class="text-indigo-600 hover:text-indigo-800 font-bold hover:underline"
+          onclick="descargarTicket('${v.id}')"
+          class="text-indigo-600 hover:text-indigo-800 font-bold hover:underline flex items-center"
           title="Ver comprobante de compra"
-        >
+        ><i data-lucide="file-text" class="h-4 w-4"></i>  
           Ver Comprobante
         </button>
       </td>
@@ -193,6 +194,9 @@ function renderizarTablaCompras(ventas, tbodyId) {
     `;
     tbody.appendChild(tr);
   });
+  if (typeof lucide !== "undefined") {
+    lucide.createIcons();
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {

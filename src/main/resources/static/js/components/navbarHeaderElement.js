@@ -191,18 +191,18 @@ class navHeader extends HTMLElement {
 
               <div
                 id="user-dropdown"
-                class="notif-dropdown absolute right-0 mt-2 w-48 rounded-xl shadow-xl py-2 hidden z-50"
+                class="notif-dropdown absolute  right-0 mt-2 w-48 rounded-xl shadow-xlpy-2 hidden z-50"
               >
                 <a
                     href="pages/client/perfil.html"
-                  class="w-full menu-item flex items-center space-x-2 px-3 py-[13px] rounded-xl font-medium transition"
+                  class="w-full menu-item  flex items-center px-4 py-2 gap-2 text-sm transition"
                 >
-                  <i data-lucide="user" class="w-5 h-5 shrink-0"></i>
+                  <i data-lucide="user" class="w-5 h-5"></i>
                   <span class="sidebar-text hidden md:inline text-sm">Perfil</span>
                 </a>
                 <button
                   id="btn-logout"
-                  class="w-full text-left px-4 py-2 text-sm hover:bg-blue-600/20 flex items-center gap-2 transition"
+                  class="w-full menu-item  px-4 py-2 flex items-center gap-2 text-sm transition"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -258,11 +258,6 @@ class navHeader extends HTMLElement {
             class="flex items-center gap-8 text-[11px] font-bold uppercase tracking-wider opacity-60"
           >
 
-            <a
-              href="pages/admin/dashboard.html"
-              class="hover:text-blue-600 transition-colors"
-              >Panel Admin</a
-            >
           </div>
         </div>
       </nav>

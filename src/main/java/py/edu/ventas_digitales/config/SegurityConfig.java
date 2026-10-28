@@ -60,7 +60,8 @@ public class SegurityConfig {
                         .requestMatchers("/pages/admin/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/categorias/**", "/api/productos/**", "/api/ventas/**",
                                 "/api/usuarios/**", "/api/reportes/**", "/reporte/pdf/**", "/api/ventas/reporte/pdf",
-                                "/ventas/pdf/**", "/api/auth/**", "/error")
+                                "/ventas/pdf/**", "/api/auth/**", "/ticket/{ventaId}",
+                                "/api/reportes/ticket/{ventaId}**", "/error")
                         .permitAll()
                         .requestMatchers("/api/carrito/**").authenticated()
                         .requestMatchers("/api/ventas/usuario/**").authenticated()

@@ -147,7 +147,7 @@
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00">
+			<textField pattern="#,##0">
 				<reportElement x="470" y="2" width="85" height="18" uuid="0a5341ef-d336-4326-a3de-614bcaabb6c2"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{montoTotal}]]></textFieldExpression>
@@ -184,7 +184,7 @@
 				<textElement textAlignment="Right"><font isBold="true"/></textElement>
 				<text><![CDATA[Recaudación Total:]]></text>
 			</staticText>
-			<textField pattern="#,##0.00">
+			<textField pattern="#,##0">
 				<reportElement x="430" y="10" width="125" height="20" uuid="9493522e-6b26-4169-a70d-d824cf137754"/>
 				<textElement textAlignment="Right"></textElement>
 				<textFieldExpression><![CDATA[$V{recaudacionSum}]]></textFieldExpression>

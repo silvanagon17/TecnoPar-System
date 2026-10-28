@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../../css/notify.css" />
     <script src="../../js/components/confirmDialog.js"></script>
     <script src="../../js/components/navbarElement.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body class="h-full transition-colors duration-200 flex flex-col font-sans">
     <main-header></main-header>
@@ -206,78 +207,18 @@
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs text-slate-600">
               <thead
-                class="bg-slate-50 text-slate-400 uppercase font-extrabold text-[10px] tracking-wider rounded-lg"
+                class="dato-usuario text-slate-400 uppercase font-extrabold text-[10px] tracking-wider rounded-lg"
               >
                 <tr>
-                  <th class="py-2.5 px-3 rounded-l-lg">Nº de Orden</th>
-                  <th class="py-2.5 px-3">Fecha</th>
-                  <th class="py-2.5 px-3">Artículos</th>
-                  <th class="py-2.5 px-3">Monto Total</th>
-                  <th class="py-2.5 px-3">Estado</th>
-                  <th class="py-2.5 px-3 text-right rounded-r-lg">Acción</th>
+                  <th class="py-3 px-2 text-center">Nº de Orden</th>
+                  <th class="py-3 px-2 text-center">Fecha</th>
+                  <th class="py-3 px-2 text-center">Artículos</th>
+                  <th class="py-3 px-2 text-center">Monto Total</th>
+                  <th class="py-3 px-2 text-center">Estado</th>
+                  <th class="py-3 px-2 text-center">Acción</th>
                 </tr>
               </thead>
-              <tbody
-                id="tabla-compra"
-                class="divide-y divide-slate-100 font-medium"
-              >
-                <tr class="hover:bg-slate-50/80 transition">
-                  <td class="py-3 px-3 font-bold text-slate-900">
-                    #ORD-2026-994
-                  </td>
-                  <td class="py-3 px-3">10 Oct, 2026</td>
-                  <td class="py-3 px-3">2 productos</td>
-
-                  <td class="py-3 px-3">Gs. 600.000</td>
-                  <td class="py-3 px-3">
-                    <span
-                      class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-green-600/10 text-xs font-medium text-green-600 ring-1 ring-inset ring-green-500/20"
-                    >
-                      <span
-                        class="w-1.5 h-1.5 rounded-full bg-green-500"
-                      ></span>
-                      COMPLETADO
-                    </span>
-                  </td>
-                  <td class="py-3 px-3 text-right">
-                    <button
-                      onclick="descargarFactura('994')"
-                      class="text-indigo-600 hover:text-indigo-800 font-bold hover:underline"
-                      title="Ver comprobante de compra"
-                    >
-                      Ver Factura
-                    </button>
-                  </td>
-                </tr>
-
-                <tr class="hover:bg-slate-50/80 transition">
-                  <td class="py-3 px-3 font-bold text-slate-900">
-                    #ORD-2026-720
-                  </td>
-                  <td class="py-3 px-3">15 Ago, 2026</td>
-                  <td class="py-3 px-3">4 productos</td>
-                  <td class="py-3 px-3">Gs. 2.300.000</td>
-                  <td class="py-3 px-3">
-                    <span
-                      class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-yellow-600/10 text-xs font-medium text-yellow-600 ring-1 ring-inset ring-amber-500/20"
-                    >
-                      <span
-                        class="w-1.5 h-1.5 rounded-full bg-amber-500"
-                      ></span>
-                      PENDIENTE
-                    </span>
-                  </td>
-                  <td class="py-3 px-3 text-right">
-                    <button
-                      onclick="descargarFactura('720')"
-                      class="text-indigo-600 hover:text-indigo-800 font-bold hover:underline"
-                      title="Ver comprobante de compra"
-                    >
-                      Ver Factura
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
+              <tbody id="tabla-compra" class="font-medium"></tbody>
             </table>
           </div>
         </div>
@@ -320,61 +261,18 @@
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs text-slate-600">
               <thead
-                class="bg-slate-50 text-slate-400 uppercase font-extrabold text-[10px] tracking-wider rounded-lg"
+                class="dato-usuario text-slate-400 uppercase font-extrabold text-[10px] tracking-wider rounded-lg"
               >
                 <tr>
-                  <th class="py-2.5 px-3 rounded-l-lg">Nº de Orden</th>
-                  <th class="py-2.5 px-3">Fecha</th>
-                  <th class="py-2.5 px-3">Artículos</th>
-                  <th class="py-2.5 px-3">Monto Total</th>
-                  <th class="py-2.5 px-3 text-right rounded-r-lg">Acción</th>
+                  <th class="py-3 px-2 text-center">Nº de Orden</th>
+                  <th class="py-3 px-2 text-center">Fecha</th>
+                  <th class="py-3 px-2 text-center">Artículos</th>
+                  <th class="py-3 px-2 text-center">Monto Total</th>
+                  <th class="py-3 px-2 text-center">Estado</th>
+                  <th class="py-3 px-2 text-center">Acción</th>
                 </tr>
               </thead>
-              <tbody
-                id="tabla-todas-compras"
-                class="divide-y divide-slate-100 font-medium"
-              >
-                <tr class="hover:bg-slate-50/80 transition">
-                  <td class="py-3 px-3 font-bold text-slate-900">
-                    #ORD-2026-994
-                  </td>
-                  <td class="py-3 px-3 text-slate-500">10 Oct, 2026</td>
-                  <td class="py-3 px-3">2 productos</td>
-
-                  <td class="py-3 px-3 font-extrabold text-slate-900">
-                    Gs. 600.000
-                  </td>
-                  <td class="py-3 px-3 text-right">
-                    <button
-                      onclick="descargarFactura('994')"
-                      class="text-indigo-600 hover:text-indigo-800 font-bold hover:underline"
-                      title="Ver comprobante de compra"
-                    >
-                      Ver Factura
-                    </button>
-                  </td>
-                </tr>
-
-                <tr class="hover:bg-slate-50/80 transition">
-                  <td class="py-3 px-3 font-bold text-slate-900">
-                    #ORD-2026-720
-                  </td>
-                  <td class="py-3 px-3 text-slate-500">15 Ago, 2026</td>
-                  <td class="py-3 px-3">4 productos</td>
-                  <td class="py-3 px-3 font-extrabold text-slate-900">
-                    Gs. 2.300.000
-                  </td>
-                  <td class="py-3 px-3 text-right">
-                    <button
-                      onclick="descargarFactura('720')"
-                      class="text-indigo-600 hover:text-indigo-800 font-bold hover:underline"
-                      title="Ver comprobante de compra"
-                    >
-                      Ver Factura
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
+              <tbody id="tabla-todas-compras" class="font-medium"></tbody>
             </table>
           </div>
         </div>
@@ -391,6 +289,7 @@
     <script src="../../js/controllers/authController.js"></script>
     <script src="../../js/utils/cambiar.js"></script>
     <script src="../../js/utils/userInfo.js"></script>
+    <script src="../../js/controllers/ticketController.js"></script>
     <script type="module" src="../../js/controllers/usuarioDatos.js"></script>
   </body>
 </html>

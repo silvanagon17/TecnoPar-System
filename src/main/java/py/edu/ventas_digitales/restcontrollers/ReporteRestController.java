@@ -4,19 +4,23 @@ import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.sql.DataSource;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+
 import py.edu.ventas_digitales.config.JasperConfig;
+import py.edu.ventas_digitales.services.ReporteVentaService;
 
 @RestController
 @RequestMapping("/api/reportes")
@@ -26,6 +30,7 @@ public class ReporteRestController {
 
     private final JasperConfig jasperConfig;
     private final DataSource dataSource;
+    private final ReporteVentaService reporteService;
 
     @GetMapping("/ventas/pdf")
     public ResponseEntity<Resource> generarReporteVentasConSql(
@@ -43,4 +48,24 @@ public class ReporteRestController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    @GetMapping("/ticket/{ventaId}")
+    public ResponseEntity<byte[]> descargarTicketVenta(@PathVariable Long ventaId) {
+        try {
+            byte[] pdfBytes = reporteService.generarTicketVentaPdf(ventaId);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDispositionFormData("inline", "comprobante_compra" + ventaId + ".pdf");
+
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(pdfBytes);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
 }
