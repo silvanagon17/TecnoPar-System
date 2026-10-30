@@ -45,7 +45,7 @@ class navHeader extends HTMLElement {
           <a
             id="btn-panel-admin"
             href="pages/admin/productos.html"
-            class="flex items-center gap-1 hover:text-blue-600 font-semibold px-3 py-1 rounded-lg border border-gray-300 hover:border-blue-500 transition"
+            class="hidden flex items-center gap-1 hover:text-blue-600 font-semibold px-3 py-1 rounded-lg hover:border-blue-500 transition"
             title="Ir al Panel de Administración"
           >
             <i data-lucide="layers-plus" class="w-5 h-5 text-blue-600"></i>
@@ -102,6 +102,10 @@ class navHeader extends HTMLElement {
                 stroke-width="1.5"
                 stroke="currentColor"
               ></i>
+              
+              <div id="cart-count"
+              class="absolute flex justify-center text-white -top-1 -right-3 bg-blue-500 text-[10px] text-center w-4 h-4 rounded-full border-1 border-blue-600"
+              ></div>
             </button>
             <div
               id="carrito-dropdown"

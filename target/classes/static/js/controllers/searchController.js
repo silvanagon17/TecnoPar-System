@@ -107,4 +107,15 @@ document.addEventListener("click", (e) => {
       contenedorResultados.innerHTML = "";
     }
   }
+
+  const btnBanner = e.target.closest("[data-busqueda]");
+  if (btnBanner) {
+    e.preventDefault();
+    const palabra = btnBanner.getAttribute("data-busqueda");
+    const inputBuscador = document.getElementById("search-input");
+    if (inputBuscador) {
+      inputBuscador.value = palabra;
+      filtrarYMostrarProductos();
+    }
+  }
 });

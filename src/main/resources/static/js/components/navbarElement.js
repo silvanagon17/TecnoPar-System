@@ -58,7 +58,8 @@ class Header extends HTMLElement {
           </div>
 
           <div
-            class="h-[32px] w-[35px] flex justify-center rounded-[11px]"
+            id="btn-notify"
+            class="hidden h-[32px] w-[35px] flex justify-center rounded-[11px]"
           >
             <button id="btn-notif-bell" class="relative">
               <svg
@@ -106,6 +107,19 @@ class Header extends HTMLElement {
           </div>
           </div>
 
+          <div
+            id="btn-house"
+            class=" h-[32px] w-[35px] flex justify-center rounded-[11px]"
+          >
+            <a
+            href="/index.html"
+            class="flex items-center gap-1 hover:text-blue-500 transition"
+            
+            >
+              <i data-lucide="house" class="w-5 h-5"></i>  
+            </a>
+            
+          </div>
           <div id="usuario-logueado" class="user hidden relative">
            <button
                 id="btn-user-menu"

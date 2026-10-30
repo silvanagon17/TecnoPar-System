@@ -1,9 +1,46 @@
+function mostrarErrorInput(inputId, mensaje) {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+
+  const inputBox = input.closest(".input-box");
+  if (!inputBox) return;
+
+  inputBox.classList.add("has-error");
+
+  let errorDiv = inputBox.querySelector(".error-message");
+  if (!errorDiv) {
+    errorDiv = document.createElement("div");
+    errorDiv.className = "error-message";
+    inputBox.appendChild(errorDiv);
+  }
+  errorDiv.textContent = mensaje;
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".input-box input").forEach((input) => {
+    input.addEventListener("input", () => {
+      const inputBox = input.closest(".input-box");
+      if (inputBox) {
+        inputBox.classList.remove("has-error");
+      }
+
+      const globalAlert = document.getElementById("loginGlobalError");
+      if (globalAlert) {
+        globalAlert.classList.add("hidden");
+      }
+    });
+  });
+});
+
 document.addEventListener("DOMContentLoaded", function () {
   const loginForm = document.getElementById("loginForm");
+  const globalAlert = document.getElementById("loginGlobalError");
 
   if (loginForm) {
     loginForm.addEventListener("submit", async function (e) {
       e.preventDefault();
+
+      if (globalAlert) globalAlert.classList.add("hidden");
 
       const email = document.getElementById("loginEmail").value;
       const contrasenha = document.getElementById("loginPassword").value;
@@ -51,10 +88,23 @@ document.addEventListener("DOMContentLoaded", function () {
           } else {
             window.location.href = "/index.html";
           }
+        } else {
+          if (globalAlert) {
+            globalAlert.textContent =
+              "El correo o la contraseña son incorrectos.";
+            globalAlert.className = "text-sm text-red-500";
+            globalAlert.classList.remove("hidden");
+            mostrarErrorInput("loginEmail");
+            mostrarErrorInput("loginPassword");
+          }
         }
       } catch (error) {
         console.error("Error al iniciar sesión: ", error);
-        alert("Ocurrió un error al conectar con el servidor.");
+        if (globalAlert) {
+          globalAlert.textContent =
+            "Ocurrió un error al conectar con el servidor.";
+          globalAlert.classList.remove("hidden");
+        }
       }
     });
   }
@@ -87,9 +137,21 @@ document.addEventListener("DOMContentLoaded", function () {
         if (response.ok) {
           alert("¡Usuario registrado con éxito! Ahora podés iniciar sesión.");
           registroFrom.reset();
+          goToLoginView();
         } else {
           const mensajeError = await response.text();
-          alert("Error al registrar: " + mensajeError);
+          if (
+            mensajeError.toLowerCase().includes("correo") ||
+            mensajeError.toLowerCase().includes("existe") ||
+            response.status === 409
+          ) {
+            mostrarErrorInput(
+              "registroEmail",
+              "Este correo electrónico ya se encuentra registrado.",
+            );
+          } else {
+            alert("Error al registrar: " + mensajeError);
+          }
         }
       } catch (error) {
         console.error("Error al registrar usuario: ", error);
@@ -101,13 +163,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.addEventListener("DOMContentLoaded", function () {
   const tipoUsuario = localStorage.getItem("tipoUsuario");
-  const btnPanelAdmin = document.getElementById("btn-panel-admin"); // Asegúrate de darle este ID a tu botón o enlace en el HTML
+  const btnPanelAdmin = document.getElementById("btn-panel-admin");
+  const btnNotif = document.getElementById("btn-notify");
+  const btnHouse = document.getElementById("btn-house");
 
-  if (btnPanelAdmin) {
-    if (tipoUsuario === "ADMIN") {
-      btnPanelAdmin.style.display = "flex"; // O "flex" / "inline-block" según tu diseño CSS
-    } else {
-      btnPanelAdmin.style.display = "none"; // Lo oculta completamente para clientes
-    }
+  if (tipoUsuario === "ADMIN") {
+    btnNotif.style.display = "flex";
+    btnHouse.style.display = "none";
+    btnPanelAdmin.style.display = "flex";
+  } else {
+    btnNotif.style.display = "none";
+    btnHouse.style.display = "flex";
+    btnPanelAdmin.style.display = "none";
   }
 });

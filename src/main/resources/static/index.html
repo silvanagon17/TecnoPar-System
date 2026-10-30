@@ -23,91 +23,136 @@
     <section id="carrusel">
       <div
         id="carouselExampleIndicators"
-        class="carousel slide relative z-0 h-[286px] md:h-[370px] w-full overflow-hidden group mb-14 shadow-2xl"
-        style="margin-top: 119px"
+        class="carousel slide relative z-0 h-[370px] w-full overflow-hidden group mb-8 shadow-xl"
+        style="margin-top: 118px"
         data-bs-ride="carousel"
       >
-        <div class="carousel-indicators">
-          <button
-            type="button"
-            data-bs-target="#carouselExampleDark"
-            data-bs-slide-to="0"
-            class="active"
-            aria-current="true"
-            aria-label="Slide 1"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#carouselExampleDark"
-            data-bs-slide-to="1"
-            aria-label="Slide 2"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#carouselExampleDark"
-            data-bs-slide-to="2"
-            aria-label="Slide 3"
-          ></button>
+        <div class="carousel-indicators z-20">
+          <div class="carousel-indicators">
+            <button
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide-to="0"
+              class="active"
+              aria-current="true"
+              aria-label="Slide 1"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide-to="1"
+              aria-label="Slide 2"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide-to="2"
+              aria-label="Slide 3"
+            ></button>
+          </div>
         </div>
-        <div class="carousel-inner" data-bs-ride="carousel">
+        <div class="carousel-inner h-100" data-bs-ride="carousel">
           <div
-            class="carousel-item active bg-gradient-to-br from-blue-600 to-indigo-950 transition"
-            data-bs-interval="4000"
+            class="carousel-item active img-carrusel transition inset-0 w-100 h-full"
+            id="carrusel-1"
           >
-            <div class="max-w-xl space-y-6" style="padding: 30px 100px">
-              <span
-                class="inline-block bg-white/10 backdrop-blur-md text-white text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full border border-white/20"
-                >Nueva Generación 2026</span
-              >
+            <img
+              src=""
+              alt="Periféricos Gaming"
+              class="absolute flex inset-0"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-r from-blue-950 via-slate-900/20 to-transparent h-100"
+            ></div>
+            <div
+              class="relative max-w-xl p-8 md:p-12 space-y-4 text-left left-[80px] mt-3"
+            >
               <h2
-                class="text-5xl md:text-6xl font-black text-white leading-tight italic uppercase"
+                class="text-3xl md:text-5xl font-extrabold text-white tracking-wide"
               >
-                RTX 4090 <span class="text-blue-400">Power</span>
+                GAMING ELITE
               </h2>
-              <p class="text-xl text-white/70">
-                Domina cualquier juego con la máxima potencia gráfica
-                disponible.
+              <p class="text-slate-200 text-sm md:text-base">
+                Periféricos mecánicos de alta respuesta, teclados y audífonos
+                diseñados para competidores.
               </p>
-              <button
-                class="bg-white text-black px-8 py-3 rounded-2xl font-black uppercase italic tracking-tighter hover:scale-105 transition shadow-xl"
-              >
-                Comprar Ahora
-              </button>
+              <div class="pt-2 mt-5">
+                <a
+                  data-categoria="PERIFÉRICOS"
+                  class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3.5 rounded-4 transition shadow-lg shadow-blue-900/50 cursor-pointer"
+                >
+                  VER CATALOGO
+                </a>
+              </div>
             </div>
           </div>
 
           <div
-            class="carousel-item bg-gradient-to-br from-purple-700 to-slate-950 transition"
-            data-bs-interval="2000"
+            class="carousel-item img-carrusel transition inset-0 w-100 h-full"
+            id="carrusel-2"
           >
-            <div class="max-w-xl space-y-6" style="padding: 30px 100px">
-              <span
-                class="inline-block bg-white/10 backdrop-blur-md text-white text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full border border-white/20"
-                >Setup Profesional</span
-              >
+            <img
+              src=""
+              alt="Periféricos Gaming"
+              class="absolute flex inset-0"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-r from-blue-950 via-slate-900/20 to-transparent h-100"
+            ></div>
+            <div
+              class="relative max-w-xl p-8 md:p-12 space-y-4 text-left left-[80px] mt-3"
+            >
               <h2
-                class="text-5xl md:text-6xl font-black text-white leading-tight italic uppercase"
+                class="text-3xl md:text-5xl font-extrabold text-white tracking-wide"
               >
-                Gaming <span class="text-purple-400">Elite</span>
+                GAMING ELITE
               </h2>
-              <p class="text-xl text-white/70">
-                Periféricos mecánicos de alta respuesta para competidores.
+              <p class="text-slate-200 text-sm md:text-base">
+                Periféricos mecánicos de alta respuesta, teclados y audífonos
+                diseñados para competidores.
               </p>
-              <button
-                class="bg-purple-500 text-white px-8 py-3 rounded-2xl font-black uppercase italic tracking-tighter hover:scale-105 transition shadow-xl"
-              >
-                Ver Setup
-              </button>
+              <div class="pt-2 mt-5">
+                <a
+                  data-busqueda="gamer"
+                  class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3.5 rounded-4 transition shadow-lg shadow-blue-900/50 cursor-pointer"
+                >
+                  VER CATALOGO
+                </a>
+              </div>
             </div>
           </div>
 
-          <div class="carousel-item">
-            <div class="relative inset-0 z-1 w-100 h-full">
-              <img
-                src="image/estatico/Gemini_Generated_Image_1sb3i71sb3i71sb3.png"
-                alt=""
-                class="w-full h-full object-cover d-block"
-              />
+          <div
+            class="carousel-item img-carrusel transition inset-0 w-100 h-full"
+            id="carrusel-3"
+            data-bs-interval="5000"
+          >
+            <img
+              src=""
+              alt="Periféricos Gaming"
+              class="absolute flex inset-0"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-r from-blue-950 via-slate-900/20 to-transparent h-100"
+            ></div>
+            <div
+              class="relative max-w-xl p-8 md:p-12 space-y-4 text-left left-[80px] mt-3"
+            >
+              <h2
+                class="text-3xl md:text-5xl font-extrabold text-white tracking-wide"
+              >
+                TECNOLOGÍA
+              </h2>
+              <p class="text-slate-200 text-sm md:text-base">
+                Celulares, relog digitales y audífonos.
+              </p>
+              <div class="pt-2 mt-5">
+                <a
+                  class="btn-ver-todo inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3.5 rounded-4 transition shadow-lg shadow-blue-900/50"
+                >
+                  VER CATALOGO
+                </a>
+              </div>
             </div>
           </div>
         </div>

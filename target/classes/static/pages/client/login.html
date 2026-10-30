@@ -75,7 +75,7 @@
               class="flex justify-content-center items-center gap-2 transition group px-2 py-1"
               title="Volver a la tienda"
             >
-              <a href="index.html"
+              <a href="../../index.html"
                 ><i data-lucide="house" class="w-6 h-6" stroke-width="1.25"></i
               ></a>
             </button>
@@ -89,9 +89,10 @@
         <div class="box">
           <h3>Iniciar Sesion</h3>
           <form action="" id="loginForm">
-            <div class="input-box">
+            <div id="loginGlobalError"></div>
+            <div class="input-box" id="box-login-email">
               <label
-                class="c-title block text-start text-xs font-bold uppercase tracking-widest text-slate-600 dark:text-slate-400 mb-1"
+                class="c-title block text-start text-xs font-bold uppercase tracking-widest mb-1"
               >
                 Correo<span class="text-red-400">*</span>
               </label>
@@ -107,6 +108,7 @@
                   required
                 />
               </div>
+              <div class="error-message"></div>
             </div>
             <div class="input-box">
               <label
@@ -129,6 +131,7 @@
                     required
                   />
                 </div>
+                <div class="error-message"></div>
               </div>
               <div class="input-link text-right mt-1">
                 <a

@@ -160,9 +160,7 @@ function renderizarTablaCompras(ventas, tbodyId) {
 
   ventas.forEach((v) => {
     const esCompletado = v.estado === "COMPLETADO";
-    const badgeClase = esCompletado
-      ? "bg-green-600/10 text-green-600 ring-green-500/20"
-      : "bg-amber-600/10 text-amber-600 ring-amber-500/20";
+    const badgeClase = esCompletado ? "text-green-600" : "text-amber-600";
     const fecha = v.fechaVenta
       ? new Date(v.fechaVenta).toLocaleString("es-PY")
       : new Date().toLocaleString("es-PY");
@@ -177,17 +175,17 @@ function renderizarTablaCompras(ventas, tbodyId) {
       <td class="text-center py-3">${v.detalles ? v.detalles.length : 1} productos</td>
       <td class="text-center py-3">Gs. ${formatoMoneda.format(v.precioTotal || v.total || 0)}</td>
       <td class="text-center py-3">
-        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${badgeClase} ring-1 ring-inset">
+        <span class="inline-flex items-center gap-1.5 text-xs font-semibold ${badgeClase}">
           ${v.estado || "PENDIENTE"}
         </span>
       </td>
       <td class="flex justify-center items-center py-3">
         <button
           onclick="descargarTicket('${v.id}')"
-          class="text-indigo-600 hover:text-indigo-800 font-bold hover:underline flex items-center"
-          title="Ver comprobante de compra"
+          class="font-bold hover:underline flex items-center bg-blue-500/50 border-1 border-blue-600/20 rounded-4 px-3 py-1"
+          title="Ticket de compra"
         ><i data-lucide="file-text" class="h-4 w-4"></i>  
-          Ver Comprobante
+          Ticket
         </button>
       </td>
       

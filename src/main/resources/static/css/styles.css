@@ -630,3 +630,25 @@ option {
 #ultimas-compras {
   border-top: 1px solid var(--borde-general);
 }
+
+.img-carrusel {
+  width: 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  align-items: center;
+  position: relative;
+  margin-bottom: 90px;
+}
+
+#carrusel-1 {
+  background-image: url(../image/estatico/Periféricos.png);
+}
+
+#carrusel-2 {
+  background-image: url(../image/estatico/setup1.png);
+}
+
+#carrusel-3 {
+  background-image: url(../image/estatico/telefonos.jpeg);
+}
