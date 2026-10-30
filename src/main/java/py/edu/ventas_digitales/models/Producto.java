@@ -31,7 +31,7 @@ public class Producto {
     @Column(name = "nombre_producto", length = 150, nullable = false)
     private String nombreProducto;
 
-    @Column(name = "descripcion", length = 215, nullable = false)
+    @Column(name = "descripcion", nullable = false)
     private String descripcion;
 
     @Column(name = "codigo", length = 45, nullable = false, unique = true)

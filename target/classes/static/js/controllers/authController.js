@@ -163,17 +163,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.addEventListener("DOMContentLoaded", function () {
   const tipoUsuario = localStorage.getItem("tipoUsuario");
-  const btnPanelAdmin = document.getElementById("btn-panel-admin");
-  const btnNotif = document.getElementById("btn-notify");
-  const btnHouse = document.getElementById("btn-house");
-
-  if (tipoUsuario === "ADMIN") {
-    btnNotif.style.display = "flex";
-    btnHouse.style.display = "none";
-    btnPanelAdmin.style.display = "flex";
+  if (tipoUsuario === "ADMIN" || tipoUsuario === "ROLE_ADMIN") {
+    document.getElementById("btn-panel-admin")?.classList.remove("hidden");
   } else {
-    btnNotif.style.display = "none";
-    btnHouse.style.display = "flex";
-    btnPanelAdmin.style.display = "none";
+    document.getElementById("btn-panel-admin")?.classList.add("hidden");
+  }
+
+  if (tipoUsuario === "ADMIN" || tipoUsuario === "ROLE_ADMIN") {
+    document.getElementById("btn-notify")?.classList.remove("hidden");
+    document.getElementById("btn-house")?.classList.add("hidden");
+  } else {
+    document.getElementById("btn-notify")?.classList.add("hidden");
+    document.getElementById("btn-house")?.classList.remove("hidden");
   }
 });

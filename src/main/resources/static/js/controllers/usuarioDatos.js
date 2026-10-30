@@ -166,8 +166,7 @@ function renderizarTablaCompras(ventas, tbodyId) {
       : new Date().toLocaleString("es-PY");
 
     const tr = document.createElement("tr");
-    tr.className =
-      "hover:bg-blue-500/10 transition text-slate-400 border-b item-table";
+    tr.className = "hover:bg-blue-500/10 border-b item-table";
 
     tr.innerHTML = `
       <td class="text-center py-3">#${v.id}</td>
@@ -182,7 +181,7 @@ function renderizarTablaCompras(ventas, tbodyId) {
       <td class="flex justify-center items-center py-3">
         <button
           onclick="descargarTicket('${v.id}')"
-          class="font-bold hover:underline flex items-center bg-blue-500/50 border-1 border-blue-600/20 rounded-4 px-3 py-1"
+          class="font-bold text-white flex items-center bg-blue-600/90 hover:bg-blue-700/90 border-1 border-blue-600/20 rounded-4 px-3 py-1"
           title="Ticket de compra"
         ><i data-lucide="file-text" class="h-4 w-4"></i>  
           Ticket

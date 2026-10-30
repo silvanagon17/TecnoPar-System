@@ -72,7 +72,7 @@ export const renderizarProductosPorCategoria = async () => {
     const productosInicio = listaProductos.slice(0, 5);
     const seccionCategoria = document.createElement("section");
     seccionCategoria.className = "seccion-categoria mb-8";
-    seccionCategoria.innerHTML = `<div class="header-categoria flex justify-between items-center mb-4">
+    seccionCategoria.innerHTML = `<div class="header-categoria flex justify-between items-center mb-4 n">
         <h2 class="text-xl uppercase flex items-center gap-3 font-extrabold ">${categoria}</h2>
           <button
             type="button"
@@ -130,18 +130,28 @@ export const crearTarjetaProducto = (prod) => {
                 </div>
               </div>
               <div class="flex items-center justify-between pt-1 gap-2">
-                <button
-                  type="button"
-                  data-id="${prod.id}"
-                  class="btn-agregar-carrito flex items-center w-75 justify-center bg-blue-600 hover:bg-blue-500 text-white rounded-3 transition active:scale-95"
-                  style="padding: 5px 16px"
-                >
-                  <div class="flex justify-content-end items-center pointer-events-none">
-                    <i data-lucide="shopping-cart" class="w-4 h-4 mx-1"></i>
-                    <span>Agregar</span>
-                  </div>
-                </button>
-
+                ${
+                  prod.stock > 0
+                    ? `
+                    <button
+                      type="button"
+                      data-id="${prod.id}"
+                      data-stock="${prod.stock}"
+                      class="btn-agregar-carrito flex items-center w-75 justify-center bg-blue-600 hover:bg-blue-500 text-white rounded-3 transition active:scale-95"
+                      style="padding: 5px 16px"
+                    >
+                      <div class="flex justify-content-end items-center pointer-events-none">
+                        <i data-lucide="shopping-cart" class="w-4 h-4 mx-1"></i>
+                        <span>Agregar</span>
+                      </div>
+                    </button>
+                  `
+                    : `
+                    <span class="w-75 text-center text-sm font-semibold text-red-500 bg-red-50 rounded-3 py-1">
+                      Agotado
+                    </span>
+                  `
+                }
                 <button type="button" class="btn-ver-detalle" data-id="${prod.id}"> 
                   <i data-lucide="eye" class="pointer-events-none"></i> 
                 </button>
@@ -159,14 +169,57 @@ document.addEventListener("click", (e) => {
     const productoIdRaw = btnAgregar.getAttribute("data-id");
     const productoId = Number(productoIdRaw);
 
-    console.log("Intentando agregar producto ID:", productoId);
+    let stockDisponible = Number(btnAgregar.getAttribute("data-stock"));
 
     if (productoId && !isNaN(productoId)) {
-      addToCart(productoId, 1);
-      cartBadge.classList.add("scale-125", "bg-green-500");
-      setTimeout(() => {
-        cartBadge.classList.remove("scale-125", "bg-green-500");
-      }, 300);
+      if (stockDisponible > 0) {
+        stockDisponible--;
+        btnAgregar.setAttribute("data-stock", stockDisponible);
+        addToCart(productoId, 1);
+        cartBadge.classList.add("scale-125", "bg-green-500");
+        setTimeout(() => {
+          cartBadge.classList.remove("scale-125", "bg-green-500");
+        }, 300);
+
+        if (stockDisponible === 0) {
+          const card = btnAgregar.closest(".cards");
+          if (card) {
+            const contenedorAcciones = card.querySelector(
+              ".flex.items-center.justify-between.pt-1.gap-2",
+            );
+            if (contenedorAcciones) {
+              const btnVerDetalleHTML = card.querySelector(".btn-ver-detalle")
+                ? card.querySelector(".btn-ver-detalle").outerHTML
+                : "";
+
+              contenedorAcciones.innerHTML = `
+                <span class="w-75 text-center text-sm font-semibold text-red-500 bg-red-50 rounded-3 py-1">
+                  Agotado
+                </span>
+                ${btnVerDetalleHTML}
+              `;
+            }
+          }
+        }
+      } else {
+        const card = btnAgregar.closest(".cards");
+        if (card) {
+          const contenedorAcciones = card.querySelector(
+            ".flex.items-center.justify-between.pt-1.gap-2",
+          );
+          if (contenedorAcciones) {
+            const btnVerDetalleHTML = card.querySelector(".btn-ver-detalle")
+              ? card.querySelector(".btn-ver-detalle").outerHTML
+              : "";
+            contenedorAcciones.innerHTML = `
+              <span class="w-75 text-center text-sm font-semibold text-red-500 bg-red-50 rounded-3 py-1">
+                Agotado
+              </span>
+              ${btnVerDetalleHTML}
+            `;
+          }
+        }
+      }
     } else {
       console.error("ID de producto inválido:", productoIdRaw);
     }

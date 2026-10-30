@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../../css/scroll.css" />
     <script src="../../js/components/navbarElement.js"></script>
     <script src="../../js/components/sidebarElement.js"></script>
+    <script src="../../js/components/footerComponent.js"></script>
     <script src="../../js/components/confirmDialog.js"></script>
   </head>
   <body class="h-full transition-colors duration-200 flex flex-col font-sans">
@@ -103,31 +104,7 @@
                   </thead>
 
                   <tbody id="tbody" class="text-sm">
-                    <tr class="border-table">
-                      <td class="py-3">ID</td>
-                      <td class="py-3 px-2">Categoría</td>
-                      <td class="py-3 px-6">Descripción</td>
-                      <td class="py-3 px-6">Estado</td>
-                      <td class="py-3 px-6 text-green-600">Activo</td>
-                      <td
-                        class="flex justify-center items-center gap-1 py-3 px-3"
-                      >
-                        <button
-                          class="btn hover:text-yellow-500 btn-editar"
-                          title="Editar"
-                          id="btnEditar"
-                        >
-                          <i data-lucide="pencil-line" class="w-5 h-5"></i>
-                        </button>
-                        <button
-                          class="btn hover:text-red-600 btn-eliminar"
-                          title="Eliminar"
-                          id="btnEliminar"
-                        >
-                          <i data-lucide="trash-2" class="w-5 h-5"></i>
-                        </button>
-                      </td>
-                    </tr>
+                    <tr class="border-table"></tr>
                   </tbody>
                 </table>
               </div>
@@ -255,6 +232,7 @@
             </div>
           </form>
         </div>
+        <footer-component></footer-component>
       </main>
     </div>
 
@@ -271,6 +249,7 @@
     <script src="../../js/utils/theme.js"></script>
     <script src="../../js/utils/userInfo.js"></script>
     <script type="module" src="../../js/utils/dropdownNotif.js"></script>
+    <script src="../../js/controllers/authController.js"></script>
     <script type="module" src="../../js/controllers/categorias.js"></script>
   </body>
 </html>

@@ -12,7 +12,7 @@ export const renderStock = (cantidad) => {
       </span>`;
   }
 
-  if (stock >= 5 && stock <= 10) {
+  if (stock >= 3 && stock <= 6) {
     return `<span class="inline-flex items-center gap-x-1.5 rounded-full bg-yellow-600/10 px-2.5 py-1 text-xs font-medium text-yellow-600 ring-1 ring-inset ring-amber-500/20">
         <span class="size-1.5 rounded-full bg-amber-500"></span>
         Stock Bajo (${stock})

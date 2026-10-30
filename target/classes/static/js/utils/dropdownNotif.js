@@ -22,7 +22,7 @@ export const cargarNotificacionStock = async () => {
           type: "warning",
           time: "Revisar inventario",
         });
-      } else if (stock >= 5 && stock <= 10) {
+      } else if (stock >= 3 && stock <= 6) {
         notificaciones.push({
           id: `stock-bajo-${prod.id}`,
           text: `Stock bajo: ${prod.nombreProducto} (${stock} unidades)`,

@@ -14,6 +14,7 @@
   --button-hover-color: hsla(0, 0%, 0%, 0.3);
   --bg-input: #10113ace;
   --bg-form-check: #232e479a;
+  --text: rgb(214, 214, 214);
 }
 
 body.modo-claro {
@@ -23,10 +24,11 @@ body.modo-claro {
   --bg-input: #e6e4ff7c;
   --borde-color: #dfdfdfc0;
   --bg-form-check: #fdfdffdc;
+  --text: rgb(59, 59, 59);
 }
 
 input {
-  background: none;
+  background: rgba(255, 255, 255, 0) !important;
 }
 
 .formulario {
@@ -120,6 +122,10 @@ input {
   transition: all 0.2s;
 }
 
+.input-control:hover {
+  background: var(--bg-form-check);
+}
+
 .input-control input {
   background: transparent;
   border: none;
@@ -128,6 +134,7 @@ input {
   font-size: 0.875rem;
   color: inherit;
 }
+
 .input-control input::placeholder {
   color: #94a3b8;
 }
@@ -139,11 +146,6 @@ input {
 
 .form-content {
   text-align: center;
-}
-
-.form-checkout {
-  background: var(--bg-form-check);
-  border: 1px solid var(--borde-color);
 }
 
 .head-resumen {
@@ -158,8 +160,8 @@ input {
 .input-control input:-webkit-autofill:hover,
 .input-control input:-webkit-autofill:focus,
 .input-control input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0px 1000px var(--bg-input-override, transparent) inset !important;
-  -webkit-text-fill-color: inherit !important;
+  -webkit-box-shadow: 0 0 0px 1000px var(--bg-input, transparent) inset !important;
+  -webkit-text-fill-color: var(--text) !important;
   transition: background-color 5000s ease-in-out 0s;
 }
 

@@ -98,7 +98,7 @@ footer {
 }
 
 .footer {
-  border-top: 1px solid var(--borde-categoria);
+  border-top: 1px solid var(--borde-general);
 }
 
 .titulo {
