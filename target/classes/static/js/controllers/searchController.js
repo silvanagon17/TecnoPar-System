@@ -59,7 +59,7 @@ const filtrarYMostrarProductos = async () => {
                 <i data-lucide="arrow-left" class="w-4 h-4"></i>
             </button>
             <div>
-                <h2 class="text-xl font-bold">Resultados para: "${inputBuscador.value.trim()}"</h2>
+                <h2 class="seccion font-bold">Resultados para: "${inputBuscador.value.trim()}"</h2>
             </div>
             </div>
     

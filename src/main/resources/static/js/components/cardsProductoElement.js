@@ -1,6 +1,6 @@
 import { obtenerProductos } from "../service/productoService.js";
-import { addToCart } from "../utils/carrito.js";
 import { goToCatalogoCompletoView, goToHomeView } from "../utils/changeView.js";
+import { inicializarManejoCarrito } from "../utils/cartHandler.js";
 
 const contenedorPrincipal = document.getElementById("contenedor-catalogo");
 
@@ -53,7 +53,7 @@ export const renderizarProductosPorCategoria = async () => {
             <i data-lucide="arrow-left" class="w-4 h-4"></i>
           </button>
           <div class="header-categoria ">
-            <h2 class="text-2xl uppercase font-extrabold">${categoriaSeleccionada}</h2>
+            <h2 class="seccion uppercase font-extrabold">${categoriaSeleccionada}</h2>
           </div>
         </div>
         <div class="grid-productos grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-5">
@@ -73,7 +73,7 @@ export const renderizarProductosPorCategoria = async () => {
     const seccionCategoria = document.createElement("section");
     seccionCategoria.className = "seccion-categoria mb-8";
     seccionCategoria.innerHTML = `<div class="header-categoria flex justify-between items-center mb-4 n">
-        <h2 class="text-xl uppercase flex items-center gap-3 font-extrabold ">${categoria}</h2>
+        <h2 class="seccion uppercase flex items-center gap-3 font-extrabold ">${categoria}</h2>
           <button
             type="button"
             class="btn-ver-todo principal px-6 py-2 rounded-xl text-xs font-bold transition"
@@ -147,7 +147,7 @@ export const crearTarjetaProducto = (prod) => {
                     </button>
                   `
                     : `
-                    <span class="w-75 text-center text-sm font-semibold text-red-500 bg-red-50 rounded-3 py-1">
+                    <span class="w-75 text-center font-semibold text-red-500 bg-rose-500/30 border-1 border-red-400/20 rounded-3"  style="padding: 5px 16px">
                       Agotado
                     </span>
                   `
@@ -161,70 +161,6 @@ export const crearTarjetaProducto = (prod) => {
 };
 
 document.addEventListener("click", (e) => {
-  const btnAgregar = e.target.closest(".btn-agregar-carrito");
-  const cartBadge = document.getElementById("cart-count");
-
-  if (btnAgregar) {
-    e.preventDefault();
-    const productoIdRaw = btnAgregar.getAttribute("data-id");
-    const productoId = Number(productoIdRaw);
-
-    let stockDisponible = Number(btnAgregar.getAttribute("data-stock"));
-
-    if (productoId && !isNaN(productoId)) {
-      if (stockDisponible > 0) {
-        stockDisponible--;
-        btnAgregar.setAttribute("data-stock", stockDisponible);
-        addToCart(productoId, 1);
-        cartBadge.classList.add("scale-125", "bg-green-500");
-        setTimeout(() => {
-          cartBadge.classList.remove("scale-125", "bg-green-500");
-        }, 300);
-
-        if (stockDisponible === 0) {
-          const card = btnAgregar.closest(".cards");
-          if (card) {
-            const contenedorAcciones = card.querySelector(
-              ".flex.items-center.justify-between.pt-1.gap-2",
-            );
-            if (contenedorAcciones) {
-              const btnVerDetalleHTML = card.querySelector(".btn-ver-detalle")
-                ? card.querySelector(".btn-ver-detalle").outerHTML
-                : "";
-
-              contenedorAcciones.innerHTML = `
-                <span class="w-75 text-center text-sm font-semibold text-red-500 bg-red-50 rounded-3 py-1">
-                  Agotado
-                </span>
-                ${btnVerDetalleHTML}
-              `;
-            }
-          }
-        }
-      } else {
-        const card = btnAgregar.closest(".cards");
-        if (card) {
-          const contenedorAcciones = card.querySelector(
-            ".flex.items-center.justify-between.pt-1.gap-2",
-          );
-          if (contenedorAcciones) {
-            const btnVerDetalleHTML = card.querySelector(".btn-ver-detalle")
-              ? card.querySelector(".btn-ver-detalle").outerHTML
-              : "";
-            contenedorAcciones.innerHTML = `
-              <span class="w-75 text-center text-sm font-semibold text-red-500 bg-red-50 rounded-3 py-1">
-                Agotado
-              </span>
-              ${btnVerDetalleHTML}
-            `;
-          }
-        }
-      }
-    } else {
-      console.error("ID de producto inválido:", productoIdRaw);
-    }
-  }
-
   const btnVerTodo = e.target.closest(".btn-ver-todo");
   if (btnVerTodo) {
     e.preventDefault();
@@ -269,4 +205,6 @@ document.addEventListener("click", (e) => {
   }
 });
 
-document.addEventListener("DOMContentLoaded", renderizarProductosPorCategoria);
+document.addEventListener("DOMContentLoaded", () => {
+  (renderizarProductosPorCategoria(), inicializarManejoCarrito());
+});

@@ -1,5 +1,5 @@
 import { goToDetailView, goToHomeView } from "../utils/changeView.js";
-import { addToCart } from "../utils/carrito.js";
+import { inicializarManejoCarrito } from "../utils/cartHandler.js";
 
 const BASE_URL_IMAGE = "/image/productos/";
 let scrollPosicionGuardada = 0;
@@ -41,7 +41,39 @@ export function verDetalleProducto(producto) {
     descripcionElement.textContent =
       producto.descripcion || "Sin descripción disponible";
   if (precioElement) precioElement.textContent = precioFormateado;
+  const btnAgregarDetalle =
+    document.getElementById("detalle-btn-agregar") ||
+    document.querySelector(".btn-agregar-carrito");
+  if (btnAgregarDetalle) {
+    btnAgregarDetalle.setAttribute("data-id", producto.id);
+    btnAgregarDetalle.setAttribute("data-stock", producto.stock);
+  }
+  const contenedorBotonDetalle = document.getElementById(
+    "contenedor-accion-detalle",
+  );
 
+  if (contenedorBotonDetalle) {
+    if (producto.stock > 0) {
+      contenedorBotonDetalle.innerHTML = `
+        <button
+          type="button"
+          id="detalle-btn-agregar"
+          data-id="${producto.id}"
+          data-stock="${producto.stock}"
+          class="btn-agregar-carrito w-full flex justify-center items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-xl transition-all shadow-lg shadow-blue-600/20"
+        >
+          <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+          <span>Agregar al Carrito</span>
+        </button>
+      `;
+    } else {
+      contenedorBotonDetalle.innerHTML = `
+        <span class="w-full text-center text-sm font-semibold text-red-500 bg-rose-500/30 border-1 border-red-400/20 rounded-xl py-2.5 block">
+          Agotado
+        </span>
+      `;
+    }
+  }
   goToDetailView();
   window.scrollTo({ top: 0, behavior: "instant" });
 
@@ -51,25 +83,13 @@ export function verDetalleProducto(producto) {
 }
 
 export function inicializarEventosDetalle() {
-  const btnAgregarDetalle =
-    document.getElementById("btn-agregar-detalle") ||
-    document.getElementById("detalle-btn-agregar");
-
-  btnAgregarDetalle?.addEventListener("click", () => {
-    const productoId = btnAgregarDetalle.getAttribute("data-id");
-
-    const inputCantidad = document.getElementById("cantidad-detalle");
-    const cantidad = parseInt(inputCantidad?.value || "1", 10);
-    if (productoActualId && !isNaN(cantidad) && cantidad > 0) {
-      addToCart(Number(productoActualId), cantidad);
-    } else {
-      console.error("ID o cantidad inválida en la modal de detalle");
-    }
-  });
-
   const btnVolver = document.getElementById("btn-volver-home");
   btnVolver?.addEventListener("click", () => {
     goToHomeView();
     window.scrollTo({ top: scrollPosicionGuardada, behavior: "instant" });
   });
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  inicializarManejoCarrito();
+});

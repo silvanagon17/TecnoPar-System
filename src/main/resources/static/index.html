@@ -23,8 +23,8 @@
     <section id="carrusel">
       <div
         id="carouselExampleIndicators"
-        class="carousel slide relative z-0 h-[370px] w-full overflow-hidden group mb-8 shadow-xl"
-        style="margin-top: 118px"
+        class="carousel slide relative z-0 h-[380px] w-full overflow-hidden group mb-8 shadow-xl"
+        style="margin-top: 113px"
         data-bs-ride="carousel"
       >
         <div class="carousel-indicators z-20">
@@ -56,11 +56,6 @@
             class="carousel-item active img-carrusel transition inset-0 w-100 h-full"
             id="carrusel-1"
           >
-            <img
-              src=""
-              alt="Periféricos Gaming"
-              class="absolute flex inset-0"
-            />
             <div
               class="absolute inset-0 bg-gradient-to-r from-blue-950 via-slate-900/20 to-transparent h-100"
             ></div>
@@ -91,11 +86,6 @@
             class="carousel-item img-carrusel transition inset-0 w-100 h-full"
             id="carrusel-2"
           >
-            <img
-              src=""
-              alt="Periféricos Gaming"
-              class="absolute flex inset-0"
-            />
             <div
               class="absolute inset-0 bg-gradient-to-r from-blue-950 via-slate-900/20 to-transparent h-100"
             ></div>
@@ -127,11 +117,6 @@
             id="carrusel-3"
             data-bs-interval="5000"
           >
-            <img
-              src=""
-              alt="Periféricos Gaming"
-              class="absolute flex inset-0"
-            />
             <div
               class="absolute inset-0 bg-gradient-to-r from-blue-950 via-slate-900/20 to-transparent h-100"
             ></div>
@@ -182,170 +167,12 @@
     </section>
 
     <main class="max-w-[1350px] mx-auto px-12 py-8">
-      <aside
-        id="sidebar"
-        anchor="bottom start"
-        popover
-        style="
-          position: fixed !important;
-          left: 0 !important;
-          top: 117px !important;
-          height: auto !important;
-          margin: 0 !important;
-          flex-direction: column !important;
-          transform: none !important;
-          border-radius: 0 !important;
-          padding: 3px;
-        "
-        class="sidebar group z-[100] shadow-2xl transition-all duration-300 ease-in-out w-64"
-      >
-        <div
-          class="overflow-hidden flex flex-col justify-content-between h-100"
-        >
-          <div
-            class="py-6 px-3 md:px-4 space-y-6 sidebar-responsive"
-            data-bs-spy="scroll"
-            data-bs-target="#navbar-example2"
-            data-bs-root-margin="0px 0px -40%"
-            data-bs-smooth-scroll="true"
-            class="p-0 rounded-2"
-            tabindex="0"
-            style="
-              max-height: 600px;
-              overflow-y: auto;
-              scrollbar-color: #818181 #02001800;
-              scrollbar-width: none;
-            "
-          >
-            <button
-              id="toggle-btn"
-              onclick="toggleSidebar()"
-              class="d-flex w-full align-items-center justify-content-between px-3 transition"
-            >
-              <span
-                class="text-[12px] sidebar-text font-bold uppercase tracking-widest block"
-                >Menú Principal</span
-              >
-              <i
-                data-lucide="chevron-left"
-                id="toggle-icon"
-                class="h-5 w-5"
-              ></i>
-            </button>
-            <nav class="space-y-1">
-              <button
-                class="w-full menu-item flex items-center space-x-2 px-3 py-[13px] rounded-xl font-medium transition bg-blue-400/20 border-1 border-blue-400/20"
-              >
-                <i data-lucide="house" class="w-5 h-5 shrink-0"></i>
-                <span class="sidebar-text hidden md:inline text-sm">Hogar</span>
-              </button>
-
-              <div class="relative">
-                <button
-                  type="button"
-                  onclick="expandMenu('dropdown-cats', 'arrow-icon')"
-                  class="w-full menu-item flex items-center space-x-2 px-3 py-[13px] rounded-xl font-medium transition"
-                >
-                  <i data-lucide="tags" class="w-5 h-5 shrink-0"></i>
-
-                  <span class="sidebar-text hidden md:inline text-sm"
-                    >Categorías</span
-                  >
-
-                  <svg
-                    id="arrow-icon"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="2"
-                    stroke="currentColor"
-                    class="size-4 sidebar-text group-hover:opacity-100 transition-transform duration-300"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="m19.5 8.25-7.5 7.5-7.5-7.5"
-                    />
-                  </svg>
-                </button>
-
-                <div
-                  id="dropdown-cats"
-                  class="hidden flex-col ml-5 mt-1 space-y-1 overflow-hidden transition-all duration-300"
-                >
-                  <a
-                    href="#"
-                    class="block px-4 py-2 text-sm hover:bg-white/5 rounded-md whitespace-nowrap group-hover:opacity-100 transition-opacity"
-                  >
-                    Notebooks
-                  </a>
-                  <a
-                    href="#"
-                    class="block px-4 py-2 text-sm hover:bg-white/5 rounded-md whitespace-nowrap group-hover:opacity-100 transition-opacity"
-                  >
-                    Pc
-                  </a>
-                  <a
-                    href="#"
-                    class="block px-4 py-2 text-sm hover:bg-white/5 rounded-md whitespace-nowrap group-hover:opacity-100 transition-opacity"
-                  >
-                    Hardware
-                  </a>
-                  <a
-                    href="#"
-                    class="block px-4 py-2 text-sm hover:bg-white/5 rounded-md whitespace-nowrap group-hover:opacity-100 transition-opacity"
-                  >
-                    Consola
-                  </a>
-
-                  <a
-                    href="#"
-                    class="block px-4 py-2 text-sm hover:bg-white/5 rounded-md whitespace-nowrap group-hover:opacity-100 transition-opacity"
-                  >
-                    Periféricos
-                  </a>
-                  <a
-                    href="#"
-                    class="block px-4 py-2 text-sm hover:bg-white/5 rounded-md whitespace-nowrap group-hover:opacity-100 transition-opacity"
-                  >
-                    Redes y Conectividad
-                  </a>
-                </div>
-              </div>
-
-              <button
-                class="w-full menu-item flex items-center space-x-2 px-3 py-[13px] rounded-xl font-medium transition"
-              >
-                <i data-lucide="user" class="w-5 h-5 shrink-0"></i>
-                <a
-                  href="pages/client/perfil.html"
-                  class="sidebar-text hidden md:inline text-sm"
-                  >Perfil</a
-                >
-                <span></span>
-              </button>
-            </nav>
-          </div>
-          <div class="footer-sidebar p-3 md:p-4">
-            <div class="hidden md:flex w-100">
-              <button
-                id="btn-logout-sb"
-                class="text-[14px] font-bold leading-none bg-red-500/10 hover:bg-red-500/30 text-red-500 rounded-xl w-full flex items-center justify-center text-[10px] space-x-2 px-2 py-[17px]"
-              >
-                <i data-lucide="log-out" class="w-5 h-5 shrink-0"></i>
-                <span class="sidebar-text"> Cerrar Sesión</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </aside>
-
       <app-confirm-dialog id="confirm-modal" class="flex"></app-confirm-dialog>
       <div id="notify-container"></div>
       <section class="mx-auto mb-20">
         <div id="view-home">
           <h2
-            class="text-xl mb-7 uppercase tracking-tighter flex items-center gap-3 font-extrabold"
+            class="seccion mb-7 uppercase flex items-center gap-3 font-extrabold"
           >
             Categorías Principales
           </h2>
@@ -361,19 +188,6 @@
         <div id="vista-catalogo-completo" class="hidden">
           <div id="contenedor-catalogo-completo"></div>
         </div>
-
-        <!-- <div
-          class="oferta w-full h-60 rounded-2 flex items-center overflow-hidden relative shadow mx-auto py-8 mt-5"
-        >
-          <div
-            class="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-transparent"
-          ></div>
-          <img
-            src="image/estatico/Gemini_Generated_Image_1sb3i71sb3i71sb3.png"
-            class="absolute inset-0 w-full h-full object-cover opacity-90"
-            alt="Banner"
-          />
-        </div> -->
       </section>
 
       <section
@@ -424,10 +238,13 @@
               <p id="detalle-precio" class="text-xl font-bold"></p>
             </div>
 
-            <div class="pt-4 footer-detail">
+            <div id="contenedor-accion-detalle" class="pt-4 footer-detail">
               <button
+                type="button"
                 id="detalle-btn-agregar"
-                class="w-full flex justify-center items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-xl transition-all shadow-lg shadow-blue-600/20"
+                data-id="${producto.id}"
+                data-stock="${producto.stock}"
+                class="btn-agregar-carrito w-full flex justify-center items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-xl transition-all shadow-lg shadow-blue-600/20"
               >
                 <i data-lucide="shopping-cart" class="w-5 h-5"></i>
                 <span>Agregar al Carrito</span>

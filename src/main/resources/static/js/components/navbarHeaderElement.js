@@ -224,35 +224,9 @@ class navHeader extends HTMLElement {
         <div
           class="mx-auto px-6 flex items-center gap-8 text-[13px] font-medium whitespace-nowrap"
         >
-          <el-dropdown
-            class="relative inline-flex flex-col items-start text-left"
-          >
-            <button
-              popovertarget="sidebar"
-              class="inline-flex w-auto items-center flex gap-2 font-bold text-xs uppercase tracking-widest whitespace-nowrap hover:text-blue-600 justify-center gap-x-1.5 rounded-md py-2 text-sm font-semibold inset-ring-1 inset-ring-white/5 transition-colors"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="17"
-                height="17"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <line x1="3" y1="12" x2="21" y2="12"></line>
-                <line x1="3" y1="6" x2="21" y2="6"></line>
-                <line x1="3" y1="18" x2="21" y2="18"></line>
-              </svg>
-              Todo
-            </button>
-          </el-dropdown>
           <div id="link-categoria-container"
-            class="flex items-center gap-8 text-[11px] font-bold uppercase tracking-wider opacity-60"
+            class="nav_links flex items-center gap-8 text-[11px] h-7 font-bold uppercase tracking-wider opacity-60"
           >
-
           </div>
         </div>
       </nav>

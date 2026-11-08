@@ -44,7 +44,7 @@ const inicializarCategorias = async () => {
     const nombreCat = cat.nombreCategoria;
 
     const itemHTML = `
-            <a class="hover:text-blue-600 btn-ver-todo transition-colors cursor-pointer"
+            <a class="btn-ver-todo transition-colors cursor-pointer"
               data-categoria="${nombreCat}"
               >${nombreCat}</a
             >`;
