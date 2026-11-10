@@ -653,6 +653,11 @@ option {
   border-radius: 10px;
 }
 
+.form-checkout {
+  background: var(--azul-seccion);
+  border: 1px solid var(--borde-general);
+}
+
 /*--------------- Detalle Perfil --------------- */
 .card-perfil {
   background: var(--azul-seccion);

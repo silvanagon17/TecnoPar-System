@@ -25,7 +25,40 @@ document.addEventListener("DOMContentLoaded", async () => {
   const vistaCheckout = document.getElementById("view-checkout");
 
   if (btnAceptarResumen) {
-    btnAceptarResumen.addEventListener("click", () => {
+    btnAceptarResumen.addEventListener("click", async () => {
+      const token = localStorage
+        .getItem("token")
+        ?.replace(/^["'](.*)["']$/, "$1")
+        .trim();
+      try {
+        const res = await fetch(
+          "http://localhost:8080/api/carrito/mi-carrito",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
+
+        if (res.ok) {
+          const carritoData = await res.json();
+          const detalles = carritoData?.detalles || [];
+
+          const productoAgotado = detalles.find((d) => {
+            const stockDisp = d.producto.stock ?? 0;
+            return stockDisp <= 0 || d.cantidad > stockDisp;
+          });
+
+          if (productoAgotado) {
+            mostrarMensaje(
+              "danger",
+              "circle-x",
+              `El producto "${productoAgotado.producto.nombreProducto || productoAgotado.producto.nombre}" ya no tiene stock suficiente. Por favor, actualiza tu carrito antes de continuar.`,
+            );
+            return;
+          }
+        }
+      } catch (error) {
+        console.error("Error al validar stock en resumen", error);
+      }
       if (vistaResumen) vistaResumen.classList.add("hidden");
       if (vistaCheckout) vistaCheckout.classList.remove("hidden");
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -36,6 +69,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     btnVolverResumen.addEventListener("click", () => {
       if (vistaCheckout) vistaCheckout.classList.add("hidden");
       if (vistaResumen) vistaResumen.classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
   }
 

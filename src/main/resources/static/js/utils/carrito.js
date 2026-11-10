@@ -148,6 +148,9 @@ const renderizarCarrito = () => {
 
     totalItems += cantidad;
 
+    const stockReal = producto.stock ?? 0;
+    const estaAgotado = stockReal <= 0 || cantidad > stockReal;
+
     const div = document.createElement("div");
     div.classList.add("carrito-item", "border-b", "py-2");
 
@@ -164,10 +167,20 @@ const renderizarCarrito = () => {
           <p class="text-[17px] capitalize text-blue-500 font-semibold mb-0">
             ${producto.nombreProducto}
           </p>
+          <p class="text-[17px] capitalize text-blue-500 font-semibold mb-0">
+            ${
+              estaAgotado
+                ? `<span class="inline-block flex justify-center items-center mt-1 text-xs font-bold text-red-500 bg-rose-500/30 border-1 border-red-400/20 px-2 py-0.5 rounded-md">
+                 <i data-lucide="triangle-exclamation-point" class="w-4 h-4 mx-1"></i> Stock insuficiente
+               </span>`
+                : ""
+            }
+          </p>
           <div class="d-flex w-100 justify-content-between align-items-center">
             <div class="precio">
               <span class="text-[15px] font-bold">Gs. ${formatoMoneda.format(subtotal)}</span>
               <small class="block text-xs">(Gs. ${formatoMoneda.format(precioBase)} c/u)</small>
+              
             </div>
             
             <div class="d-flex align-items-center gap-2">
