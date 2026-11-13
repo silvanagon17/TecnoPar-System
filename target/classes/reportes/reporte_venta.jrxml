@@ -4,6 +4,7 @@
               xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" 
               name="comprovante_venta" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5d148504-c474-47b5-9bc7-df6cccfaf8cc">
 	<parameter name="LOGO_DIR" class="java.io.InputStream"/>
+	<parameter name="TITULO_REPORTE" class="java.lang.String"/>
 	<field name="id" class="java.lang.Long"/>
 	<field name="fecha" class="java.lang.String"/>
 	<field name="cliente" class="java.lang.String"/>
@@ -69,14 +70,13 @@
 
 	<pageHeader>
 		<band height="45" splitType="Stretch">
-			
-			<staticText>
+			<textField>
 				<reportElement x="180" y="10" width="200" height="25" uuid="d0ad36be-eb08-4cbf-8c56-5595c533e508"/>
 				<textElement textAlignment="Center">
 					<font fontName="Antonio" size="16" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Reporte de Ventas]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$P{TITULO_REPORTE}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 

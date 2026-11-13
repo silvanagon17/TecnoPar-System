@@ -327,6 +327,7 @@ app-sidebar {
 .menu-item:hover {
   background-color: var(--azul-hover);
   color: var(--texto-hover-azul);
+  border-radius: 10px;
 }
 
 .collapsed .menu-item {
@@ -443,8 +444,8 @@ app-sidebar {
 }
 
 .buscador {
-  background-color: var(--azul-buscador);
-  border: 1px solid var(--borde-general);
+  background-color: var(--azul-boton);
+  border: 0.5px solid var(--borde-general);
 }
 
 .principal {

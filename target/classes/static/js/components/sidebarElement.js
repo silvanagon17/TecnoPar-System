@@ -79,7 +79,7 @@ class SidebarElement extends HTMLElement {
             </a>
 
             <a
-              href="#"
+              href="/pages/admin/reporte.html"
               class="w-full menu-item flex items-center space-x-2 px-3 py-[13px] rounded-xl font-medium transition"
             >
               <i data-lucide="file-chart-line" class="w-5 h-5 shrink-0"></i>

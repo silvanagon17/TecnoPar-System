@@ -28,7 +28,7 @@ public class ReporteVentaService {
     @Autowired
     private VentaRepository ventaRepository;
 
-    public byte[] generarReporteVentasPdf(List<ReporteVentaDto> ventas) throws Exception {
+    public byte[] generarReporteVentasPdf(List<ReporteVentaDto> ventas, String titulo) throws Exception {
         InputStream jrxmlStream = getClass().getResourceAsStream("/reportes/reporte_venta.jrxml");
         if (jrxmlStream == null) {
             throw new IllegalArgumentException("No se encontró el archivo /reportes/reporte_venta.jrxml");
@@ -40,11 +40,62 @@ public class ReporteVentaService {
             parameters.put("LOGO_DIR", logoStream);
         }
 
+        parameters.put("TITULO_REPORTE", titulo);
+
         JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlStream);
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(ventas);
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 
         return JasperExportManager.exportReportToPdf(jasperPrint);
+    }
+
+    public List<ReporteVentaDto> generarReporteVentasDelMes(String nombreUsuarioLogueado) {
+        List<Venta> ventasDelMes = ventaRepository.findVentasDelMes("COMPLETADO");
+        List<ReporteVentaDto> listaReporte = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+        for (Venta v : ventasDelMes) {
+            if (v.getEstado() != null && v.getEstado().equalsIgnoreCase("PENDIENTE")) {
+                continue;
+            }
+
+            String nombreCompleto = "Sin Cliente";
+            if (v.getUsuario() != null) {
+                String nombre = v.getUsuario().getNombre() != null ? v.getUsuario().getNombre() : "";
+                String apellido = v.getUsuario().getApellido() != null ? v.getUsuario().getApellido() : "";
+                nombreCompleto = (nombre + " " + apellido);
+            }
+
+            String direccion = (v.getUsuario() != null && v.getUsuario().getDireccion() != null)
+                    ? v.getUsuario().getDireccion()
+                    : "";
+            String ciudad = direccion.contains(",") ? direccion.split(",")[0].trim() : direccion;
+
+            int totalArticulos = 0;
+            if (v.getDetalles() != null) {
+                for (DetalleVenta det : v.getDetalles()) {
+                    if (det.getCantidad() != null) {
+                        totalArticulos += det.getCantidad();
+                    }
+                }
+            }
+
+            String fechaFormateada = (v.getFechaVenta() != null) ? v.getFechaVenta().format(formatter) : "";
+
+            ReporteVentaDto dto = new ReporteVentaDto();
+            dto.setId(v.getId());
+            dto.setFecha(fechaFormateada);
+            dto.setCliente(nombreCompleto.isEmpty() ? "Sin Nombre" : nombreCompleto);
+            dto.setCiudad(ciudad);
+            dto.setMetodoPago(v.getMetodoPago() != null ? v.getMetodoPago() : "Efectivo");
+            dto.setCantidad(totalArticulos);
+            dto.setMontoTotal(v.getPrecioTotal());
+            dto.setUsuario(nombreUsuarioLogueado != null ? nombreUsuarioLogueado : "Admin");
+
+            listaReporte.add(dto);
+        }
+
+        return listaReporte;
     }
 
     public byte[] generarTicketVentaPdf(Long ventaId) throws Exception {

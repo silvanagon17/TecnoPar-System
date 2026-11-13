@@ -1,7 +1,9 @@
 package py.edu.ventas_digitales.restcontrollers;
 
 import java.security.Principal;
-
+import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.Locale;
 import java.util.List;
 import java.util.Map;
 
@@ -73,7 +75,37 @@ public class VentaRestController {
                 nombreUsuarioLogueado = principal.getName();
             }
             List<ReporteVentaDto> listaVentas = ventaService.obtenerVentasParaReporte(nombreUsuarioLogueado);
-            byte[] pdfBytes = reporteVentaService.generarReporteVentasPdf(listaVentas);
+            byte[] pdfBytes = reporteVentaService.generarReporteVentasPdf(listaVentas, "Reporte General de Ventas");
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDispositionFormData("inline", "reporte_venta.pdf");
+
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(pdfBytes);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/reporte_mes/pdf")
+    public ResponseEntity<byte[]> generarReporteDelMesPdf(Principal principal) {
+        try {
+            String nombreUsuarioLogueado = "Administrador";
+            if (principal != null) {
+                nombreUsuarioLogueado = principal.getName();
+            }
+            List<ReporteVentaDto> listaVentas = reporteVentaService.generarReporteVentasDelMes(nombreUsuarioLogueado);
+
+            LocalDate fechaHoy = LocalDate.now();
+            Locale locales = Locale.of("es", "ES");
+            String nombreMes = fechaHoy.getMonth().getDisplayName(TextStyle.FULL, locales);
+            String mesCapitalizado = nombreMes.substring(0, 1).toUpperCase() + nombreMes.substring(1) + " "
+                    + fechaHoy.getYear();
+            byte[] pdfBytes = reporteVentaService.generarReporteVentasPdf(listaVentas,
+                    "Reporte de Ventas - " + mesCapitalizado);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);
             headers.setContentDispositionFormData("inline", "reporte_venta.pdf");

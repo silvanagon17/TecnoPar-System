@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reportes</title>
+    <link rel="stylesheet" href="../../css/bootstrap/bootstrap.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../css/notify.css" />
+    <link rel="stylesheet" href="../../css/styles.css" />
+    <link rel="stylesheet" href="../../css/scroll.css" />
+    <script src="../../js/components/navbarAdmin.js"></script>
+    <script src="../../js/components/sidebarElement.js"></script>
+    <script src="../../js/components/footerComponent.js"></script>
+    <script src="../../js/components/confirmDialog.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+  <body class="h-full transition-colors duration-200 flex flex-col font-sans">
+    <main-header></main-header>
+    <div class="flex w-full min-h-screen">
+      <app-sidebar></app-sidebar>
+
+      <main class="flex-1 min-w-0 p-6 md:p-8 mt-[60px]">
+        <div id="notify-container"></div>
+        <app-confirm-dialog id="confirm-modal"></app-confirm-dialog>
+        <div class="border-b pb-3">
+          <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight">
+            Reportes
+          </h2>
+          <p class="text-sm text-slate-400 mt-1">
+            Genera, exporta y gestiona los reportes detallados de tu tienda.
+          </p>
+        </div>
+        <div>
+          <h3
+            class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-4 flex items-center gap-2 pt-3"
+          >
+            <i data-lucide="zap" class="w-4 h-4 text-slate-500"></i> Reportes
+            Rápidos
+          </h3>
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-4"
+          >
+            <div
+              class="dashboard-bg p-4 rounded-2xl shadow-sm flex flex-column hover:border-blue-600/30 gap-3 transition-all cursor-pointer group"
+            >
+              <div class="w-100 flex items-center gap-3">
+                <div
+                  class="w-9 h-9 bg-green-500/30 text-green-600 rounded-xl flex justify-center items-center border-1 border-green-400/30"
+                >
+                  <i
+                    data-lucide="file-text"
+                    class="w-6 h-6 flex justify-center items-center text-center"
+                  ></i>
+                </div>
+                <p class="text-[14px] font-extrabold uppercase">
+                  Ventas del Mes
+                </p>
+              </div>
+              <p class="text-xs text-slate-500 leading-relaxed">
+                Resumen completo de pedidos y totales de ingresos.
+              </p>
+
+              <div class="w-100">
+                <button
+                  id="btnReporteMes"
+                  onclick="generarReporteMes()"
+                  class="w-100 flex align-items-center justify-content-center text-xs bg-blue-500 rounded-3 gap-1 font-bold px-3 py-2.5 transition-transform hover:bg-blue-600"
+                >
+                  <span class="flex text-white gap-1"
+                    >Generar PDF
+                    <i
+                      data-lucide="arrow-right"
+                      class="w-4 h-4 shrink-0 group-hover:translate-x-1"
+                    ></i>
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            <div
+              class="dashboard-bg p-4 rounded-2xl shadow-sm flex flex-column hover:border-blue-600/30 gap-3 transition-all cursor-pointer group"
+            >
+              <div class="w-100 flex items-center gap-3">
+                <div
+                  class="w-9 h-9 bg-amber-500/30 text-amber-600 rounded-xl flex justify-center items-center border-1 border-amber-400/30"
+                >
+                  <i
+                    data-lucide="triangle-exclamation-point"
+                    class="w-6 h-6 flex justify-center items-center text-center"
+                  ></i>
+                </div>
+                <p class="text-[14px] font-extrabold uppercase">
+                  Stock Crítico y Agotado
+                </p>
+              </div>
+              <p class="text-xs text-slate-500 leading-relaxed">
+                Resumen completo de productos con stock crítico y stock agotado.
+              </p>
+
+              <div>
+                <button
+                  class="w-100 flex align-items-center justify-content-center text-xs bg-blue-500 rounded-3 gap-1 font-bold px-3 py-2.5 transition-transform hover:bg-blue-600"
+                >
+                  <span class="flex text-white gap-1"
+                    >Generar PDF
+                    <i
+                      data-lucide="arrow-right"
+                      class="w-4 h-4 shrink-0 group-hover:translate-x-1"
+                    ></i>
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            <div
+              class="dashboard-bg p-4 rounded-2xl shadow-sm flex flex-column hover:border-blue-6 00/30 gap-3 transition-all cursor-pointer group"
+            >
+              <div class="w-100 flex items-center gap-3">
+                <div
+                  class="w-9 h-9 bg-violet-500/30 text-violet-600 rounded-xl flex justify-center items-center border-1 border-violet-400/30"
+                >
+                  <i
+                    data-lucide="award"
+                    class="w-6 h-6 flex justify-center items-center text-center"
+                  ></i>
+                </div>
+                <p class="text-[14px] font-extrabold uppercase">
+                  Productos Más Vendidos
+                </p>
+              </div>
+              <p class="text-xs text-slate-500 leading-relaxed">
+                Ranking de artículos con mayor cantidad de unidades vendidas.
+              </p>
+
+              <div>
+                <button
+                  class="w-100 flex align-items-center justify-content-center text-xs bg-blue-500 rounded-3 gap-1 font-bold px-3 py-2.5 transition-transform hover:bg-blue-600"
+                >
+                  <span class="flex text-white gap-1"
+                    >Generar PDF
+                    <i
+                      data-lucide="arrow-right"
+                      class="w-4 h-4 shrink-0 group-hover:translate-x-1"
+                    ></i>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4">
+          <h3
+            class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-4 flex items-center gap-2 pt-3"
+          >
+            <i data-lucide="file-pen" class="w-4 h-4 text-slate-500"></i>
+            Reportes Personalizados
+          </h3>
+
+          <div class="dashboard-bg rounded-2xl">
+            <div class="p-6 border-b">
+              <h3 class="font-bold">Generar Reporte por Filtros</h3>
+              <p class="text-xs text-slate-500">
+                Selecciona el módulo y el rango de fechas para consultar.
+              </p>
+            </div>
+
+            <form id="customReportForm" class="p-6 space-y-6">
+              <div class="grid grid-cols-1 md:grid-cols-4 gap-6 border-b pb-4">
+                <div>
+                  <label
+                    class="block text-xs font-bold uppercase tracking-wider mb-2"
+                  >
+                    1. Módulo
+                  </label>
+                  <select
+                    id="reportModule"
+                    class="w-full principal text-sm rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  >
+                    <option value="ventas">Ventas e Ingresos</option>
+                    <option value="pedidos">Pedidos</option>
+                    <option value="clientes">Clientes Frecuentes</option>
+                    <option value="metodo_pago">Metodos de Pagos</option>
+                    <option value="stock_critico">Alertas de Stock</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label
+                    class="block text-xs font-bold uppercase tracking-wider mb-2"
+                  >
+                    2. Desglose Específico
+                  </label>
+                  <select
+                    id="reportSubtype"
+                    class="w-full principal text-sm rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  ></select>
+                </div>
+
+                <div>
+                  <label
+                    class="block text-xs font-bold uppercase tracking-wider mb-2"
+                  >
+                    2. Fecha Inicio
+                  </label>
+                  <input
+                    type="date"
+                    id="dateStart"
+                    required
+                    class="w-full principal text-sm rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    class="block text-xs font-bold uppercase tracking-wider mb-2"
+                  >
+                    3. Fecha Fin
+                  </label>
+                  <input
+                    type="date"
+                    id="dateEnd"
+                    required
+                    class="w-full principal text-sm rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+
+              <div class="flex items-center justify-end gap-3">
+                <button
+                  type="reset"
+                  class="px-4 py-2 text-xs font-bold text-slate-500 hover:text-slate-800 transition-colors"
+                >
+                  Limpiar
+                </button>
+                <button
+                  type="submit"
+                  id="btnSubmitCustom"
+                  class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-md shadow-blue-500/20 transition-all"
+                >
+                  <i data-lucide="file-text" class="w-4 h-4"></i>
+                  <span>Generar y Descargar</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <footer-component></footer-component>
+      </main>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      lucide.createIcons();
+    </script>
+
+    <script src="../../js/bootstrap/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.3.25/dist/lenis.min.js"></script>
+    <script src="../../js/utils/scroll.js"></script>
+    <script src="../../js/utils/filters.js"></script>
+    <script src="../../js/utils/sidebar.js"></script>
+    <script src="../../js/utils/theme.js"></script>
+    <script src="../../js/utils/userInfo.js"></script>
+    <script type="module" src="../../js/utils/dropdownNotif.js"></script>
+    <script src="../../js/controllers/authController.js"></script>
+    <script src="../../js/controllers/reporteController.js"></script>
+  </body>
+</html>

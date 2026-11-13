@@ -17,7 +17,7 @@ class navHeader extends HTMLElement {
           <span class="titulo text-blue-500">TecnoPar</span>
         </div>
 
-        <div class="flex-1 max-w-2xl relative group hidden md:block">
+        <div class="buscador rounded-4 flex-1 max-w-2xl relative group hidden md:block">
           <svg
             class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"
             xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +37,7 @@ class navHeader extends HTMLElement {
             type="text"
             placeholder="¿Qué vas a buscar hoy?"
             id="search-input"
-            class="principal w-full rounded-4 h-[38px] py-2.5 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 transition-all"
+            class="buscador w-full rounded-4 h-[38px] py-2.5 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 transition-all"
           />
         </div>
 

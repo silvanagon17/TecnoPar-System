@@ -42,7 +42,7 @@ class ConfirmDialogElement extends HTMLElement {
           <el-dialog-backdrop class="fixed inset-0 bg-gray-900/50 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"></el-dialog-backdrop>
 
             <div tabindex="0" class="flex min-h-full items-end justify-center p-4 text-center focus:outline-none sm:items-center sm:p-0">
-            <el-dialog-panel class="dialog shadow-lg relative transform overflow-hidden rounded-lg text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95">
+            <el-dialog-panel class="dialog shadow-lg relative transform overflow-hidden rounded-lg text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-auto sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95">
              <div class="dialog-panel px-4 pt-4 pb-4 sm:p-6 sm:pb-4">
                 <div class="sm:flex sm:items-start">
                   <div class="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-yellow-500/10 sm:mx-0 sm:size-10">
@@ -50,7 +50,7 @@ class ConfirmDialogElement extends HTMLElement {
                       <path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                   </div>
-                  <div class="text-center sm:mt-0 sm:ml-4 sm:text-left">
+                  <div class="text-center sm:mt-0 sm:ml-4 sm:text-left px-2">
                     <h3 id="dialog-title" class="text-base font-semibold ">¿Descartar cambios?</h3>
                     <div class="mt-2">
                       <p id="dialog-message" class="text-sm">Has introducido información en el formulario. Si sales ahora, perderás todos los cambios no guardados.</p>
