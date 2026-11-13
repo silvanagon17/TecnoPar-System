@@ -1,6 +1,8 @@
 package py.edu.ventas_digitales.services;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -112,7 +114,8 @@ public class VentaService {
         return ventaGuardada;
     }
 
-    public List<ReporteVentaDto> obtenerVentasParaReporte(String nombreUsuarioLogueado) {
+    public List<ReporteVentaDto> obtenerVentasParaReporte(LocalDate fechaInicio, LocalDate fechaFin,
+            String metodoPago, String nombreUsuarioLogueado) {
 
         List<Venta> todasLasVentas = ventaRepository.findAll();
         List<ReporteVentaDto> listaReporte = new ArrayList<>();
@@ -122,6 +125,20 @@ public class VentaService {
 
             if (venta.getEstado() != null && venta.getEstado().equalsIgnoreCase("PENDIENTE")) {
                 continue;
+            }
+
+            if (metodoPago != null && !metodoPago.isEmpty() && !metodoPago.equalsIgnoreCase("Todos los métodos")) {
+                if (venta.getMetodoPago() == null || !venta.getMetodoPago().equalsIgnoreCase(metodoPago)) {
+                    continue;
+                }
+            }
+
+            if (fechaInicio != null && fechaFin != null && venta.getFechaVenta() != null) {
+                LocalDateTime inicio = fechaInicio.atStartOfDay();
+                LocalDateTime fin = fechaFin.atTime(23, 59, 59);
+                if (venta.getFechaVenta().isBefore(inicio) || venta.getFechaVenta().isAfter(fin)) {
+                    continue;
+                }
             }
 
             String clienteCompleto = "Sin Cliente";

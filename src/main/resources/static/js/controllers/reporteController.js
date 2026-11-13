@@ -1,3 +1,5 @@
+const { ur } = require("zod/v4/locales");
+
 async function imprimirReporteVentas() {
   Swal.fire({
     title: "Generando reporte...",
@@ -9,13 +11,31 @@ async function imprimirReporteVentas() {
     },
   });
 
+  const fechaInicio = document.getElementById("fecha-inicio").value;
+  const fechaFin = document.getElementById("fecha-fin").value;
+  const metodoPago = document.getElementById("select-metodo-pago").value;
+
+  const params = new URLSearchParams();
+  if (fechaInicio) {
+    params.append("fechaInicio", fechaInicio);
+  }
+  if (fechaFin) {
+    params.append("fechaFin", fechaFin);
+  }
+  if (metodoPago && metodoPago !== "") {
+    params.append("metodoPago", metodoPago);
+  }
+
+  let url = "http://localhost:8080/api/ventas/reporte/pdf";
+  const queryString = params.toString();
+  if (queryString) {
+    url += "?" + queryString;
+  }
+
   try {
-    const response = await fetch(
-      "http://localhost:8080/api/ventas/reporte/pdf",
-      {
-        method: "GET",
-      },
-    );
+    const response = await fetch(url, {
+      method: "GET",
+    });
 
     if (!response.ok) {
       throw new Error("No se pudo generar el reporte de ventas.");

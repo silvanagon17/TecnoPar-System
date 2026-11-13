@@ -1,6 +1,7 @@
 package py.edu.ventas_digitales.services;
 
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,7 +29,8 @@ public class ReporteVentaService {
     @Autowired
     private VentaRepository ventaRepository;
 
-    public byte[] generarReporteVentasPdf(List<ReporteVentaDto> ventas, String titulo) throws Exception {
+    public byte[] generarReporteVentasPdf(List<ReporteVentaDto> ventas, String titulo, LocalDateTime fechaInicio,
+            LocalDateTime fechaFin, String metodoPago) throws Exception {
         InputStream jrxmlStream = getClass().getResourceAsStream("/reportes/reporte_venta.jrxml");
         if (jrxmlStream == null) {
             throw new IllegalArgumentException("No se encontró el archivo /reportes/reporte_venta.jrxml");
@@ -41,6 +43,16 @@ public class ReporteVentaService {
         }
 
         parameters.put("TITULO_REPORTE", titulo);
+
+        String textoFechas = "Historial Completo";
+        if (fechaInicio != null && fechaFin != null) {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            textoFechas = "Desde: " + fechaInicio.format(dtf) + " - Hasta: " + fechaFin.format(dtf);
+        }
+        parameters.put("FILTRO_FECHAS", textoFechas);
+
+        String textoPago = (metodoPago != null && !metodoPago.isEmpty()) ? metodoPago : "Todos los métodos";
+        parameters.put("FILTRO_PAGO", textoPago);
 
         JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlStream);
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(ventas);

@@ -2,11 +2,13 @@ package py.edu.ventas_digitales.restcontrollers;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.TextStyle;
 import java.util.Locale;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -68,14 +71,21 @@ public class VentaRestController {
     }
 
     @GetMapping("/reporte/pdf")
-    public ResponseEntity<byte[]> generarReportePdf(Principal principal) {
+    public ResponseEntity<byte[]> generarReportePdf(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaInicio,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFin,
+            @RequestParam(required = false) String metodoPago, Principal principal) {
         try {
             String nombreUsuarioLogueado = "Administrador";
             if (principal != null) {
                 nombreUsuarioLogueado = principal.getName();
             }
-            List<ReporteVentaDto> listaVentas = ventaService.obtenerVentasParaReporte(nombreUsuarioLogueado);
-            byte[] pdfBytes = reporteVentaService.generarReporteVentasPdf(listaVentas, "Reporte General de Ventas");
+            List<ReporteVentaDto> listaVentas = ventaService.obtenerVentasParaReporte(fechaInicio, fechaFin, metodoPago,
+                    nombreUsuarioLogueado);
+            LocalDateTime inicioDateTime = (fechaInicio != null) ? fechaInicio.atStartOfDay() : null;
+            LocalDateTime finDateTime = (fechaFin != null) ? fechaFin.atTime(23, 59, 59) : null;
+            byte[] pdfBytes = reporteVentaService.generarReporteVentasPdf(listaVentas, "Reporte General de Ventas",
+                    inicioDateTime, finDateTime, metodoPago);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);
             headers.setContentDispositionFormData("inline", "reporte_venta.pdf");
@@ -100,12 +110,16 @@ public class VentaRestController {
             List<ReporteVentaDto> listaVentas = reporteVentaService.generarReporteVentasDelMes(nombreUsuarioLogueado);
 
             LocalDate fechaHoy = LocalDate.now();
+
+            LocalDateTime inicioMes = fechaHoy.withDayOfMonth(1).atStartOfDay();
+            LocalDateTime finMes = fechaHoy.withDayOfMonth(fechaHoy.lengthOfMonth()).atTime(23, 59, 59);
+
             Locale locales = Locale.of("es", "ES");
             String nombreMes = fechaHoy.getMonth().getDisplayName(TextStyle.FULL, locales);
             String mesCapitalizado = nombreMes.substring(0, 1).toUpperCase() + nombreMes.substring(1) + " "
                     + fechaHoy.getYear();
             byte[] pdfBytes = reporteVentaService.generarReporteVentasPdf(listaVentas,
-                    "Reporte de Ventas - " + mesCapitalizado);
+                    "Reporte de Ventas - " + mesCapitalizado, inicioMes, finMes, "Todos los métodos");
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);
             headers.setContentDispositionFormData("inline", "reporte_venta.pdf");
