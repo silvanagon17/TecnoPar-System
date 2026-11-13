@@ -44,17 +44,17 @@
 			</textField>
 			<staticText>
 				<reportElement x="410" y="10" width="50" height="20" uuid="002f36e9-f4bd-440e-ae88-787cc4d216d0"/>
-				<textElement><font fontName="Antonio" isBold="true"/></textElement>
+				<textElement><font fontName="Antonio" size="12" isBold="true"/></textElement>
 				<text><![CDATA[Fecha:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="410" y="31" width="50" height="20" uuid="c5f8d9df-d166-4e3c-aba8-35a79a65dba4"/>
-				<textElement><font fontName="Antonio" isBold="true"/></textElement>
+				<textElement><font fontName="Antonio" size="12" isBold="true"/></textElement>
 				<text><![CDATA[Hora:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="240" y="10" width="55" height="20" uuid="0a49186c-8bd5-4628-a95d-51cbfc33ae42"/>
-				<textElement><font fontName="Antonio" isBold="true"/></textElement>
+				<textElement><font fontName="Antonio" size="12" isBold="true"/></textElement>
 				<text><![CDATA[Usuario:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">

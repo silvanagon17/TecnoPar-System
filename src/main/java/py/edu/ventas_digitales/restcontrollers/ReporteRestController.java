@@ -1,8 +1,10 @@
 package py.edu.ventas_digitales.restcontrollers;
 
+import java.security.Principal;
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
 
@@ -20,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 
 import py.edu.ventas_digitales.config.JasperConfig;
+import py.edu.ventas_digitales.dto.ReporteStockDto;
+import py.edu.ventas_digitales.services.ReporteStockService;
 import py.edu.ventas_digitales.services.ReporteVentaService;
 
 @RestController
@@ -31,6 +35,7 @@ public class ReporteRestController {
     private final JasperConfig jasperConfig;
     private final DataSource dataSource;
     private final ReporteVentaService reporteService;
+    private final ReporteStockService reporteStockService;
 
     @GetMapping("/ventas/pdf")
     public ResponseEntity<Resource> generarReporteVentasConSql(
@@ -47,6 +52,27 @@ public class ReporteRestController {
             e.printStackTrace();
             return ResponseEntity.internalServerError().build();
         }
+    }
+
+    @GetMapping("/stockCritico/pdf")
+    public ResponseEntity<byte[]> generarReporteStockCrit(Principal principal) {
+        try {
+            String nombreUsuarioLogueado = "Administrador";
+            if (principal != null) {
+                nombreUsuarioLogueado = principal.getName();
+            }
+            List<ReporteStockDto> listaProductoCrit = reporteStockService
+                    .obtenerProdStockCritico(nombreUsuarioLogueado);
+            byte[] pdfBytes = reporteStockService.generarPdfStockCritico(listaProductoCrit);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDispositionFormData("inline", "reporte_stock.pdf");
+            return ResponseEntity.ok().headers(headers).body(pdfBytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+
     }
 
     @GetMapping("/ticket/{ventaId}")

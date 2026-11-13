@@ -60,6 +60,7 @@ public class SegurityConfig {
                         .requestMatchers("/pages/admin/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/categorias/**", "/api/productos/**", "/api/ventas/**",
                                 "/api/usuarios/**", "/api/reportes/**", "/reporte/pdf/**", "/api/ventas/reporte/pdf",
+                                "/api/reportes/stockCritico/pdf",
                                 "/api/ventas/reporte_mes/pdf",
                                 "/ventas/pdf/**", "/api/auth/**", "/ticket/{ventaId}",
                                 "/api/reportes/ticket/{ventaId}**", "/error")
